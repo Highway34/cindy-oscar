@@ -13,6 +13,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Italiana&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -33,6 +35,8 @@ h1{font-family:'Italiana',serif;font-weight:400;font-size:clamp(2.4rem,7vw,4rem)
 h1 em{color:var(--dorado2);font-style:italic}
 .sub{font-style:italic;color:var(--tinta-dim);font-size:1.2rem}
 .contador{margin:1.1rem auto 0;display:inline-block;border:1px solid rgba(201,169,106,.45);border-radius:100px;padding:.6rem 1.5rem;font-style:italic;background:rgba(201,169,106,.1);font-size:1.02rem}
+.nube{display:inline-block;margin:.6rem auto 0;font-style:italic;font-size:.92rem;color:var(--tinta-dim);border:1px dashed rgba(201,169,106,.4);border-radius:100px;padding:.35rem 1rem}
+.nube.on{color:var(--menta);border-color:rgba(143,208,179,.55)}
 .historia{background:linear-gradient(180deg, rgba(28,24,38,.94), rgba(14,13,18,.97));border:1px solid rgba(201,169,106,.35);border-radius:var(--radio);padding:1.5rem 1.4rem;margin:1.4rem 0;text-align:center;box-shadow:var(--sombra)}
 .historia a{color:var(--dorado2);text-underline-offset:3px}
 .historia a:hover{color:#fff}
@@ -119,6 +123,7 @@ footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
 <h1>Para <em>ella</em> ♥</h1>
 <p class="sub">donde guardo cada poema que te escribo</p>
 <div><span class="contador" id="contador">juntos desde el día del sí ♥</span></div>
+<div><span class="nube" id="nubeEstado">♥ guardado en esta página + este dispositivo</span></div>
 <figure class="foto-wrap"><div class="foto-marco"><img src="foto-nosotros.jpg?v=5" alt="Nosotros juntos ♥" fetchpriority="high" decoding="async" onerror="this.style.display='none'"><figcaption>nosotros ♥ 04 · 09 · 2026</figcaption></div></figure>
 </header>
 
@@ -315,13 +320,17 @@ function waEvento(ev){
 }
 function pintarEv(){
   const c=document.getElementById('listaEv');
-  const todos=[...EVENTOS_FIJOS.map(e=>({...e,esFijo:true})),...eventos.map(e=>({...e,esFijo:false}))];
+  const fijos=EVENTOS_FIJOS.map(e=>({...e,origen:'fijo'}));
+  const nubeArr=(typeof eventosNube!=='undefined'?eventosNube:[]).map(e=>({...e,origen:'nube'}));
+  const loc=eventos.map(e=>({...e,origen:'local'}));
+  const todos=[...fijos,...nubeArr,...loc];
   c.innerHTML = todos.length?'':'<div class="empty">Aún no hay eventos. Crea el primero, amor ♥<br>Ej. “Picnic bajo la luna este sábado”.</div>';
   todos.forEach((ev)=>{
     const d=document.createElement('div'); d.className='ev';
-    const badge=ev.esFijo?'<div class="tipo" style="display:inline-block;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dorado2);border:1px solid rgba(201,169,106,.5);border-radius:100px;padding:.22rem .8rem;margin:.4rem 0">♥ en la página</div>':'<div class="tipo" style="display:inline-block;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-dim);border:1px dashed rgba(236,226,204,.35);border-radius:100px;padding:.22rem .8rem;margin:.4rem 0">solo en este dispositivo</div>';
-    d.innerHTML=`<h3>${esc(ev.titulo)}</h3>${badge}<div class="cuando">${esc(fmtFecha(ev.fecha))} · ${esc(ev.horaI)}–${esc(ev.horaF)}${ev.lugar?' · '+esc(ev.lugar):''}</div><div class="desc">${esc(ev.desc||'')}</div><div class="acciones"><a class="pill" target="_blank" rel="noopener" href="${gcalLink(ev)}">＋ Google Calendar</a><a class="pill wa" target="_blank" rel="noopener" href="${waEvento(ev)}">Enviar por WhatsApp ♥</a>${ev.esFijo?'':'<button class="borrar">borrar</button>'}</div>`;
-    if(!ev.esFijo){ d.querySelector('.borrar').onclick=()=>{ const idx=eventos.findIndex(x=>x.titulo===ev.titulo&&x.fecha===ev.fecha); if(idx>-1) eventos.splice(idx,1); guardarEv(eventos); pintarEv(); }; }
+    const badge=ev.origen==='fijo'?'<div class="tipo" style="display:inline-block;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dorado2);border:1px solid rgba(201,169,106,.5);border-radius:100px;padding:.22rem .8rem;margin:.4rem 0">♥ en la página</div>':ev.origen==='nube'?'<div class="tipo" style="display:inline-block;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--menta);border:1px solid rgba(143,208,179,.5);border-radius:100px;padding:.22rem .8rem;margin:.4rem 0">☁ compartido</div>':'<div class="tipo" style="display:inline-block;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-dim);border:1px dashed rgba(236,226,204,.35);border-radius:100px;padding:.22rem .8rem;margin:.4rem 0">solo en este dispositivo</div>';
+    d.innerHTML=`<h3>${esc(ev.titulo)}</h3>${badge}<div class="cuando">${esc(fmtFecha(ev.fecha))} · ${esc(ev.horaI)}–${esc(ev.horaF)}${ev.lugar?' · '+esc(ev.lugar):''}</div><div class="desc">${esc(ev.desc||'')}</div><div class="acciones"><a class="pill" target="_blank" rel="noopener" href="${gcalLink(ev)}">＋ Google Calendar</a><a class="pill wa" target="_blank" rel="noopener" href="${waEvento(ev)}">Enviar por WhatsApp ♥</a>${ev.origen==='fijo'?'':'<button class="borrar">borrar</button>'}</div>`;
+    if(ev.origen==='local'){ d.querySelector('.borrar').onclick=()=>{ const idx=eventos.findIndex(x=>(x.lid||x.titulo+x.fecha)===(ev.lid||ev.titulo+ev.fecha)); if(idx>-1) eventos.splice(idx,1); guardarEv(eventos); pintarEv(); }; }
+    if(ev.origen==='nube'){ d.querySelector('.borrar').onclick=()=>nubeDel('eventos', ev.id); }
     c.appendChild(d);
   });
   const n=document.getElementById('nEv'); if(n) n.textContent=`(${todos.length})`;
@@ -334,10 +343,10 @@ function agregarEvento(){
   const lu=document.getElementById('eLugar').value.trim();
   const de=document.getElementById('eDesc').value.trim();
   if(!t){ toast('msgE','Ponle título al evento ♥'); return; }
-  eventos.unshift({titulo:t,fecha:f,horaI:hi,horaF:hf,lugar:lu,desc:de});
-  guardarEv(eventos); pintarEv();
+  const obj={titulo:t,fecha:f,horaI:hi,horaF:hf,lugar:lu,desc:de,lid:'L'+Date.now()};
+  if(nube.on){ nubeAdd('eventos', obj).then(()=>{ toast('msgE','Guardado en el blog compartido ☁♥ ya lo ven los dos'); }); }
+  else{ eventos.unshift(obj); guardarEv(eventos); pintarEv(); toast('msgE','Guardado en este dispositivo ♥ (activa la nube para compartirlo sin WhatsApp)'); }
   document.getElementById('eTitulo').value=''; document.getElementById('eLugar').value=''; document.getElementById('eDesc').value='';
-  toast('msgE','Guardado ♥ y si quieres compartirlo, usa WhatsApp en la tarjeta');
 }
 
 // --- IDEAS FIJAS EN LA PÁGINA (las ve todo el mundo) ---
@@ -355,13 +364,17 @@ function waIdea(it){
 }
 function pintarIdeas(){
   const c=document.getElementById('listaIdeas'); if(!c) return;
-  const todos=[...IDEAS_FIJAS.map(x=>({...x,esFijo:true})),...ideas.map(x=>({...x,esFijo:false}))];
+  const fijos=IDEAS_FIJAS.map(x=>({...x,origen:'fijo'}));
+  const nubeArr=(typeof ideasNube!=='undefined'?ideasNube:[]).map(x=>({...x,origen:'nube'}));
+  const loc=ideas.map(x=>({...x,origen:'local'}));
+  const todos=[...fijos,...nubeArr,...loc];
   c.innerHTML = todos.length?'':'<div class="empty">Aún no hay mensajitos. Sé la primera en dejar uno, amor ♥<br>Ej. “Amor, ¿vamos por helado y vemos estrellas?”</div>';
   todos.forEach((it)=>{
     const d=document.createElement('div'); d.className='idea';
-    const badge=it.esFijo?'<div class="cuando">♥ fijo en la página · '+esc(fmtFecha(it.fecha))+'</div>':'<div class="cuando">solo en este dispositivo · '+esc(fmtFecha(it.fecha))+'</div>';
-    d.innerHTML=`<h3>${esc(it.nombre||'Ella ♥')}</h3><div class="tipo">${esc(it.tipo||'💌 Mensaje bonito')}</div>${badge}<div class="texto">${esc(it.texto||'')}</div><div class="acciones"><a class="pill wa" target="_blank" rel="noopener" href="${waIdea(it)}">Enviar por WhatsApp ♥</a>${it.esFijo?'':'<button class="borrar">borrar</button>'}</div>`;
-    if(!it.esFijo){ d.querySelector('.borrar').onclick=()=>{ const idx=ideas.findIndex(x=>x.texto===it.texto&&x.fecha===it.fecha); if(idx>-1) ideas.splice(idx,1); guardarIdeas(ideas); pintarIdeas(); }; }
+    const badge=it.origen==='fijo'?'<div class="cuando">♥ fijo en la página · '+esc(fmtFecha(it.fecha))+'</div>':it.origen==='nube'?'<div class="cuando">☁ compartido · '+esc(fmtFecha(it.fecha))+'</div>':'<div class="cuando">solo en este dispositivo · '+esc(fmtFecha(it.fecha))+'</div>';
+    d.innerHTML=`<h3>${esc(it.nombre||'Ella ♥')}</h3><div class="tipo">${esc(it.tipo||'💌 Mensaje bonito')}</div>${badge}<div class="texto">${esc(it.texto||'')}</div><div class="acciones"><a class="pill wa" target="_blank" rel="noopener" href="${waIdea(it)}">Enviar por WhatsApp ♥</a>${it.origen==='fijo'?'':'<button class="borrar">borrar</button>'}</div>`;
+    if(it.origen==='local'){ d.querySelector('.borrar').onclick=()=>{ const idx=ideas.findIndex(x=>(x.lid||x.texto+x.fecha)===(it.lid||it.texto+it.fecha)); if(idx>-1) ideas.splice(idx,1); guardarIdeas(ideas); pintarIdeas(); }; }
+    if(it.origen==='nube'){ d.querySelector('.borrar').onclick=()=>nubeDel('ideas', it.id); }
     c.appendChild(d);
   });
   const n=document.getElementById('nIdeas'); if(n) n.textContent=`(${todos.length})`;
@@ -372,20 +385,100 @@ function agregarIdea(){
   const tx=document.getElementById('sTexto').value.trim();
   const f=new Date().toISOString().slice(0,10);
   if(!tx){ toast('msgS','Escribe un mensajito primero, amor ♥'); return; }
-  ideas.unshift({nombre:n,tipo:tp,texto:tx,fecha:f});
-  guardarIdeas(ideas); pintarIdeas();
+  const obj={nombre:n,tipo:tp,texto:tx,fecha:f,lid:'L'+Date.now()};
+  if(nube.on){ nubeAdd('ideas', obj).then(()=>{ toast('msgS','Guardado en el blog compartido ☁♥ ya lo ven los dos'); }); }
+  else{ ideas.unshift(obj); guardarIdeas(ideas); pintarIdeas(); toast('msgS','Guardado en este dispositivo ♥ (activa la nube para compartirlo sin WhatsApp)'); }
   document.getElementById('sTexto').value='';
-  toast('msgS','Guardado con amor ♥ y si quieres que él lo vea, mándalo por WhatsApp');
 }
+// NOTE: pintar inicial se llama después de init nube (abajo)
+
+// --- NUBE COMPARTIDA (Firebase, opcional) ---
+// Pega aquí tu config de Firebase para activar blog compartido real:
+// const FIREBASE_CONFIG = {apiKey:"...", authDomain:"...", projectId:"...", ...};
+const FIREBASE_CONFIG = null;
+const nube = {db:null, on:false};
+function nubeEstado(){
+  const el=document.getElementById('nubeEstado'); if(!el) return;
+  if(nube.on){ el.textContent='☁ blog compartido activado ♥ lo que escriban lo ven los dos'; el.classList.add('on'); }
+  else{ el.textContent='♥ guardado en esta página + este dispositivo'; el.classList.remove('on'); }
+}
+try{
+  if(FIREBASE_CONFIG && window.firebase){
+    firebase.initializeApp(FIREBASE_CONFIG);
+    nube.db = firebase.firestore();
+    nube.on = true;
+    // escucha en vivo: eventos e ideas compartidos
+    nube.db.collection('eventos').orderBy('creado','desc').onSnapshot(snap=>{
+      const arr=[]; snap.forEach(d=>arr.push({id:d.id,...d.data()}));
+      eventosNube = arr; pintarEv();
+    });
+    nube.db.collection('ideas').orderBy('creado','desc').onSnapshot(snap=>{
+      const arr=[]; snap.forEach(d=>arr.push({id:d.id,...d.data()}));
+      ideasNube = arr; pintarIdeas();
+    });
+  }
+}catch(e){ nube.on=false; }
+var eventosNube = [];
+var ideasNube = [];
+async function nubeAdd(col, obj){
+  if(!nube.on) return null;
+  try{ const r = await nube.db.collection(col).add({...obj, creado: Date.now()}); return r.id; }
+  catch(e){ return null; }
+}
+async function nubeDel(col, id){
+  if(!nube.on || !id) return;
+  try{ await nube.db.collection(col).doc(id).delete(); }catch(e){}
+}
+nubeEstado();
 pintarIdeas(); pintarEv();
 
-// fondo estrellado (respeta reduced-motion)
-const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const cv=document.getElementById('stars'),ctx=cv.getContext('2d');let W,H,s=[];
-function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight;s=Array.from({length:innerWidth<600?80:140},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+.3,v:Math.random()*.4+.1}))}
-rs();addEventListener('resize',rs);
-if(!reduce){ (function l(){ctx.clearRect(0,0,W,H);s.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle='rgba(233,207,154,.7)';ctx.fill();p.y+=p.v;if(p.y>H)p.y=0});requestAnimationFrame(l)})(); }
-else { ctx.clearRect(0,0,W,H); s.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle='rgba(233,207,154,.7)';ctx.fill();}); }
+// --- PARTÍCULAS DORADAS QUE CAEN (lluvia de amor) ---
+(function particulas(){
+  try{
+    const cv=document.getElementById('stars'); if(!cv) return;
+    const ctx=cv.getContext('2d');
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let W,H,DPR;
+    let estrellas=[], lluvia=[];
+    function rs(){
+      DPR = Math.min(2, window.devicePixelRatio||1);
+      W = window.innerWidth; H = window.innerHeight;
+      cv.width = W*DPR; cv.height = H*DPR;
+      cv.style.width = W+'px'; cv.style.height = H+'px';
+      ctx.setTransform(DPR,0,0,DPR,0,0);
+      const nE = W<600?70:120, nL = W<600?45:80;
+      estrellas = Array.from({length:nE},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+.4,tw:Math.random()*Math.PI*2,vs:.3+Math.random()*.7}));
+      lluvia = Array.from({length:nL},()=>({x:Math.random()*W,y:Math.random()*H,r:1+Math.random()*2.2,v:.5+Math.random()*1.3,sw:Math.random()*Math.PI*2,sa:.3+Math.random()*.7,a:.35+Math.random()*.45}));
+    }
+    rs(); window.addEventListener('resize', rs);
+    function frame(t){
+      ctx.clearRect(0,0,W,H);
+      // estrellas que titilan
+      estrellas.forEach(p=>{
+        const a = .35 + .35*Math.sin(t/900 + p.tw);
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,7);
+        ctx.fillStyle = `rgba(233,207,154,${a.toFixed(2)})`; ctx.fill();
+      });
+      // lluvia dorada que cae con vaivén
+      lluvia.forEach(p=>{
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,7);
+        ctx.save(); ctx.shadowColor='rgba(233,207,154,.9)'; ctx.shadowBlur=8;
+        ctx.fillStyle = `rgba(233,207,154,${p.a})`; ctx.fill(); ctx.restore();
+        p.y += p.v; p.sw += .02; p.x += Math.sin(p.sw)*p.sa*.4;
+        if(p.y > H+6){ p.y = -6; p.x = Math.random()*W; }
+        if(p.x > W+6) p.x = -6; if(p.x < -6) p.x = W+6;
+      });
+      if(!document.hidden) requestAnimationFrame(frame);
+      else setTimeout(()=>requestAnimationFrame(frame), 500);
+    }
+    if(reduce){
+      ctx.clearRect(0,0,W,H);
+      estrellas.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle='rgba(233,207,154,.6)';ctx.fill();});
+      lluvia.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle='rgba(233,207,154,.5)';ctx.fill();});
+    } else requestAnimationFrame(frame);
+    document.addEventListener('visibilitychange', ()=>{ if(!document.hidden && !reduce) requestAnimationFrame(frame); });
+  }catch(e){}
+})();
 </script>
 </body>
 </html>
