@@ -4,63 +4,109 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Nuestro Rincón ♥ Para Ella</title>
+<meta name="description" content="Nuestro rincón: poemas, eventos e ideas con amor para ella ♥">
+<meta name="theme-color" content="#0e0d12">
+<meta property="og:title" content="Nuestro Rincón ♥ Para Ella">
+<meta property="og:description" content="Poemas, eventos e ideas guardados con amor.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♥</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Italiana&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--fondo:#0e0d12;--tinta:#ece2cc;--dorado:#c9a96a;--dorado2:#e9cf9a;--vino:#8a2f44;--rosa:#d9a5b3}
-body{background:var(--fondo);color:var(--tinta);font-family:'Cormorant Garamond',serif;min-height:100vh}
+:root{
+--fondo:#0e0d12;--fondo2:#17131f;--tinta:#ece2cc;--tinta-dim:rgba(236,226,204,.72);
+--dorado:#c9a96a;--dorado2:#e9cf9a;--vino:#8a2f44;--rosa:#d9a5b3;--menta:#8fd0b3;
+--radio:14px;--sombra:0 18px 50px rgba(0,0,0,.5);--foco:0 0 0 3px rgba(233,207,154,.35);
+--borde:rgba(201,169,106,.28);
+}
+html{scroll-behavior:smooth}
+body{background:var(--fondo);color:var(--tinta);font-family:'Cormorant Garamond',Georgia,serif;min-height:100vh;line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 #stars{position:fixed;inset:0;z-index:0;pointer-events:none}
 .nebula{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(900px 600px at 20% 10%, rgba(138,47,68,.28), transparent 60%),radial-gradient(1000px 700px at 80% 20%, rgba(72,60,130,.35), transparent 60%),radial-gradient(800px 600px at 50% 100%, rgba(201,169,106,.14), transparent 60%)}
-.wrap{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:2rem 1.2rem 4rem}
-header{text-align:center;padding:2.5rem 0 1.5rem}
-.pret{letter-spacing:.5em;text-transform:uppercase;font-size:.75rem;color:var(--dorado)}
-h1{font-family:'Italiana',serif;font-weight:400;font-size:clamp(2.2rem,7vw,3.8rem);margin:.8rem 0}
+.wrap{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:1.5rem 1.1rem 4rem}
+@media(min-width:700px){.wrap{padding:2rem 1.5rem 5rem}}
+header{text-align:center;padding:2.2rem 0 1rem}
+.pret{letter-spacing:.5em;text-transform:uppercase;font-size:.72rem;color:var(--dorado)}
+h1{font-family:'Italiana',serif;font-weight:400;font-size:clamp(2.4rem,7vw,4rem);margin:.7rem 0;line-height:1.05;letter-spacing:.01em}
 h1 em{color:var(--dorado2);font-style:italic}
-.sub{font-style:italic;opacity:.7;font-size:1.2rem}
-.contador{margin:1.2rem auto;display:inline-block;border:1px solid rgba(201,169,106,.4);border-radius:100px;padding:.6rem 1.4rem;font-style:italic;background:rgba(201,169,106,.08)}
-.historia{background:linear-gradient(180deg, rgba(28,24,38,.94), rgba(14,13,18,.97));border:1px solid rgba(201,169,106,.35);border-radius:12px;padding:1.5rem;margin:1.5rem 0;text-align:center}
-.historia a{color:var(--dorado2)}
-.grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1.5rem}
+.sub{font-style:italic;color:var(--tinta-dim);font-size:1.2rem}
+.contador{margin:1.1rem auto 0;display:inline-block;border:1px solid rgba(201,169,106,.45);border-radius:100px;padding:.6rem 1.5rem;font-style:italic;background:rgba(201,169,106,.1);font-size:1.02rem}
+.historia{background:linear-gradient(180deg, rgba(28,24,38,.94), rgba(14,13,18,.97));border:1px solid rgba(201,169,106,.35);border-radius:var(--radio);padding:1.5rem 1.4rem;margin:1.4rem 0;text-align:center;box-shadow:var(--sombra)}
+.historia a{color:var(--dorado2);text-underline-offset:3px}
+.historia a:hover{color:#fff}
+.bienvenida{background:rgba(255,255,255,.032);border-left:3px solid var(--dorado);border-radius:0 var(--radio) var(--radio) 0;padding:1.25rem 1.35rem;margin:1.2rem 0;font-style:italic;line-height:1.75}
+.bienvenida h2{font-family:'Italiana',serif;font-weight:400;font-size:1.35rem;margin-bottom:.5rem;font-style:normal;letter-spacing:.02em}
+/* tabs sticky */
+nav.tabs{position:sticky;top:.6rem;z-index:5;display:flex;gap:.55rem;justify-content:center;margin:1.1rem 0;padding:.55rem;background:rgba(14,13,18,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--borde);border-radius:100px;flex-wrap:wrap}
+nav.tabs button{background:transparent;border:1px solid transparent;color:var(--tinta);border-radius:100px;padding:.65rem 1.3rem;cursor:pointer;font-family:'Italiana',serif;letter-spacing:.12em;text-transform:uppercase;font-size:.83rem;min-height:44px;transition:.2s}
+nav.tabs button:hover{border-color:var(--dorado);color:var(--dorado2)}
+nav.tabs button.activo{background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;border-color:transparent;font-weight:400}
+nav.tabs button:focus-visible{outline:none;box-shadow:var(--foco)}
+nav.tabs .n{opacity:.65;font-size:.78em;margin-left:.3em}
+/* cards */
+.grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1.2rem}
 @media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
-.card{background:rgba(255,255,255,.03);border:1px solid rgba(201,169,106,.25);border-radius:12px;padding:1.3rem;cursor:pointer;transition:.25s}
-.card:hover{transform:translateY(-3px);border-color:var(--dorado);box-shadow:0 15px 40px rgba(0,0,0,.5)}
-.card h3{font-family:'Italiana',serif;font-weight:400;font-size:1.5rem}
-.card .fecha{font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dorado);margin:.3rem 0 .6rem}
-.card p{font-style:italic;opacity:.8;line-height:1.5}
-.card .ver{margin-top:.8rem;display:inline-block;font-size:.9rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dorado2)}
-#visor{display:none;margin-top:1.5rem;background:#f5ecd8;color:#2b2135;border-radius:12px;padding:2rem 1.5rem;box-shadow:0 30px 80px rgba(0,0,0,.6)}
-#visor h2{font-family:'Italiana',serif;font-weight:400;text-align:center;font-size:2rem}
-#visor .fecha-v{text-align:center;font-style:italic;opacity:.6;margin:.3rem 0 1rem}
-#visor .texto{white-space:pre-wrap;line-height:1.7;font-size:1.1rem;max-width:600px;margin:0 auto}
-#visor .cerrar{display:block;margin:1.5rem auto 0;background:transparent;border:1px solid #8a2f44;color:#8a2f44;border-radius:100px;padding:.6rem 1.8rem;cursor:pointer;font-family:inherit;font-style:italic}
-.form{background:rgba(201,169,106,.06);border:1px dashed rgba(201,169,106,.5);border-radius:12px;padding:1.5rem;margin-top:2rem}
-.form h2{font-family:'Italiana',serif;font-weight:400;font-size:1.6rem;margin-bottom:.3rem}
-.form p{font-style:italic;opacity:.7;margin-bottom:1rem}
-.form input,.form textarea,.form select{width:100%;background:#17131f;border:1px solid rgba(201,169,106,.35);color:var(--tinta);border-radius:8px;padding:.8rem;font-family:inherit;font-size:1rem;margin-bottom:.8rem}
+.card{background:rgba(255,255,255,.032);border:1px solid var(--borde);border-radius:var(--radio);padding:1.25rem 1.2rem;cursor:pointer;transition:transform .22s,border-color .22s,box-shadow .22s;display:flex;flex-direction:column;gap:.15rem}
+.card:hover,.card:focus-within{transform:translateY(-3px);border-color:var(--dorado);box-shadow:var(--sombra)}
+.card h3{font-family:'Italiana',serif;font-weight:400;font-size:1.45rem;line-height:1.2}
+.card .fecha{font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dorado);margin:.35rem 0 .5rem}
+.card p{font-style:italic;color:var(--tinta-dim);line-height:1.55;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.card .ver{margin-top:.7rem;display:inline-block;font-size:.88rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dorado2)}
+#visor{display:none;margin-top:1.2rem;background:#f5ecd8;color:#2b2135;border-radius:var(--radio);padding:2rem 1.4rem;box-shadow:0 30px 80px rgba(0,0,0,.6);animation:subir .35s ease}
+@keyframes subir{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+#visor h2{font-family:'Italiana',serif;font-weight:400;text-align:center;font-size:1.9rem;line-height:1.2}
+#visor .fecha-v{text-align:center;font-style:italic;opacity:.6;margin:.35rem 0 1rem}
+#visor .texto{white-space:pre-wrap;line-height:1.8;font-size:1.12rem;max-width:620px;margin:0 auto}
+#visor .texto::first-letter{font-family:'Italiana',serif;font-size:1.6em;color:var(--vino)}
+#visor .cerrar{display:block;margin:1.5rem auto 0;background:transparent;border:1px solid #8a2f44;color:#8a2f44;border-radius:100px;padding:.7rem 2rem;cursor:pointer;font-family:inherit;font-style:italic;font-size:1rem;min-height:44px}
+#visor .cerrar:hover{background:var(--vino);color:#fff}
+/* forms */
+.form{background:rgba(201,169,106,.06);border:1px dashed rgba(201,169,106,.5);border-radius:var(--radio);padding:1.4rem 1.3rem;margin-top:1.6rem}
+.form h2{font-family:'Italiana',serif;font-weight:400;font-size:1.55rem;margin-bottom:.25rem;letter-spacing:.01em}
+.form p{font-style:italic;color:var(--tinta-dim);margin-bottom:1rem}
+.lbl{display:block;font-size:.82rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dorado);margin:.9rem 0 .35rem}
+.form input,.form textarea,.form select{width:100%;background:var(--fondo2);border:1px solid rgba(201,169,106,.35);color:var(--tinta);border-radius:10px;padding:.85rem .9rem;font-family:inherit;font-size:1rem;margin-bottom:.15rem;transition:.2s}
+.form textarea{min-height:140px;resize:vertical;line-height:1.6}
+.form input:focus,.form textarea:focus,.form select:focus{outline:none;border-color:var(--dorado2);box-shadow:var(--foco);background:#1d1828}
 .form select{appearance:none;cursor:pointer}
 .form select option{background:#17131f}
-.form textarea{min-height:140px;resize:vertical}
-.form button{background:linear-gradient(180deg,var(--dorado2),var(--dorado));border:none;border-radius:100px;padding:.9rem 2rem;font-family:'Italiana',serif;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;color:#1a1420}
-.borrar{margin-top:.6rem;background:transparent;border:none;color:var(--rosa);cursor:pointer;font-style:italic;opacity:.7}
-nav.tabs{display:flex;gap:.6rem;justify-content:center;margin:1.2rem 0;flex-wrap:wrap}
-nav.tabs button{background:transparent;border:1px solid rgba(201,169,106,.4);color:var(--tinta);border-radius:100px;padding:.6rem 1.6rem;cursor:pointer;font-family:'Italiana',serif;letter-spacing:.15em;text-transform:uppercase;font-size:.85rem}
-nav.tabs button.activo{background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;border:none}
-.bienvenida{background:rgba(255,255,255,.03);border-left:3px solid var(--dorado);border-radius:0 12px 12px 0;padding:1.3rem 1.4rem;margin:1.5rem 0;font-style:italic;line-height:1.7}
-.bienvenida h2{font-family:'Italiana',serif;font-weight:400;font-size:1.4rem;margin-bottom:.5rem}
-.ev{background:rgba(255,255,255,.03);border:1px solid rgba(201,169,106,.25);border-radius:12px;padding:1.1rem;margin-top:.8rem}
-.ev h3{font-family:'Italiana',serif;font-weight:400;font-size:1.3rem}
-.ev .cuando{color:var(--dorado);font-style:italic;margin:.2rem 0 .5rem}
-.ev a.gcal{display:inline-block;margin-top:.6rem;border:1px solid rgba(201,169,106,.5);color:var(--dorado2);border-radius:100px;padding:.5rem 1.2rem;text-decoration:none;font-style:italic}
-.idea{background:rgba(255,255,255,.03);border:1px solid rgba(217,165,179,.35);border-radius:12px;padding:1.1rem;margin-top:.8rem}
-.idea h3{font-family:'Italiana',serif;font-weight:400;font-size:1.3rem}
-.idea .tipo{display:inline-block;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:var(--rosa);border:1px solid rgba(217,165,179,.5);border-radius:100px;padding:.2rem .8rem;margin:.4rem 0}
-.idea .cuando{color:var(--dorado);font-style:italic;margin:.2rem 0 .5rem;font-size:.9rem}
-footer{text-align:center;margin-top:3rem;font-style:italic;opacity:.6}
+.form input[type="date"],.form input[type="time"]{color-scheme:dark}
+.row2{display:flex;gap:.6rem;flex-wrap:wrap}
+.row2>div{flex:1 1 140px}
+.hint{font-size:.92rem;font-style:italic;color:var(--tinta-dim);background:rgba(0,0,0,.25);border:1px solid rgba(201,169,106,.2);border-radius:10px;padding:.7rem .9rem;margin:.8rem 0;line-height:1.55}
+.hint b{color:var(--dorado2)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;background:linear-gradient(180deg,var(--dorado2),var(--dorado));border:none;border-radius:100px;padding:.95rem 2rem;font-family:'Italiana',serif;letter-spacing:.18em;text-transform:uppercase;cursor:pointer;color:#1a1420;font-size:.92rem;min-height:48px;width:100%;transition:.2s;margin-top:.7rem}
+@media(min-width:560px){.btn{width:auto}}
+.btn:hover{filter:brightness(1.07);transform:translateY(-1px)}
+.btn:active{transform:scale(.98)}
+.btn:focus-visible{outline:none;box-shadow:var(--foco)}
+.msg{min-height:1.4em;margin-top:.7rem;font-style:italic;color:var(--dorado2)}
+.borrar{margin-top:.5rem;background:transparent;border:none;color:var(--rosa);cursor:pointer;font-style:italic;opacity:.75;padding:.4rem 0;min-height:36px}
+.borrar:hover{opacity:1;text-decoration:underline}
+/* list items */
+.ev,.idea{background:rgba(255,255,255,.032);border:1px solid var(--borde);border-radius:var(--radio);padding:1.1rem 1.1rem;margin-top:.85rem;animation:subir .3s ease}
+.idea{border-color:rgba(217,165,179,.4);border-left:3px solid var(--rosa)}
+.ev{border-left:3px solid var(--dorado)}
+.ev h3,.idea h3{font-family:'Italiana',serif;font-weight:400;font-size:1.32rem;line-height:1.25}
+.ev .cuando,.idea .cuando{color:var(--dorado);font-style:italic;margin:.25rem 0 .5rem;font-size:.95rem}
+.idea .tipo{display:inline-block;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--rosa);border:1px solid rgba(217,165,179,.5);border-radius:100px;padding:.22rem .8rem;margin:.45rem 0}
+.idea .texto,.ev .desc{font-style:italic;color:var(--tinta-dim);line-height:1.65;white-space:pre-wrap}
+.acciones{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.75rem}
+.pill{display:inline-flex;align-items:center;gap:.35rem;border:1px solid rgba(201,169,106,.5);color:var(--dorado2);border-radius:100px;padding:.55rem 1.1rem;text-decoration:none;font-style:italic;font-size:.95rem;min-height:42px;transition:.2s;background:transparent;cursor:pointer;font-family:inherit}
+.pill:hover{background:rgba(201,169,106,.14);border-color:var(--dorado2)}
+.pill.wa{border-color:rgba(143,208,179,.55);color:var(--menta)}
+.pill.wa:hover{background:rgba(143,208,179,.12)}
+.empty{font-style:italic;color:var(--tinta-dim);margin-top:1rem;text-align:center;border:1px dashed rgba(201,169,106,.3);border-radius:var(--radio);padding:1.2rem}
+footer{text-align:center;margin-top:3rem;font-style:italic;color:var(--tinta-dim)}
+footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<canvas id="stars"></canvas>
-<div class="nebula"></div>
+<canvas id="stars" aria-hidden="true"></canvas>
+<div class="nebula" aria-hidden="true"></div>
 <div class="wrap">
 <header>
 <div class="pret">✦ Nuestro rincón ✦</div>
@@ -88,16 +134,16 @@ si te vas, se apaga.<br>
 Si te quedas, arde.</p>
 </div>
 
-<nav class="tabs">
-<button id="tabPoemas" class="activo" onclick="mostrar('poemas')">Poemas ♥</button>
-<button id="tabEventos" onclick="mostrar('eventos')">Eventos ♥</button>
-<button id="tabIdeas" onclick="mostrar('ideas')">Ideas ♥</button>
+<nav class="tabs" aria-label="Secciones">
+<button id="tabPoemas" class="activo" onclick="mostrar('poemas')">Poemas <span class="n" id="nPoemas"></span></button>
+<button id="tabEventos" onclick="mostrar('eventos')">Eventos <span class="n" id="nEv"></span></button>
+<button id="tabIdeas" onclick="mostrar('ideas')">Ideas <span class="n" id="nIdeas"></span></button>
 </nav>
 
-<section id="secPoemas">
+<section id="secPoemas" aria-label="Poemas">
 <div class="grid" id="lista"></div>
 
-<div id="visor">
+<div id="visor" role="dialog" aria-modal="false" aria-labelledby="vTitulo">
 <h2 id="vTitulo"></h2>
 <div class="fecha-v" id="vFecha"></div>
 <div class="texto" id="vTexto"></div>
@@ -106,52 +152,64 @@ Si te quedas, arde.</p>
 
 <div class="form">
 <h2>✦ Agregar nuevo poema</h2>
-<p>Escríbelo aquí y se guarda en este blog. Avísame y lo dejo fijo en la web para ti.</p>
-<input id="fTitulo" placeholder="Título del poema… ej. Luna de septiembre">
+<p>Escríbelo aquí y se guarda en este dispositivo. Si quieres que quede fijo para siempre en la web, avísame y lo publico por ti.</p>
+<label class="lbl" for="fTitulo">Título</label>
+<input id="fTitulo" placeholder="Ej. Luna de septiembre" autocomplete="off">
+<label class="lbl" for="fFecha">Fecha</label>
 <input id="fFecha" type="date">
+<label class="lbl" for="fTexto">Poema</label>
 <textarea id="fTexto" placeholder="Escribe tu poema aquí…"></textarea>
-<button onclick="agregar()">Guardar para ella ♥</button>
-<div id="msg" style="margin-top:.6rem;font-style:italic;color:var(--dorado2)"></div>
+<button class="btn" onclick="agregar()">Guardar para ella ♥</button>
+<div id="msg" class="msg" aria-live="polite"></div>
 </div>
 </section>
 
-<section id="secEventos" style="display:none">
+<section id="secEventos" style="display:none" aria-label="Eventos">
 <div class="form">
 <h2>✦ Nuestros eventos</h2>
-<p>Crea citas, aniversarios o salidas y mándalas a Google Calendar ♥</p>
-<input id="eTitulo" placeholder="Título… ej. Cena de aniversario">
+<p>Crea citas, aniversarios o salidas. Se guardan en este celular y puedes mandarlos a Google Calendar ♥</p>
+<label class="lbl" for="eTitulo">Título</label>
+<input id="eTitulo" placeholder="Ej. Cena de aniversario" autocomplete="off">
+<label class="lbl" for="eFecha">Fecha</label>
 <input id="eFecha" type="date">
-<div style="display:flex;gap:.6rem">
-<input id="eHoraI" type="time" value="19:00" style="flex:1">
-<input id="eHoraF" type="time" value="21:00" style="flex:1">
+<div class="row2">
+<div><label class="lbl" for="eHoraI">Inicia</label><input id="eHoraI" type="time" value="19:00"></div>
+<div><label class="lbl" for="eHoraF">Termina</label><input id="eHoraF" type="time" value="21:00"></div>
 </div>
-<input id="eLugar" placeholder="Lugar… (opcional)">
-<textarea id="eDesc" placeholder="Detalles… (opcional)" style="min-height:80px"></textarea>
-<button onclick="agregarEvento()">Guardar evento ♥</button>
-<div id="msgE" style="margin-top:.6rem;font-style:italic;color:var(--dorado2)"></div>
+<label class="lbl" for="eLugar">Lugar (opcional)</label>
+<input id="eLugar" placeholder="Ej. Mirador, cine, casa…" autocomplete="off">
+<label class="lbl" for="eDesc">Detalles (opcional)</label>
+<textarea id="eDesc" placeholder="Ej. Llevo flores, playlist y tu chocolate favorito…" style="min-height:80px"></textarea>
+<button class="btn" onclick="agregarEvento()">Guardar evento ♥</button>
+<div id="msgE" class="msg" aria-live="polite"></div>
+<div class="hint">💡 <b>¿Por qué no lo ve el otro?</b> Esto se guarda solo en este navegador. Para compartirlo, usa <b>WhatsApp</b> en cada tarjeta o el botón de <b>Google Calendar</b>. Así sí le llega, amor.</div>
 </div>
 <div id="listaEv"></div>
 </section>
 
-<section id="secIdeas" style="display:none">
+<section id="secIdeas" style="display:none" aria-label="Ideas y mensajes">
 <div class="form">
 <h2>✦ Caja de ideas y mensajitos ✦</h2>
-<p>Mi amor, este es tu espacio ♥ Deja una idea para una cita, una sugerencia para el blog, o simplemente un mensaje bonito. Todo lo que escribas aquí florece en nuestro rincón.</p>
-<input id="sNombre" placeholder="Tu nombre ♥ (opcional)">
+<p>Mi amor, este es tu espacio ♥ Deja una idea para una cita, una sugerencia para el blog, o simplemente un mensaje bonito y amable. Todo lo que escribas aquí florece.</p>
+<label class="lbl" for="sNombre">Tu nombre</label>
+<input id="sNombre" placeholder="Tu nombre ♥ (opcional)" autocomplete="off">
+<label class="lbl" for="sTipo">Tipo</label>
 <select id="sTipo">
 <option value="💌 Mensaje bonito">💌 Mensaje bonito</option>
 <option value="💡 Idea para cita">💡 Idea para cita</option>
 <option value="🌙 Sugerencia">🌙 Sugerencia</option>
 <option value="✨ Plan a futuro">✨ Plan a futuro</option>
 </select>
-<textarea id="sTexto" placeholder="Escribe aquí un mensaje amable y bonito…&#10;Ej: Amor, hoy pensé en ti cuando vi la luna… Me encantaría que fuéramos por un helado y miráramos las estrellas juntos ♥&#10;No tengas pena, escribe con el corazón."></textarea>
-<button onclick="agregarIdea()">Guardar con amor ♥</button>
-<div id="msgS" style="margin-top:.6rem;font-style:italic;color:var(--dorado2)"></div>
+<label class="lbl" for="sTexto">Tu mensaje amable y bonito</label>
+<textarea id="sTexto" placeholder="Escribe aquí con el corazón…&#10;Ej: Amor, hoy pensé en ti cuando vi la luna… Me encantaría que fuéramos por un helado y miráramos las estrellas juntos ♥"></textarea>
+<button class="btn" onclick="agregarIdea()">Guardar con amor ♥</button>
+<div id="msgS" class="msg" aria-live="polite"></div>
+<div class="hint">💌 Se guarda en este dispositivo con amor. Si quieres que <b>él lo vea</b>, toca <b>Enviar por WhatsApp ♥</b> en tu tarjeta. Así le llega al instante.</div>
 </div>
 <div id="listaIdeas"></div>
 </section>
 
-<footer>hecho con amor ♥</footer>
+<footer><div class="orn">✦ ♥ ✦</div><div>hecho con amor, para siempre</div></footer>
 </div>
 
 <script>
@@ -161,47 +219,61 @@ const DEFAULT = [
 {titulo:"Sí, somos novios", fecha:"2026-09-22", texto:"Me dijiste que sí.\nY el laberinto se volvió jardín,\nel insomnio se volvió calma,\ny la noche se volvió nuestra.\n\nEsto apenas empieza.", fijo:true}
 ];
 
-function cargar(){
-  try{ const g = JSON.parse(localStorage.getItem('poemas-ella')||'null'); if(Array.isArray(g)&&g.length) return g; }catch(e){}
-  return DEFAULT;
+/* storage seguro */
+const store = {
+  get(k, fb){ try{ const v = JSON.parse(localStorage.getItem(k)); return v ?? fb; }catch(e){ return fb; } },
+  set(k, v){ try{ localStorage.setItem(k, JSON.stringify(v)); return true; }catch(e){ return false; } }
+};
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function fmtFecha(f){
+  if(!f) return '';
+  try{ const d = new Date(f+'T12:00:00'); return d.toLocaleDateString('es-ES',{day:'numeric',month:'short',year:'numeric'}); }
+  catch(e){ return f; }
 }
-function guardar(l){ localStorage.setItem('poemas-ella', JSON.stringify(l)); }
+function toast(id, txt){ const el=document.getElementById(id); if(el) el.textContent=txt; }
+
+function cargar(){ const g = store.get('poemas-ella', null); if(Array.isArray(g)&&g.length) return g; return DEFAULT; }
+function guardar(l){ if(!store.set('poemas-ella', l)) toast('msg','⚠️ Este navegador no deja guardar. Usa WhatsApp para no perderlo ♥'); }
 let lista = cargar();
 
 function pintar(){
   const c = document.getElementById('lista'); c.innerHTML='';
   lista.forEach((p,i)=>{
-    const d=document.createElement('div'); d.className='card';
-    d.innerHTML=`<h3>${p.titulo}</h3><div class="fecha">${p.fecha||''}</div><p>${(p.texto||'').slice(0,110)}…</p><span class="ver">leer ♥</span>${p.fijo?'':'<br><button class="borrar" data-i="'+i+'">borrar</button>'}`;
-    d.onclick=(e)=>{ if(e.target.classList.contains('borrar')){ lista.splice(+e.target.dataset.i,1); guardar(lista); pintar(); return;} abrir(i); };
+    const d=document.createElement('div'); d.className='card'; d.tabIndex=0;
+    d.setAttribute('role','button'); d.setAttribute('aria-label','Leer '+p.titulo);
+    d.innerHTML=`<h3>${esc(p.titulo)}</h3><div class="fecha">${esc(fmtFecha(p.fecha))}</div><p>${esc((p.texto||'').slice(0,110))}…</p><span class="ver">leer ♥</span>${p.fijo?'':'<br><button class="borrar" data-i="'+i+'">borrar</button>'}`;
+    const open=()=>abrir(i);
+    d.onclick=(e)=>{ if(e.target.classList.contains('borrar')){ lista.splice(+e.target.dataset.i,1); guardar(lista); pintar(); return;} open(); };
+    d.onkeydown=(e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } };
     c.appendChild(d);
   });
-  // contador de días desde el sí (22 sep 2026)
-  const inicio = new Date('2026-09-22'); const hoy = new Date();
+  const np=document.getElementById('nPoemas'); if(np) np.textContent=`(${lista.length})`;
+  const inicio = new Date('2026-09-22T12:00:00'); const hoy = new Date();
   const dias = Math.max(0, Math.floor((hoy-inicio)/86400000));
-  document.getElementById('contador').textContent = dias===0 ? 'juntos desde hoy ♥ el día del sí' : `juntos hace ${dias} día(s) ♥`;
+  document.getElementById('contador').textContent = dias===0 ? 'juntos desde hoy ♥ el día del sí' : dias===1 ? 'juntos hace 1 día ♥' : `juntos hace ${dias} días ♥`;
 }
 function abrir(i){
   document.getElementById('vTitulo').textContent = lista[i].titulo;
-  document.getElementById('vFecha').textContent = lista[i].fecha||'';
+  document.getElementById('vFecha').textContent = fmtFecha(lista[i].fecha);
   document.getElementById('vTexto').textContent = lista[i].texto;
   document.getElementById('visor').style.display='block';
-  document.getElementById('visor').scrollIntoView({behavior:'smooth'});
+  document.getElementById('visor').scrollIntoView({behavior:'smooth',block:'center'});
 }
 function cerrar(){ document.getElementById('visor').style.display='none'; }
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') cerrar(); });
 function agregar(){
   const t=document.getElementById('fTitulo').value.trim();
   const f=document.getElementById('fFecha').value || new Date().toISOString().slice(0,10);
   const x=document.getElementById('fTexto').value.trim();
-  if(!t||!x){ document.getElementById('msg').textContent='Ponle título y poema ♥'; return; }
+  if(!t||!x){ toast('msg','Ponle título y poema ♥'); return; }
   lista.unshift({titulo:t,fecha:f,texto:x});
   guardar(lista); pintar();
   document.getElementById('fTitulo').value=''; document.getElementById('fTexto').value='';
-  document.getElementById('msg').textContent='Guardado ♥ ya está en tu blog';
+  toast('msg','Guardado ♥ ya está en tu blog (en este dispositivo)');
 }
 pintar();
 
-// --- TABS ---
+// --- TABS con hash ---
 function mostrar(cual){
   document.getElementById('secPoemas').style.display = cual==='poemas'?'block':'none';
   document.getElementById('secEventos').style.display = cual==='eventos'?'block':'none';
@@ -209,27 +281,36 @@ function mostrar(cual){
   document.getElementById('tabPoemas').classList.toggle('activo', cual==='poemas');
   document.getElementById('tabEventos').classList.toggle('activo', cual==='eventos');
   document.getElementById('tabIdeas').classList.toggle('activo', cual==='ideas');
+  if(('#'+cual)!==location.hash){ history.replaceState(null,'','#'+cual); }
   if(cual==='eventos') pintarEv();
   if(cual==='ideas') pintarIdeas();
+  window.scrollTo({top:document.querySelector('nav.tabs').offsetTop-70,behavior:'smooth'});
 }
+(function initTab(){ const h=(location.hash||'').replace('#',''); if(['poemas','eventos','ideas'].includes(h)) mostrar(h); })();
 
-// --- EVENTOS + GOOGLE CALENDAR ---
-function cargarEv(){ try{ const g=JSON.parse(localStorage.getItem('eventos-ella')||'[]'); if(Array.isArray(g)) return g; }catch(e){} return []; }
-function guardarEv(l){ localStorage.setItem('eventos-ella', JSON.stringify(l)); }
+// --- EVENTOS + GOOGLE CALENDAR + WHATSAPP ---
+function cargarEv(){ const g=store.get('eventos-ella', []); return Array.isArray(g)?g:[]; }
+function guardarEv(l){ if(!store.set('eventos-ella', l)) toast('msgE','⚠️ No se pudo guardar en este navegador ♥'); }
 let eventos = cargarEv();
 function fmtG(d,h){ return d.replace(/-/g,'')+'T'+h.replace(/:/g,'')+'00'; }
 function gcalLink(ev){
   const p=new URLSearchParams({action:'TEMPLATE',text:ev.titulo,dates:fmtG(ev.fecha,ev.horaI)+'/'+fmtG(ev.fecha,ev.horaF),details:ev.desc||'',location:ev.lugar||''});
   return 'https://calendar.google.com/calendar/render?'+p.toString();
 }
+function waEvento(ev){
+  const t=`Mi amor ♥ mira nuestro evento: ${ev.titulo} — ${fmtFecha(ev.fecha)} de ${ev.horaI} a ${ev.horaF}${ev.lugar?' en '+ev.lugar:''}.${ev.desc?' '+ev.desc:''} (de nuestro rincón ✨)`;
+  return 'https://wa.me/?text='+encodeURIComponent(t);
+}
 function pintarEv(){
-  const c=document.getElementById('listaEv'); c.innerHTML = eventos.length?'':'<p style="font-style:italic;opacity:.6;margin-top:1rem">Aún no hay eventos. Crea el primero ♥</p>';
+  const c=document.getElementById('listaEv');
+  c.innerHTML = eventos.length?'':'<div class="empty">Aún no hay eventos. Crea el primero, amor ♥<br>Ej. “Picnic bajo la luna este sábado”.</div>';
   eventos.forEach((ev,i)=>{
     const d=document.createElement('div'); d.className='ev';
-    d.innerHTML=`<h3>${ev.titulo}</h3><div class="cuando">${ev.fecha} · ${ev.horaI}–${ev.horaF}${ev.lugar?' · '+ev.lugar:''}</div><div style="font-style:italic;opacity:.8">${ev.desc||''}</div><a class="gcal" target="_blank" href="${gcalLink(ev)}">＋ Añadir a Google Calendar</a><br><button class="borrar" data-i="${i}">borrar</button>`;
+    d.innerHTML=`<h3>${esc(ev.titulo)}</h3><div class="cuando">${esc(fmtFecha(ev.fecha))} · ${esc(ev.horaI)}–${esc(ev.horaF)}${ev.lugar?' · '+esc(ev.lugar):''}</div><div class="desc">${esc(ev.desc||'')}</div><div class="acciones"><a class="pill" target="_blank" rel="noopener" href="${gcalLink(ev)}">＋ Google Calendar</a><a class="pill wa" target="_blank" rel="noopener" href="${waEvento(ev)}">Enviar por WhatsApp ♥</a><button class="borrar" data-i="${i}">borrar</button></div>`;
     d.querySelector('.borrar').onclick=()=>{ eventos.splice(i,1); guardarEv(eventos); pintarEv(); };
     c.appendChild(d);
   });
+  const n=document.getElementById('nEv'); if(n) n.textContent=`(${eventos.length})`;
 }
 function agregarEvento(){
   const t=document.getElementById('eTitulo').value.trim();
@@ -238,45 +319,52 @@ function agregarEvento(){
   const hf=document.getElementById('eHoraF').value||'21:00';
   const lu=document.getElementById('eLugar').value.trim();
   const de=document.getElementById('eDesc').value.trim();
-  if(!t){ document.getElementById('msgE').textContent='Ponle título al evento ♥'; return; }
+  if(!t){ toast('msgE','Ponle título al evento ♥'); return; }
   eventos.unshift({titulo:t,fecha:f,horaI:hi,horaF:hf,lugar:lu,desc:de});
   guardarEv(eventos); pintarEv();
-  document.getElementById('msgE').textContent='Guardado ♥ tócalo para mandarlo a Google Calendar';
+  document.getElementById('eTitulo').value=''; document.getElementById('eLugar').value=''; document.getElementById('eDesc').value='';
+  toast('msgE','Guardado ♥ y si quieres compartirlo, usa WhatsApp en la tarjeta');
 }
 
-// --- CAJA DE IDEAS Y MENSAJES ---
-function cargarIdeas(){ try{ const g=JSON.parse(localStorage.getItem('ideas-ella')||'[]'); if(Array.isArray(g)) return g; }catch(e){} return []; }
-function guardarIdeas(l){ localStorage.setItem('ideas-ella', JSON.stringify(l)); }
+// --- CAJA DE IDEAS Y MENSAJES + WHATSAPP ---
+function cargarIdeas(){ const g=store.get('ideas-ella', []); return Array.isArray(g)?g:[]; }
+function guardarIdeas(l){ if(!store.set('ideas-ella', l)) toast('msgS','⚠️ No se pudo guardar en este navegador ♥'); }
 let ideas = cargarIdeas();
-function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function waIdea(it){
+  const t=`${it.tipo||'💌'} de ${it.nombre||'Ella ♥'} (${fmtFecha(it.fecha)}): ${it.texto} — de nuestro rincón ♥`;
+  return 'https://wa.me/?text='+encodeURIComponent(t);
+}
 function pintarIdeas(){
   const c=document.getElementById('listaIdeas'); if(!c) return;
-  c.innerHTML = ideas.length?'':'<p style="font-style:italic;opacity:.6;margin-top:1rem">Aún no hay mensajitos. Sé la primera en dejar uno, amor ♥</p>';
+  c.innerHTML = ideas.length?'':'<div class="empty">Aún no hay mensajitos. Sé la primera en dejar uno, amor ♥<br>Ej. “Amor, ¿vamos por helado y vemos estrellas?”</div>';
   ideas.forEach((it,i)=>{
     const d=document.createElement('div'); d.className='idea';
-    d.innerHTML=`<h3>${esc(it.nombre||'Ella ♥')}</h3><div class="tipo">${esc(it.tipo||'💌 Mensaje bonito')}</div><div class="cuando">${esc(it.fecha||'')}</div><div style="font-style:italic;line-height:1.6;white-space:pre-wrap">${esc(it.texto||'')}</div><button class="borrar" data-i="${i}">borrar</button>`;
+    d.innerHTML=`<h3>${esc(it.nombre||'Ella ♥')}</h3><div class="tipo">${esc(it.tipo||'💌 Mensaje bonito')}</div><div class="cuando">${esc(fmtFecha(it.fecha))}</div><div class="texto">${esc(it.texto||'')}</div><div class="acciones"><a class="pill wa" target="_blank" rel="noopener" href="${waIdea(it)}">Enviar por WhatsApp ♥</a><button class="borrar" data-i="${i}">borrar</button></div>`;
     d.querySelector('.borrar').onclick=()=>{ ideas.splice(i,1); guardarIdeas(ideas); pintarIdeas(); };
     c.appendChild(d);
   });
+  const n=document.getElementById('nIdeas'); if(n) n.textContent=`(${ideas.length})`;
 }
 function agregarIdea(){
   const n=document.getElementById('sNombre').value.trim()||'Ella ♥';
   const tp=document.getElementById('sTipo').value;
   const tx=document.getElementById('sTexto').value.trim();
   const f=new Date().toISOString().slice(0,10);
-  if(!tx){ document.getElementById('msgS').textContent='Escribe un mensajito primero, amor ♥'; return; }
+  if(!tx){ toast('msgS','Escribe un mensajito primero, amor ♥'); return; }
   ideas.unshift({nombre:n,tipo:tp,texto:tx,fecha:f});
   guardarIdeas(ideas); pintarIdeas();
   document.getElementById('sTexto').value='';
-  document.getElementById('msgS').textContent='Guardado con amor ♥ gracias por escribir';
+  toast('msgS','Guardado con amor ♥ y si quieres que él lo vea, mándalo por WhatsApp');
 }
-pintarIdeas();
+pintarIdeas(); pintarEv();
 
-// fondo estrellado
+// fondo estrellado (respeta reduced-motion)
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const cv=document.getElementById('stars'),ctx=cv.getContext('2d');let W,H,s=[];
-function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight;s=Array.from({length:140},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+.3,v:Math.random()*.4+.1}))}
+function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight;s=Array.from({length:innerWidth<600?80:140},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+.3,v:Math.random()*.4+.1}))}
 rs();addEventListener('resize',rs);
-(function l(){ctx.clearRect(0,0,W,H);s.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle='rgba(233,207,154,.7)';ctx.fill();p.y+=p.v;if(p.y>H)p.y=0});requestAnimationFrame(l)})();
+if(!reduce){ (function l(){ctx.clearRect(0,0,W,H);s.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle='rgba(233,207,154,.7)';ctx.fill();p.y+=p.v;if(p.y>H)p.y=0});requestAnimationFrame(l)})(); }
+else { ctx.clearRect(0,0,W,H); s.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle='rgba(233,207,154,.7)';ctx.fill();}); }
 </script>
 </body>
 </html>
