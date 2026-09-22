@@ -38,13 +38,13 @@ h1 em{color:var(--dorado2);font-style:italic}
 .historia a:hover{color:#fff}
 .bienvenida{background:rgba(255,255,255,.032);border-left:3px solid var(--dorado);border-radius:0 var(--radio) var(--radio) 0;padding:1.25rem 1.35rem;margin:1.2rem 0;font-style:italic;line-height:1.75}
 .bienvenida h2{font-family:'Italiana',serif;font-weight:400;font-size:1.35rem;margin-bottom:.5rem;font-style:normal;letter-spacing:.02em}
-/* tabs sticky */
-nav.tabs{position:sticky;top:.6rem;z-index:5;display:flex;gap:.55rem;justify-content:center;margin:1.1rem 0;padding:.55rem;background:rgba(14,13,18,.82);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid var(--borde);border-radius:100px;flex-wrap:wrap}
-nav.tabs button{background:transparent;border:1px solid transparent;color:var(--tinta);border-radius:100px;padding:.65rem 1.3rem;cursor:pointer;font-family:'Italiana',serif;letter-spacing:.12em;text-transform:uppercase;font-size:.83rem;min-height:44px;transition:.2s}
-nav.tabs button:hover{border-color:var(--dorado);color:var(--dorado2)}
-nav.tabs button.activo{background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;border-color:transparent;font-weight:400}
+/* tabs - caja elegante que se va al hacer scroll */
+nav.tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;max-width:560px;margin:1.2rem auto;padding:5px;background:rgba(0,0,0,.38);border:1px solid var(--borde);border-radius:18px}
+nav.tabs button{background:transparent;border:none;color:var(--tinta-dim);border-radius:13px;padding:.85rem .4rem;cursor:pointer;font-family:'Italiana',serif;letter-spacing:.1em;text-transform:uppercase;font-size:.82rem;min-height:48px;transition:.22s;line-height:1.2}
+nav.tabs button:hover{color:var(--dorado2);background:rgba(201,169,106,.1)}
+nav.tabs button.activo{background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;box-shadow:0 6px 20px rgba(201,169,106,.35)}
 nav.tabs button:focus-visible{outline:none;box-shadow:var(--foco)}
-nav.tabs .n{opacity:.65;font-size:.78em;margin-left:.3em}
+nav.tabs .n{display:block;font-family:'Cormorant Garamond',serif;font-size:.78rem;letter-spacing:.05em;opacity:.75;text-transform:none;margin-top:.1rem}
 /* cards */
 .grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1.2rem}
 @media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
@@ -101,11 +101,11 @@ nav.tabs .n{opacity:.65;font-size:.78em;margin-left:.3em}
 .empty{font-style:italic;color:var(--tinta-dim);margin-top:1rem;text-align:center;border:1px dashed rgba(201,169,106,.3);border-radius:var(--radio);padding:1.2rem}
 footer{text-align:center;margin-top:3rem;font-style:italic;color:var(--tinta-dim)}
 footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
-.foto-wrap{display:flex;justify-content:center;margin:1.3rem 0 .3rem}
-.foto-marco{width:210px;background:#f5ecd8;border-radius:12px;padding:8px 8px 10px;box-shadow:var(--sombra),0 0 0 1px rgba(201,169,106,.5);transform:rotate(-2.5deg);transition:.25s;position:relative}
+.foto-wrap{display:flex;justify-content:center;margin:1.4rem 0 .4rem}
+.foto-marco{width:min(260px,72vw);background:linear-gradient(180deg,#fbf3df,#f0dfbe);border-radius:14px;padding:10px 10px 12px;box-shadow:0 20px 60px rgba(0,0,0,.6),0 0 0 1px rgba(201,169,106,.65),0 0 32px rgba(201,169,106,.22);transform:rotate(-2.5deg);transition:.25s;position:relative}
 .foto-marco:hover{transform:rotate(0deg) scale(1.03)}
-.foto-marco img{width:100%;height:230px;object-fit:cover;border-radius:8px;display:block}
-.foto-marco figcaption{text-align:center;color:#5b4a3a;font-style:italic;font-size:.92rem;margin-top:.45rem}
+.foto-marco img{width:100%;height:290px;object-fit:cover;border-radius:9px;display:block;background:#222}
+.foto-marco figcaption{text-align:center;color:#5b4a3a;font-style:italic;font-size:.95rem;margin-top:.5rem}
 .foto-marco::after{content:'♥';position:absolute;top:-12px;right:-10px;background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;box-shadow:0 5px 15px rgba(0,0,0,.4)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
@@ -119,7 +119,7 @@ footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
 <h1>Para <em>ella</em> ♥</h1>
 <p class="sub">donde guardo cada poema que te escribo</p>
 <div><span class="contador" id="contador">juntos desde el día del sí ♥</span></div>
-<figure class="foto-wrap"><div class="foto-marco"><img src="foto-nosotros.jpg" alt="Nosotros juntos ♥" loading="lazy"><figcaption>nosotros ♥ 04 · 09 · 2026</figcaption></div></figure>
+<figure class="foto-wrap"><div class="foto-marco"><img src="foto-nosotros.jpg?v=5" alt="Nosotros juntos ♥" fetchpriority="high" decoding="async" onerror="this.style.display='none'"><figcaption>nosotros ♥ 04 · 09 · 2026</figcaption></div></figure>
 </header>
 
 <div class="historia">
@@ -142,9 +142,9 @@ Si te quedas, arde.</p>
 </div>
 
 <nav class="tabs" aria-label="Secciones">
-<button id="tabPoemas" class="activo" onclick="mostrar('poemas')">Poemas <span class="n" id="nPoemas"></span></button>
-<button id="tabEventos" onclick="mostrar('eventos')">Eventos <span class="n" id="nEv"></span></button>
-<button id="tabIdeas" onclick="mostrar('ideas')">Ideas <span class="n" id="nIdeas"></span></button>
+<button id="tabPoemas" class="activo" onclick="mostrar('poemas')">♥ Poemas <span class="n" id="nPoemas"></span></button>
+<button id="tabEventos" onclick="mostrar('eventos')">✦ Eventos <span class="n" id="nEv"></span></button>
+<button id="tabIdeas" onclick="mostrar('ideas')">✉ Ideas <span class="n" id="nIdeas"></span></button>
 </nav>
 
 <section id="secPoemas" aria-label="Poemas">
@@ -189,7 +189,7 @@ Si te quedas, arde.</p>
 <textarea id="eDesc" placeholder="Ej. Llevo flores, playlist y tu chocolate favorito…" style="min-height:80px"></textarea>
 <button class="btn" onclick="agregarEvento()">Guardar evento ♥</button>
 <div id="msgE" class="msg" aria-live="polite"></div>
-<div class="hint">💡 <b>¿Por qué no lo ve el otro?</b> Esto se guarda solo en este navegador. Para compartirlo, usa <b>WhatsApp</b> en cada tarjeta o el botón de <b>Google Calendar</b>. Así sí le llega, amor.</div>
+<div class="hint">💡 <b>Dos tipos:</b> ♥ <b>en la página</b> = lo vemos los dos siempre (dime y yo lo fijo). <b>Solo en este dispositivo</b> = es tu borrador. Para pasarlo al otro usa <b>WhatsApp</b> o <b>Google Calendar</b>.</div>
 </div>
 <div id="listaEv"></div>
 </section>
@@ -211,7 +211,7 @@ Si te quedas, arde.</p>
 <textarea id="sTexto" placeholder="Escribe aquí con el corazón…&#10;Ej: Amor, hoy pensé en ti cuando vi la luna… Me encantaría que fuéramos por un helado y miráramos las estrellas juntos ♥"></textarea>
 <button class="btn" onclick="agregarIdea()">Guardar con amor ♥</button>
 <div id="msgS" class="msg" aria-live="polite"></div>
-<div class="hint">💌 Se guarda en este dispositivo con amor. Si quieres que <b>él lo vea</b>, toca <b>Enviar por WhatsApp ♥</b> en tu tarjeta. Así le llega al instante.</div>
+<div class="hint">💌 Lo que guardas aquí es borrador en este celular. Si quieres que quede <b>fijo en la página para los dos</b>, mándamelo por <b>WhatsApp ♥</b> y yo lo publico. Lo fijo sale con ♥ en la página.</div>
 </div>
 <div id="listaIdeas"></div>
 </section>
@@ -280,7 +280,7 @@ function agregar(){
 }
 pintar();
 
-// --- TABS con hash ---
+// --- TABS con hash (sin sticky, se va al hacer scroll) ---
 function mostrar(cual){
   document.getElementById('secPoemas').style.display = cual==='poemas'?'block':'none';
   document.getElementById('secEventos').style.display = cual==='eventos'?'block':'none';
@@ -291,10 +291,14 @@ function mostrar(cual){
   if(('#'+cual)!==location.hash){ history.replaceState(null,'','#'+cual); }
   if(cual==='eventos') pintarEv();
   if(cual==='ideas') pintarIdeas();
-  window.scrollTo({top:document.querySelector('nav.tabs').offsetTop-70,behavior:'smooth'});
 }
 (function initTab(){ const h=(location.hash||'').replace('#',''); if(['poemas','eventos','ideas'].includes(h)) mostrar(h); })();
 
+// --- EVENTOS FIJOS EN LA PÁGINA (los ve todo el mundo) ---
+// Para fijar uno para siempre, dime "fija este evento: ..." y yo lo agrego aquí y lo publico ♥
+const EVENTOS_FIJOS = [
+{titulo:"Nuestra noche de estrellas ♥", fecha:"2026-09-27", horaI:"19:00", horaF:"21:30", lugar:"Mirador", desc:"Primera cita oficial: helado, playlist y mirarnos hasta que el silencio aprenda tu nombre.", fijo:true}
+];
 // --- EVENTOS + GOOGLE CALENDAR + WHATSAPP ---
 function cargarEv(){ const g=store.get('eventos-ella', []); return Array.isArray(g)?g:[]; }
 function guardarEv(l){ if(!store.set('eventos-ella', l)) toast('msgE','⚠️ No se pudo guardar en este navegador ♥'); }
@@ -310,14 +314,16 @@ function waEvento(ev){
 }
 function pintarEv(){
   const c=document.getElementById('listaEv');
-  c.innerHTML = eventos.length?'':'<div class="empty">Aún no hay eventos. Crea el primero, amor ♥<br>Ej. “Picnic bajo la luna este sábado”.</div>';
-  eventos.forEach((ev,i)=>{
+  const todos=[...EVENTOS_FIJOS.map(e=>({...e,esFijo:true})),...eventos.map(e=>({...e,esFijo:false}))];
+  c.innerHTML = todos.length?'':'<div class="empty">Aún no hay eventos. Crea el primero, amor ♥<br>Ej. “Picnic bajo la luna este sábado”.</div>';
+  todos.forEach((ev)=>{
     const d=document.createElement('div'); d.className='ev';
-    d.innerHTML=`<h3>${esc(ev.titulo)}</h3><div class="cuando">${esc(fmtFecha(ev.fecha))} · ${esc(ev.horaI)}–${esc(ev.horaF)}${ev.lugar?' · '+esc(ev.lugar):''}</div><div class="desc">${esc(ev.desc||'')}</div><div class="acciones"><a class="pill" target="_blank" rel="noopener" href="${gcalLink(ev)}">＋ Google Calendar</a><a class="pill wa" target="_blank" rel="noopener" href="${waEvento(ev)}">Enviar por WhatsApp ♥</a><button class="borrar" data-i="${i}">borrar</button></div>`;
-    d.querySelector('.borrar').onclick=()=>{ eventos.splice(i,1); guardarEv(eventos); pintarEv(); };
+    const badge=ev.esFijo?'<div class="tipo" style="display:inline-block;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dorado2);border:1px solid rgba(201,169,106,.5);border-radius:100px;padding:.22rem .8rem;margin:.4rem 0">♥ en la página</div>':'<div class="tipo" style="display:inline-block;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-dim);border:1px dashed rgba(236,226,204,.35);border-radius:100px;padding:.22rem .8rem;margin:.4rem 0">solo en este dispositivo</div>';
+    d.innerHTML=`<h3>${esc(ev.titulo)}</h3>${badge}<div class="cuando">${esc(fmtFecha(ev.fecha))} · ${esc(ev.horaI)}–${esc(ev.horaF)}${ev.lugar?' · '+esc(ev.lugar):''}</div><div class="desc">${esc(ev.desc||'')}</div><div class="acciones"><a class="pill" target="_blank" rel="noopener" href="${gcalLink(ev)}">＋ Google Calendar</a><a class="pill wa" target="_blank" rel="noopener" href="${waEvento(ev)}">Enviar por WhatsApp ♥</a>${ev.esFijo?'':'<button class="borrar">borrar</button>'}</div>`;
+    if(!ev.esFijo){ d.querySelector('.borrar').onclick=()=>{ const idx=eventos.findIndex(x=>x.titulo===ev.titulo&&x.fecha===ev.fecha); if(idx>-1) eventos.splice(idx,1); guardarEv(eventos); pintarEv(); }; }
     c.appendChild(d);
   });
-  const n=document.getElementById('nEv'); if(n) n.textContent=`(${eventos.length})`;
+  const n=document.getElementById('nEv'); if(n) n.textContent=`(${todos.length})`;
 }
 function agregarEvento(){
   const t=document.getElementById('eTitulo').value.trim();
@@ -333,6 +339,11 @@ function agregarEvento(){
   toast('msgE','Guardado ♥ y si quieres compartirlo, usa WhatsApp en la tarjeta');
 }
 
+// --- IDEAS FIJAS EN LA PÁGINA (las ve todo el mundo) ---
+// Para fijar una para siempre, dime "fija esta idea: ..." y yo la agrego aquí y la publico ♥
+const IDEAS_FIJAS = [
+{nombre:"Oscar ♥", tipo:"💌 Mensaje bonito", texto:"Cindy, esta cajita es tuya. Escríbeme aquí tus ideas y yo las convierto en planes. Todo lo tuyo florece aquí.", fecha:"2026-09-22", fijo:true}
+];
 // --- CAJA DE IDEAS Y MENSAJES + WHATSAPP ---
 function cargarIdeas(){ const g=store.get('ideas-ella', []); return Array.isArray(g)?g:[]; }
 function guardarIdeas(l){ if(!store.set('ideas-ella', l)) toast('msgS','⚠️ No se pudo guardar en este navegador ♥'); }
@@ -343,14 +354,16 @@ function waIdea(it){
 }
 function pintarIdeas(){
   const c=document.getElementById('listaIdeas'); if(!c) return;
-  c.innerHTML = ideas.length?'':'<div class="empty">Aún no hay mensajitos. Sé la primera en dejar uno, amor ♥<br>Ej. “Amor, ¿vamos por helado y vemos estrellas?”</div>';
-  ideas.forEach((it,i)=>{
+  const todos=[...IDEAS_FIJAS.map(x=>({...x,esFijo:true})),...ideas.map(x=>({...x,esFijo:false}))];
+  c.innerHTML = todos.length?'':'<div class="empty">Aún no hay mensajitos. Sé la primera en dejar uno, amor ♥<br>Ej. “Amor, ¿vamos por helado y vemos estrellas?”</div>';
+  todos.forEach((it)=>{
     const d=document.createElement('div'); d.className='idea';
-    d.innerHTML=`<h3>${esc(it.nombre||'Ella ♥')}</h3><div class="tipo">${esc(it.tipo||'💌 Mensaje bonito')}</div><div class="cuando">${esc(fmtFecha(it.fecha))}</div><div class="texto">${esc(it.texto||'')}</div><div class="acciones"><a class="pill wa" target="_blank" rel="noopener" href="${waIdea(it)}">Enviar por WhatsApp ♥</a><button class="borrar" data-i="${i}">borrar</button></div>`;
-    d.querySelector('.borrar').onclick=()=>{ ideas.splice(i,1); guardarIdeas(ideas); pintarIdeas(); };
+    const badge=it.esFijo?'<div class="cuando">♥ fijo en la página · '+esc(fmtFecha(it.fecha))+'</div>':'<div class="cuando">solo en este dispositivo · '+esc(fmtFecha(it.fecha))+'</div>';
+    d.innerHTML=`<h3>${esc(it.nombre||'Ella ♥')}</h3><div class="tipo">${esc(it.tipo||'💌 Mensaje bonito')}</div>${badge}<div class="texto">${esc(it.texto||'')}</div><div class="acciones"><a class="pill wa" target="_blank" rel="noopener" href="${waIdea(it)}">Enviar por WhatsApp ♥</a>${it.esFijo?'':'<button class="borrar">borrar</button>'}</div>`;
+    if(!it.esFijo){ d.querySelector('.borrar').onclick=()=>{ const idx=ideas.findIndex(x=>x.texto===it.texto&&x.fecha===it.fecha); if(idx>-1) ideas.splice(idx,1); guardarIdeas(ideas); pintarIdeas(); }; }
     c.appendChild(d);
   });
-  const n=document.getElementById('nIdeas'); if(n) n.textContent=`(${ideas.length})`;
+  const n=document.getElementById('nIdeas'); if(n) n.textContent=`(${todos.length})`;
 }
 function agregarIdea(){
   const n=document.getElementById('sNombre').value.trim()||'Ella ♥';
