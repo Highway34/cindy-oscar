@@ -130,7 +130,7 @@ footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
 <div class="pret">✦ Nuestro rincón ✦</div>
 <h1>Cindy <em>&</em> Oscar ♥</h1>
 <p class="sub">nuestro blog ♥</p>
-<div><span class="contador" id="contador">nuestras historias, poemas y planes ♥</span></div>
+<div><span class="contador" id="contador">desde el 18 sep ♥</span></div>
 <div><span class="nube" id="nubeEstado">♥ guardado en esta página + este dispositivo</span>
 <div class="nube-wrap"><details class="nube-cfg" id="nubeCfg">
 <summary>☁ activar blog compartido (ver en ambos lados)</summary>
@@ -150,9 +150,9 @@ footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
 </header>
 
 <div class="historia">
-<p>Todo empezó con <strong>El jardín nocturno</strong>… me dijiste que <strong>SÍ</strong> y ahora somos novios.</p>
-<p style="margin-top:.6rem">Este blog es para ti: aquí agregaré poemas, cartas y recuerdos. Incluye el que ya te hice:</p>
-<p style="margin-top:.8rem"><a href="poema-jardin-nocturno.html">→ Abrir el poema original “El jardín nocturno”</a></p>
+<p>Este es <strong>nuestro blog</strong> ♥ aquí guardamos poemas, planes y recuerdos.</p>
+<p style="margin-top:.6rem">Empieza por el primero que te hice:</p>
+<p style="margin-top:.8rem"><a href="poema-jardin-nocturno.html">→ Abrir el poema “El jardín nocturno”</a></p>
 </div>
 
 <div class="bienvenida">
@@ -299,6 +299,24 @@ function pintar(){
   });
   const np=document.getElementById('nPoemas'); if(np) np.textContent=`(${todos.length})`;
 }
+// --- CONTADOR desde 18 sep: meses · días · minutos ---
+function actualizarContador(){
+  try{
+    const inicio=new Date('2026-09-18T00:00:00'); const ahora=new Date();
+    let diff=Math.max(0,ahora-inicio);
+    const minTotal=Math.floor(diff/60000);
+    const diasTotal=Math.floor(diff/86400000);
+    // meses calendario
+    let meses=(ahora.getFullYear()-inicio.getFullYear())*12+(ahora.getMonth()-inicio.getMonth());
+    if(ahora.getDate()<inicio.getDate()) meses--;
+    meses=Math.max(0,meses);
+    const ref=new Date(inicio); ref.setMonth(inicio.getMonth()+meses);
+    let dias=Math.floor((ahora-ref)/86400000); if(dias<0) dias=0;
+    const el=document.getElementById('contador'); if(!el) return;
+    el.textContent=`desde el 18 sep ♥ ${meses} ${meses===1?'mes':'meses'} · ${dias} ${dias===1?'día':'días'} · ${minTotal.toLocaleString('es')} min`;
+  }catch(e){}
+}
+actualizarContador(); setInterval(actualizarContador,30000);
 function abrir(i){
   const todos = todosPoemas();
   const p = todos[i]; if(!p) return;
