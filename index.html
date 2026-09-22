@@ -101,6 +101,12 @@ nav.tabs .n{opacity:.65;font-size:.78em;margin-left:.3em}
 .empty{font-style:italic;color:var(--tinta-dim);margin-top:1rem;text-align:center;border:1px dashed rgba(201,169,106,.3);border-radius:var(--radio);padding:1.2rem}
 footer{text-align:center;margin-top:3rem;font-style:italic;color:var(--tinta-dim)}
 footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
+.foto-wrap{display:flex;justify-content:center;margin:1.3rem 0 .3rem}
+.foto-marco{width:210px;background:#f5ecd8;border-radius:12px;padding:8px 8px 10px;box-shadow:var(--sombra),0 0 0 1px rgba(201,169,106,.5);transform:rotate(-2.5deg);transition:.25s;position:relative}
+.foto-marco:hover{transform:rotate(0deg) scale(1.03)}
+.foto-marco img{width:100%;height:230px;object-fit:cover;border-radius:8px;display:block}
+.foto-marco figcaption{text-align:center;color:#5b4a3a;font-style:italic;font-size:.92rem;margin-top:.45rem}
+.foto-marco::after{content:'♥';position:absolute;top:-12px;right:-10px;background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;box-shadow:0 5px 15px rgba(0,0,0,.4)}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -113,6 +119,7 @@ footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
 <h1>Para <em>ella</em> ♥</h1>
 <p class="sub">donde guardo cada poema que te escribo</p>
 <div><span class="contador" id="contador">juntos desde el día del sí ♥</span></div>
+<figure class="foto-wrap"><div class="foto-marco"><img src="foto-nosotros.jpg" alt="Nosotros juntos ♥" loading="lazy"><figcaption>nosotros ♥ 04 · 09 · 2026</figcaption></div></figure>
 </header>
 
 <div class="historia">
