@@ -37,6 +37,14 @@ h1 em{color:var(--dorado2);font-style:italic}
 .contador{margin:1.1rem auto 0;display:inline-block;border:1px solid rgba(201,169,106,.45);border-radius:100px;padding:.6rem 1.5rem;font-style:italic;background:rgba(201,169,106,.1);font-size:1.02rem}
 .nube{display:inline-block;margin:.6rem auto 0;font-style:italic;font-size:.92rem;color:var(--tinta-dim);border:1px dashed rgba(201,169,106,.4);border-radius:100px;padding:.35rem 1rem}
 .nube.on{color:var(--menta);border-color:rgba(143,208,179,.55)}
+.nube-wrap{margin-top:.6rem}
+details.nube-cfg{display:inline-block;text-align:left;font-style:normal;max-width:560px;margin:.5rem auto 0;font-size:.95rem}
+details.nube-cfg summary{cursor:pointer;font-style:italic;color:var(--tinta-dim);border:1px dashed rgba(201,169,106,.4);border-radius:100px;padding:.35rem 1rem;display:inline-block;min-height:36px}
+details.nube-cfg summary:hover{color:var(--dorado2);border-color:var(--dorado2)}
+.nube-box{margin-top:.6rem;background:rgba(0,0,0,.35);border:1px solid var(--borde);border-radius:12px;padding:.9rem}
+.nube-box textarea{width:100%;min-height:90px;background:var(--fondo2);border:1px solid rgba(201,169,106,.35);color:var(--tinta);border-radius:10px;padding:.7rem;font-family:monospace;font-size:.82rem}
+.nube-box .row{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.6rem}
+.nube-box .pill{font-size:.85rem;min-height:38px;padding:.45rem .9rem}
 .historia{background:linear-gradient(180deg, rgba(28,24,38,.94), rgba(14,13,18,.97));border:1px solid rgba(201,169,106,.35);border-radius:var(--radio);padding:1.5rem 1.4rem;margin:1.4rem 0;text-align:center;box-shadow:var(--sombra)}
 .historia a{color:var(--dorado2);text-underline-offset:3px}
 .historia a:hover{color:#fff}
@@ -123,7 +131,21 @@ footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
 <h1>Para <em>ella</em> ♥</h1>
 <p class="sub">donde guardo cada poema que te escribo</p>
 <div><span class="contador" id="contador">juntos desde el día del sí ♥</span></div>
-<div><span class="nube" id="nubeEstado">♥ guardado en esta página + este dispositivo</span></div>
+<div><span class="nube" id="nubeEstado">♥ guardado en esta página + este dispositivo</span>
+<div class="nube-wrap"><details class="nube-cfg" id="nubeCfg">
+<summary>☁ activar blog compartido (ver en ambos lados)</summary>
+<div class="nube-box">
+<div style="font-style:italic;color:var(--tinta-dim);margin-bottom:.5rem">Pega 1 vez en cada celular la config de Firebase y listo: poemas, eventos e ideas se guardan ☁ para los dos. Sin config, sigue guardando local + WhatsApp.</div>
+<textarea id="fCfg" placeholder='Pega aquí tu firebaseConfig JSON, ej: {"apiKey":"...","authDomain":"...","projectId":"...","appId":"..."}'></textarea>
+<div class="row">
+<button class="pill" onclick="guardarCfg()">☁ Activar nube ♥</button>
+<button class="pill" onclick="probarNube()">Probar conexión</button>
+<button class="pill" onclick="borrarCfg()" style="opacity:.7">Desactivar</button>
+</div>
+<div id="msgNube" class="msg"></div>
+<div style="font-style:italic;font-size:.85rem;opacity:.75;margin-top:.4rem">Cómo conseguirla: Firebase Console → Crear proyecto “cindy-oscar” → Build → Firestore Database → Crear base en modo producción → Web &lt;/&gt; → copiar firebaseConfig. Reglas: allow read, write: if true (solo Uds. tienen el link).</div>
+</div>
+</details></div></div>
 <figure class="foto-wrap"><div class="foto-marco"><img src="foto-nosotros.jpg?v=5" alt="Nosotros juntos ♥" fetchpriority="high" decoding="async" onerror="this.style.display='none'"><figcaption>nosotros ♥ 04 · 09 · 2026</figcaption></div></figure>
 </header>
 
@@ -164,7 +186,7 @@ Si te quedas, arde.</p>
 
 <div class="form">
 <h2>✦ Agregar nuevo poema</h2>
-<p>Escríbelo aquí y se guarda en este dispositivo. Si quieres que quede fijo para siempre en la web, avísame y lo publico por ti.</p>
+<p>Escríbelo aquí. Con la nube ☁ activada se guarda para los dos, si no, en este dispositivo.</p>
 <label class="lbl" for="fTitulo">Título</label>
 <input id="fTitulo" placeholder="Ej. Luna de septiembre" autocomplete="off">
 <label class="lbl" for="fFecha">Fecha</label>
@@ -244,30 +266,43 @@ function fmtFecha(f){
 }
 function toast(id, txt){ const el=document.getElementById(id); if(el) el.textContent=txt; }
 
-function cargar(){ const g = store.get('poemas-ella', null); if(Array.isArray(g)&&g.length) return g; return DEFAULT; }
+function cargar(){ const g = store.get('poemas-ella', null); if(Array.isArray(g)&&g.length) return g; return []; }
 function guardar(l){ if(!store.set('poemas-ella', l)) toast('msg','⚠️ Este navegador no deja guardar. Usa WhatsApp para no perderlo ♥'); }
 let lista = cargar();
+var poemasNube = [];
+
+function todosPoemas(){
+  const fijos = DEFAULT.map(p=>({...p,origen:'fijo'}));
+  const nubeArr = (typeof poemasNube!=='undefined'?poemasNube:[]).map(p=>({...p,origen:'nube'}));
+  const loc = lista.map(p=>({...p,origen:'local'}));
+  return [...fijos,...nubeArr,...loc];
+}
 
 function pintar(){
   const c = document.getElementById('lista'); c.innerHTML='';
-  lista.forEach((p,i)=>{
+  const todos = todosPoemas();
+  todos.forEach((p)=>{
     const d=document.createElement('div'); d.className='card'; d.tabIndex=0;
     d.setAttribute('role','button'); d.setAttribute('aria-label','Leer '+p.titulo);
-    d.innerHTML=`<h3>${esc(p.titulo)}</h3><div class="fecha">${esc(fmtFecha(p.fecha))}</div><p>${esc((p.texto||'').slice(0,110))}…</p><span class="ver">leer ♥</span>${p.fijo?'':'<br><button class="borrar" data-i="'+i+'">borrar</button>'}`;
-    const open=()=>abrir(i);
-    d.onclick=(e)=>{ if(e.target.classList.contains('borrar')){ lista.splice(+e.target.dataset.i,1); guardar(lista); pintar(); return;} open(); };
+    const badge = p.origen==='fijo' ? '<span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dorado2)">♥ en la página</span>' : p.origen==='nube' ? '<span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--menta)">☁ compartido</span>' : '<span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.6">solo este dispositivo</span>';
+    d.innerHTML=`<h3>${esc(p.titulo)}</h3><div class="fecha">${esc(fmtFecha(p.fecha))} · ${badge}</div><p>${esc((p.texto||'').slice(0,110))}…</p><span class="ver">leer ♥</span>${(p.origen==='local'||p.origen==='nube')?'<br><button class="borrar">borrar</button>':''}`;
+    const idxReal = p.origen==='local' ? lista.findIndex(x=>(x.lid||x.titulo+x.fecha)===(p.lid||p.titulo+p.fecha)) : -1;
+    const open=()=>{ document.getElementById('vTitulo').textContent=p.titulo; document.getElementById('vFecha').textContent=fmtFecha(p.fecha); document.getElementById('vTexto').textContent=p.texto; document.getElementById('visor').style.display='block'; document.getElementById('visor').scrollIntoView({behavior:'smooth',block:'center'}); };
+    d.onclick=(e)=>{ if(e.target.classList.contains('borrar')){ if(p.origen==='local'){ if(idxReal>-1) lista.splice(idxReal,1); guardar(lista); pintar(); } else if(p.origen==='nube'){ nubeDel('poemas', p.id); } return;} open(); };
     d.onkeydown=(e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } };
     c.appendChild(d);
   });
-  const np=document.getElementById('nPoemas'); if(np) np.textContent=`(${lista.length})`;
+  const np=document.getElementById('nPoemas'); if(np) np.textContent=`(${todos.length})`;
   const inicio = new Date('2026-09-22T12:00:00'); const hoy = new Date();
   const dias = Math.max(0, Math.floor((hoy-inicio)/86400000));
   document.getElementById('contador').textContent = dias===0 ? 'juntos desde hoy ♥ el día del sí' : dias===1 ? 'juntos hace 1 día ♥' : `juntos hace ${dias} días ♥`;
 }
 function abrir(i){
-  document.getElementById('vTitulo').textContent = lista[i].titulo;
-  document.getElementById('vFecha').textContent = fmtFecha(lista[i].fecha);
-  document.getElementById('vTexto').textContent = lista[i].texto;
+  const todos = todosPoemas();
+  const p = todos[i]; if(!p) return;
+  document.getElementById('vTitulo').textContent = p.titulo;
+  document.getElementById('vFecha').textContent = fmtFecha(p.fecha);
+  document.getElementById('vTexto').textContent = p.texto;
   document.getElementById('visor').style.display='block';
   document.getElementById('visor').scrollIntoView({behavior:'smooth',block:'center'});
 }
@@ -278,10 +313,10 @@ function agregar(){
   const f=document.getElementById('fFecha').value || new Date().toISOString().slice(0,10);
   const x=document.getElementById('fTexto').value.trim();
   if(!t||!x){ toast('msg','Ponle título y poema ♥'); return; }
-  lista.unshift({titulo:t,fecha:f,texto:x});
-  guardar(lista); pintar();
+  const obj={titulo:t,fecha:f,texto:x,lid:'L'+Date.now()};
+  if(nube.on){ nubeAdd('poemas', obj).then(()=>{ toast('msg','Guardado en el blog compartido ☁♥ ya lo ven los dos'); }); }
+  else{ lista.unshift(obj); guardar(lista); pintar(); toast('msg','Guardado en este dispositivo ♥ (activa la nube ☁ arriba para que lo vea ella)'); }
   document.getElementById('fTitulo').value=''; document.getElementById('fTexto').value='';
-  toast('msg','Guardado ♥ ya está en tu blog (en este dispositivo)');
 }
 pintar();
 
@@ -302,8 +337,7 @@ function mostrar(cual){
 // --- EVENTOS FIJOS EN LA PÁGINA (los ve todo el mundo) ---
 // Para fijar uno para siempre, dime "fija este evento: ..." y yo lo agrego aquí y lo publico ♥
 const EVENTOS_FIJOS = [
-{titulo:"Cine francés ♥ Cinemateca", fecha:"2026-09-25", horaI:"19:00", horaF:"21:00", lugar:"Cinemateca", desc:"Viernes 25: noche de cine francés juntos. Llegamos temprano, helado y mirarnos bonito en la oscuridad del cine.", fijo:true},
-{titulo:"Nuestra noche de estrellas ♥", fecha:"2026-09-27", horaI:"19:00", horaF:"21:30", lugar:"Mirador", desc:"Primera cita oficial: helado, playlist y mirarnos hasta que el silencio aprenda tu nombre.", fijo:true}
+{titulo:"Cine francés ♥ Cinemateca", fecha:"2026-09-25", horaI:"17:30", horaF:"19:30", lugar:"Cinemateca", desc:"Viernes 25 a las 5:30 pm: plan de cine francés juntos. Llegamos temprano, helado y mirarnos bonito en la oscuridad del cine.", fijo:true}
 ];
 // --- EVENTOS + GOOGLE CALENDAR + WHATSAPP ---
 function cargarEv(){ const g=store.get('eventos-ella', []); return Array.isArray(g)?g:[]; }
@@ -352,7 +386,7 @@ function agregarEvento(){
 // --- IDEAS FIJAS EN LA PÁGINA (las ve todo el mundo) ---
 // Para fijar una para siempre, dime "fija esta idea: ..." y yo la agrego aquí y la publico ♥
 const IDEAS_FIJAS = [
-{nombre:"Oscar ♥", tipo:"💌 Mensaje bonito", texto:"Cindy, esta cajita es tuya. Escríbeme aquí tus ideas y yo las convierto en planes. Todo lo tuyo florece aquí.", fecha:"2026-09-22", fijo:true}
+{nombre:"Oscar ♥", tipo:"💌 Mensaje bonito", texto:"Te quiero mi Condy", fecha:"2026-09-22", fijo:true}
 ];
 // --- CAJA DE IDEAS Y MENSAJES + WHATSAPP ---
 function cargarIdeas(){ const g=store.get('ideas-ella', []); return Array.isArray(g)?g:[]; }
@@ -393,42 +427,78 @@ function agregarIdea(){
 // NOTE: pintar inicial se llama después de init nube (abajo)
 
 // --- NUBE COMPARTIDA (Firebase, opcional) ---
-// Pega aquí tu config de Firebase para activar blog compartido real:
-// const FIREBASE_CONFIG = {apiKey:"...", authDomain:"...", projectId:"...", ...};
-const FIREBASE_CONFIG = null;
+// 1) hardcode aquí si quieres, o 2) pega 1 vez en la cajita ☁ de arriba (se guarda en localStorage)
+const FIREBASE_CONFIG_BUILT = null;
+function getCfg(){
+  if(FIREBASE_CONFIG_BUILT) return FIREBASE_CONFIG_BUILT;
+  try{ const s = localStorage.getItem('firebase-config'); if(s) return JSON.parse(s); }catch(e){}
+  return null;
+}
 const nube = {db:null, on:false};
+var eventosNube = [];
+var ideasNube = [];
 function nubeEstado(){
   const el=document.getElementById('nubeEstado'); if(!el) return;
   if(nube.on){ el.textContent='☁ blog compartido activado ♥ lo que escriban lo ven los dos'; el.classList.add('on'); }
-  else{ el.textContent='♥ guardado en esta página + este dispositivo'; el.classList.remove('on'); }
+  else{ el.textContent='♥ guardado en esta página + este dispositivo (activa ☁ arriba para ambos lados)'; el.classList.remove('on'); }
 }
-try{
-  if(FIREBASE_CONFIG && window.firebase){
-    firebase.initializeApp(FIREBASE_CONFIG);
-    nube.db = firebase.firestore();
-    nube.on = true;
-    // escucha en vivo: eventos e ideas compartidos
-    nube.db.collection('eventos').orderBy('creado','desc').onSnapshot(snap=>{
-      const arr=[]; snap.forEach(d=>arr.push({id:d.id,...d.data()}));
-      eventosNube = arr; pintarEv();
-    });
-    nube.db.collection('ideas').orderBy('creado','desc').onSnapshot(snap=>{
-      const arr=[]; snap.forEach(d=>arr.push({id:d.id,...d.data()}));
-      ideasNube = arr; pintarIdeas();
-    });
-  }
-}catch(e){ nube.on=false; }
-var eventosNube = [];
-var ideasNube = [];
+function initNube(){
+  const cfg = getCfg();
+  nube.on=false; nube.db=null;
+  try{
+    if(cfg && cfg.projectId && window.firebase){
+      if(!firebase.apps.length) firebase.initializeApp(cfg);
+      nube.db = firebase.firestore();
+      nube.on = true;
+      nube.db.collection('poemas').orderBy('creado','desc').onSnapshot(snap=>{
+        const arr=[]; snap.forEach(d=>arr.push({id:d.id,...d.data()}));
+        poemasNube = arr; pintar();
+      },()=>{});
+      nube.db.collection('eventos').orderBy('creado','desc').onSnapshot(snap=>{
+        const arr=[]; snap.forEach(d=>arr.push({id:d.id,...d.data()}));
+        eventosNube = arr; pintarEv();
+      },()=>{});
+      nube.db.collection('ideas').orderBy('creado','desc').onSnapshot(snap=>{
+        const arr=[]; snap.forEach(d=>arr.push({id:d.id,...d.data()}));
+        ideasNube = arr; pintarIdeas();
+      },()=>{});
+    }
+  }catch(e){ nube.on=false; }
+  nubeEstado();
+}
+function guardarCfg(){
+  const ta=document.getElementById('fCfg'); const msg=document.getElementById('msgNube');
+  try{
+    let txt=(ta.value||'').trim();
+    if(!txt){ if(msg) msg.textContent='Pega primero tu config ♥'; return; }
+    // permite pegar el objeto entero o solo el JSON
+    if(txt.includes('firebaseConfig')){ const m=txt.match(/\{[\s\S]*\}/); if(m) txt=m[0]; }
+    const cfg=JSON.parse(txt);
+    if(!cfg.projectId||!cfg.apiKey){ if(msg) msg.textContent='Esa config está incompleta ♥ falta apiKey/projectId'; return; }
+    localStorage.setItem('firebase-config', JSON.stringify(cfg));
+    if(msg) msg.textContent='☁ Config guardada… conectando ♥';
+    initNube();
+    setTimeout(()=>{ if(msg) msg.textContent = nube.on ? '☁ Conectado ♥ ya guardan en ambos lados' : '⚠️ No conectó. Revisa apiKey/projectId y reglas Firestore.'; },1500);
+  }catch(e){ if(msg) msg.textContent='⚠️ JSON inválido. Pega el objeto {apiKey…} tal cual lo da Firebase.'; }
+}
+function borrarCfg(){ localStorage.removeItem('firebase-config'); location.reload(); }
+async function probarNube(){
+  const msg=document.getElementById('msgNube');
+  if(!nube.on){ if(msg) msg.textContent='Nube apagada. Pega tu config y dale Activar.'; return; }
+  try{ await nube.db.collection('poemas').limit(1).get(); if(msg) msg.textContent='☁ Conexión OK ♥ ambos lados ven lo mismo'; }
+  catch(e){ if(msg) msg.textContent='⚠️ Error: revisa Reglas Firestore → allow read, write: if true; → '+String(e.code||e.message||e).slice(0,120); }
+}
 async function nubeAdd(col, obj){
   if(!nube.on) return null;
   try{ const r = await nube.db.collection(col).add({...obj, creado: Date.now()}); return r.id; }
-  catch(e){ return null; }
+  catch(e){ toast(col==='poemas'?'msg':col==='eventos'?'msgE':'msgS','⚠️ Nube falló, guardo local ♥'); if(col==='poemas'){lista.unshift(obj);guardar(lista);pintar();} if(col==='eventos'){eventos.unshift(obj);guardarEv(eventos);pintarEv();} if(col==='ideas'){ideas.unshift(obj);guardarIdeas(ideas);pintarIdeas();} return null; }
 }
 async function nubeDel(col, id){
   if(!nube.on || !id) return;
   try{ await nube.db.collection(col).doc(id).delete(); }catch(e){}
 }
+(function initCfgBox(){ try{ const s=localStorage.getItem('firebase-config'); if(s){ const t=document.getElementById('fCfg'); if(t) t.value=s; } }catch(e){} })();
+initNube();
 nubeEstado();
 pintarIdeas(); pintarEv();
 
