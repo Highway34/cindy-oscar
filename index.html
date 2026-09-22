@@ -245,7 +245,7 @@ Si te quedas, arde.</p>
 
 <footer><div class="orn">✦ ♥ ✦</div><div>Cindy & Oscar · hecho con amor, para siempre</div></footer>
 </div>
-<button id="musBtn" aria-label="Baby I'm Yours 8-bit" title="Baby I'm Yours 8-bit ♥">♪</button>
+<button id="musBtn" aria-label="Ambiente chill" title="Ambiente chill ♥">♪</button>
 <style>#musBtn{position:fixed;right:16px;bottom:16px;z-index:20;width:54px;height:54px;border-radius:50%;border:1px solid rgba(201,169,106,.6);background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;font-size:1.4rem;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.5);min-height:54px}#musBtn.on{box-shadow:0 0 0 3px rgba(233,207,154,.35),0 10px 30px rgba(0,0,0,.5)}#musBtn:focus-visible{outline:none;box-shadow:var(--foco)}</style>
 
 <script>
@@ -268,15 +268,18 @@ function fmtFecha(f){
 }
 function toast(id, txt){ const el=document.getElementById(id); if(el) el.textContent=txt; }
 
-function cargar(){ const g = store.get('poemas-ella', null); if(Array.isArray(g)&&g.length) return g; return []; }
+function esFijo(p){ return DEFAULT.some(d=>d.titulo===p.titulo && d.fecha===p.fecha); }
+function cargar(){ const g = store.get('poemas-ella', null); if(!Array.isArray(g)||!g.length) return []; const limpio=g.filter(p=>!esFijo(p)); if(limpio.length!==g.length){ try{localStorage.setItem('poemas-ella',JSON.stringify(limpio));}catch(e){} } return limpio; }
 function guardar(l){ if(!store.set('poemas-ella', l)) toast('msg','⚠️ Este navegador no deja guardar. Usa WhatsApp para no perderlo ♥'); }
 let lista = cargar();
 var poemasNube = [];
 
 function todosPoemas(){
-  const fijos = DEFAULT.map(p=>({...p,origen:'fijo'}));
-  const nubeArr = (typeof poemasNube!=='undefined'?poemasNube:[]).map(p=>({...p,origen:'nube'}));
-  const loc = lista.map(p=>({...p,origen:'local'}));
+  const seen=new Set();
+  const uniq=(arr)=>arr.filter(p=>{ const k=(p.titulo||'')+'|'+(p.fecha||''); if(seen.has(k)) return false; seen.add(k); return true; });
+  const fijos = uniq(DEFAULT.map(p=>({...p,origen:'fijo'})));
+  const nubeArr = uniq((typeof poemasNube!=='undefined'?poemasNube:[]).map(p=>({...p,origen:'nube'})));
+  const loc = uniq(lista.map(p=>({...p,origen:'local'})));
   return [...fijos,...nubeArr,...loc];
 }
 
@@ -504,35 +507,22 @@ initNube();
 nubeEstado();
 pintarIdeas(); pintarEv();
 
-// --- BABY I'M YOURS 8-BIT (Arctic Monkeys cover chiptune, sin internet) ---
+// --- AMBIENTE CHILL (pad suave, sin internet) ---
 let musCtx=null, musOn=false, musTimer=null;
-const N={A3:220,B3:246.94,D4:293.66,E4:329.63,Fs4:369.99,G4:392,A4:440,B4:493.88,D5:587.33,E5:659.25,Fs5:739.99,G5:783.99,D3:146.83,B2:123.47,E3:164.81,A2:110,G2:98,Fs3:185};
-// lead: Baby I'm yours... (D - B7 - Em - A)
-const MUS_LEAD=[
-[N.Fs4,1],[N.A4,1],[N.B4,1.5],[N.A4,.5],[N.Fs4,1],[N.E4,1],[N.D4,2],
-[N.D4,1],[N.E4,1],[N.Fs4,1.5],[N.E4,.5],[N.D4,1],[N.B3,1],[N.D4,2],
-[N.E4,1],[N.Fs4,1],[N.G4,1.5],[N.Fs4,.5],[N.E4,1],[N.D4,1],[N.B3,2],
-[N.A3,1],[N.B3,1],[N.D4,2],[N.E4,1],[N.Fs4,1],[N.E4,2],[N.D4,2]
-];
-const MUS_BASS=[N.D3,N.B2,N.E3,N.A2];
-function musNota8(f,t0,dur,tipo){
-  const o=musCtx.createOscillator(), g=musCtx.createGain();
-  o.type=tipo||'square'; o.frequency.value=f;
-  g.gain.setValueAtTime(0.0001,t0); g.gain.exponentialRampToValueAtTime(0.12,t0+0.02); g.gain.setValueAtTime(0.12,t0+dur*0.7); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
-  o.connect(g); g.connect(musCtx.destination); o.start(t0); o.stop(t0+dur+0.02);
+const MUS_PADS=[[293.66,369.99,440],[246.94,293.66,369.99],[329.63,392,493.88],[220,277.18,329.63]];
+function musPad(chord,t0,dur){
+  chord.forEach(f=>{
+    const o=musCtx.createOscillator(), g=musCtx.createGain();
+    o.type='sine'; o.frequency.value=f;
+    g.gain.setValueAtTime(0.0001,t0); g.gain.linearRampToValueAtTime(0.06,t0+1.2); g.gain.linearRampToValueAtTime(0.0001,t0+dur);
+    o.connect(g); g.connect(musCtx.destination); o.start(t0); o.stop(t0+dur+0.1);
+  });
 }
 function musLoop(){
   if(!musOn) return;
-  const BEAT=0.34;
-  let t0=musCtx.currentTime+0.06;
-  MUS_LEAD.forEach(([f,b])=>{ musNota8(f,t0,b*BEAT,'square'); t0+=b*BEAT; });
-  // bajo 8-bit acompañando
-  let tb=musCtx.currentTime+0.06;
-  const barDur=t0-(musCtx.currentTime+0.06);
-  const steps=4, each=barDur/steps;
-  MUS_BASS.forEach((f,i)=>musNota8(f,tb+i*each,each*0.9,'triangle'));
-  const total=(t0-musCtx.currentTime)*1000+150;
-  musTimer=setTimeout(musLoop, total);
+  const t0=musCtx.currentTime+0.1;
+  MUS_PADS.forEach((c,i)=>musPad(c,t0+i*4,4.5));
+  musTimer=setTimeout(musLoop, MUS_PADS.length*4000+500);
 }
 (function initMus(){
   const b=document.getElementById('musBtn'); if(!b) return;
