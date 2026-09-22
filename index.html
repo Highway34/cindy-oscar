@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nuestro Rincón ♥ Para Ella</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Italiana&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--fondo:#0e0d12;--tinta:#ece2cc;--dorado:#c9a96a;--dorado2:#e9cf9a;--vino:#8a2f44;--rosa:#d9a5b3}
+body{background:var(--fondo);color:var(--tinta);font-family:'Cormorant Garamond',serif;min-height:100vh}
+#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+.nebula{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(900px 600px at 20% 10%, rgba(138,47,68,.28), transparent 60%),radial-gradient(1000px 700px at 80% 20%, rgba(72,60,130,.35), transparent 60%),radial-gradient(800px 600px at 50% 100%, rgba(201,169,106,.14), transparent 60%)}
+.wrap{position:relative;z-index:1;max-width:820px;margin:0 auto;padding:2rem 1.2rem 4rem}
+header{text-align:center;padding:2.5rem 0 1.5rem}
+.pret{letter-spacing:.5em;text-transform:uppercase;font-size:.75rem;color:var(--dorado)}
+h1{font-family:'Italiana',serif;font-weight:400;font-size:clamp(2.2rem,7vw,3.8rem);margin:.8rem 0}
+h1 em{color:var(--dorado2);font-style:italic}
+.sub{font-style:italic;opacity:.7;font-size:1.2rem}
+.contador{margin:1.2rem auto;display:inline-block;border:1px solid rgba(201,169,106,.4);border-radius:100px;padding:.6rem 1.4rem;font-style:italic;background:rgba(201,169,106,.08)}
+.historia{background:linear-gradient(180deg, rgba(28,24,38,.94), rgba(14,13,18,.97));border:1px solid rgba(201,169,106,.35);border-radius:12px;padding:1.5rem;margin:1.5rem 0;text-align:center}
+.historia a{color:var(--dorado2)}
+.grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1.5rem}
+@media(min-width:640px){.grid{grid-template-columns:1fr 1fr}}
+.card{background:rgba(255,255,255,.03);border:1px solid rgba(201,169,106,.25);border-radius:12px;padding:1.3rem;cursor:pointer;transition:.25s}
+.card:hover{transform:translateY(-3px);border-color:var(--dorado);box-shadow:0 15px 40px rgba(0,0,0,.5)}
+.card h3{font-family:'Italiana',serif;font-weight:400;font-size:1.5rem}
+.card .fecha{font-size:.85rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dorado);margin:.3rem 0 .6rem}
+.card p{font-style:italic;opacity:.8;line-height:1.5}
+.card .ver{margin-top:.8rem;display:inline-block;font-size:.9rem;letter-spacing:.15em;text-transform:uppercase;color:var(--dorado2)}
+#visor{display:none;margin-top:1.5rem;background:#f5ecd8;color:#2b2135;border-radius:12px;padding:2rem 1.5rem;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+#visor h2{font-family:'Italiana',serif;font-weight:400;text-align:center;font-size:2rem}
+#visor .fecha-v{text-align:center;font-style:italic;opacity:.6;margin:.3rem 0 1rem}
+#visor .texto{white-space:pre-wrap;line-height:1.7;font-size:1.1rem;max-width:600px;margin:0 auto}
+#visor .cerrar{display:block;margin:1.5rem auto 0;background:transparent;border:1px solid #8a2f44;color:#8a2f44;border-radius:100px;padding:.6rem 1.8rem;cursor:pointer;font-family:inherit;font-style:italic}
+.form{background:rgba(201,169,106,.06);border:1px dashed rgba(201,169,106,.5);border-radius:12px;padding:1.5rem;margin-top:2rem}
+.form h2{font-family:'Italiana',serif;font-weight:400;font-size:1.6rem;margin-bottom:.3rem}
+.form p{font-style:italic;opacity:.7;margin-bottom:1rem}
+.form input,.form textarea{width:100%;background:#17131f;border:1px solid rgba(201,169,106,.35);color:var(--tinta);border-radius:8px;padding:.8rem;font-family:inherit;font-size:1rem;margin-bottom:.8rem}
+.form textarea{min-height:140px;resize:vertical}
+.form button{background:linear-gradient(180deg,var(--dorado2),var(--dorado));border:none;border-radius:100px;padding:.9rem 2rem;font-family:'Italiana',serif;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;color:#1a1420}
+.borrar{margin-top:.6rem;background:transparent;border:none;color:var(--rosa);cursor:pointer;font-style:italic;opacity:.7}
+footer{text-align:center;margin-top:3rem;font-style:italic;opacity:.6}
+</style>
+</head>
+<body>
+<canvas id="stars"></canvas>
+<div class="nebula"></div>
+<div class="wrap">
+<header>
+<div class="pret">✦ Nuestro rincón ✦</div>
+<h1>Para <em>ella</em> ♥</h1>
+<p class="sub">donde guardo cada poema que te escribo</p>
+<div><span class="contador" id="contador">juntos desde el día del sí ♥</span></div>
+</header>
+
+<div class="historia">
+<p>Todo empezó con <strong>El jardín nocturno</strong>… me dijiste que <strong>SÍ</strong> y ahora somos novios.</p>
+<p style="margin-top:.6rem">Este blog es para ti: aquí agregaré poemas, cartas y recuerdos. Incluye el que ya te hice:</p>
+<p style="margin-top:.8rem"><a href="poema-jardin-nocturno.html">→ Abrir el poema original “El jardín nocturno”</a></p>
+</div>
+
+<div class="grid" id="lista"></div>
+
+<div id="visor">
+<h2 id="vTitulo"></h2>
+<div class="fecha-v" id="vFecha"></div>
+<div class="texto" id="vTexto"></div>
+<button class="cerrar" onclick="cerrar()">cerrar ♥</button>
+</div>
+
+<div class="form">
+<h2>✦ Agregar nuevo poema</h2>
+<p>Escríbelo aquí y se guarda en este blog (en este celular/navegador). Mañana te enseño a hacerlo permanente.</p>
+<input id="fTitulo" placeholder="Título del poema… ej. Luna de septiembre">
+<input id="fFecha" type="date">
+<textarea id="fTexto" placeholder="Escribe tu poema aquí…"></textarea>
+<button onclick="agregar()">Guardar para ella ♥</button>
+<div id="msg" style="margin-top:.6rem;font-style:italic;color:var(--dorado2)"></div>
+</div>
+
+<footer>hecho con amor — mañana seguimos con Whop ♥</footer>
+</div>
+
+<script>
+const DEFAULT = [
+{titulo:"El jardín nocturno", fecha:"2026-09-18", texto:"Quizás el tiempo sea un jardín que se bifurca en tu mirada,\numbral de un laberinto donde me pierdo para encontrarte…\n\n(Poema completo en la página original → toca arriba “Abrir el poema original”)\n\nAmor, ¿si deshojamos juntos la eternidad?", fijo:true},
+{titulo:"Sí, somos novios", fecha:"2026-09-22", texto:"Me dijiste que sí.\nY el laberinto se volvió jardín,\nel insomnio se volvió calma,\ny la noche se volvió nuestra.\n\nEsto apenas empieza.", fijo:true}
+];
+
+function cargar(){
+  try{ const g = JSON.parse(localStorage.getItem('poemas-ella')||'null'); if(Array.isArray(g)&&g.length) return g; }catch(e){}
+  return DEFAULT;
+}
+function guardar(l){ localStorage.setItem('poemas-ella', JSON.stringify(l)); }
+let lista = cargar();
+
+function pintar(){
+  const c = document.getElementById('lista'); c.innerHTML='';
+  lista.forEach((p,i)=>{
+    const d=document.createElement('div'); d.className='card';
+    d.innerHTML=`<h3>${p.titulo}</h3><div class="fecha">${p.fecha||''}</div><p>${(p.texto||'').slice(0,110)}…</p><span class="ver">leer ♥</span>${p.fijo?'':'<br><button class="borrar" data-i="'+i+'">borrar</button>'}`;
+    d.onclick=(e)=>{ if(e.target.classList.contains('borrar')){ lista.splice(+e.target.dataset.i,1); guardar(lista); pintar(); return;} abrir(i); };
+    c.appendChild(d);
+  });
+  // contador de días desde el sí (22 sep 2026)
+  const inicio = new Date('2026-09-22'); const hoy = new Date();
+  const dias = Math.max(0, Math.floor((hoy-inicio)/86400000));
+  document.getElementById('contador').textContent = dias===0 ? 'juntos desde hoy ♥ el día del sí' : `juntos hace ${dias} día(s) ♥`;
+}
+function abrir(i){
+  document.getElementById('vTitulo').textContent = lista[i].titulo;
+  document.getElementById('vFecha').textContent = lista[i].fecha||'';
+  document.getElementById('vTexto').textContent = lista[i].texto;
+  document.getElementById('visor').style.display='block';
+  document.getElementById('visor').scrollIntoView({behavior:'smooth'});
+}
+function cerrar(){ document.getElementById('visor').style.display='none'; }
+function agregar(){
+  const t=document.getElementById('fTitulo').value.trim();
+  const f=document.getElementById('fFecha').value || new Date().toISOString().slice(0,10);
+  const x=document.getElementById('fTexto').value.trim();
+  if(!t||!x){ document.getElementById('msg').textContent='Ponle título y poema ♥'; return; }
+  lista.unshift({titulo:t,fecha:f,texto:x});
+  guardar(lista); pintar();
+  document.getElementById('fTitulo').value=''; document.getElementById('fTexto').value='';
+  document.getElementById('msg').textContent='Guardado ♥ ya está en tu blog';
+}
+pintar();
+
+// fondo estrellado
+const cv=document.getElementById('stars'),ctx=cv.getContext('2d');let W,H,s=[];
+function rs(){W=cv.width=innerWidth;H=cv.height=innerHeight;s=Array.from({length:140},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.5+.3,v:Math.random()*.4+.1}))}
+rs();addEventListener('resize',rs);
+(function l(){ctx.clearRect(0,0,W,H);s.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,7);ctx.fillStyle='rgba(233,207,154,.7)';ctx.fill();p.y+=p.v;if(p.y>H)p.y=0});requestAnimationFrame(l)})();
+</script>
+</body>
+</html>

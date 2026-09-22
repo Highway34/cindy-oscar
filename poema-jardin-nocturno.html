@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para ti — Haz clic para abrir</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Italiana&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--negro:#0e0d12;--tinta:#ece2cc;--dorado:#c9a96a;--dorado2:#e9cf9a;--vino:#8a2f44;--rosa:#d9a5b3}
+body{background:#0e0d12;color:var(--tinta);font-family:'Cormorant Garamond',serif;min-height:100vh;overflow-x:hidden;display:flex;align-items:center;justify-content:center;padding:2rem 1rem}
+#universo{position:fixed;inset:0;z-index:0}
+.nebula{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(900px 600px at 20% 10%, rgba(138,47,68,.28), transparent 60%),radial-gradient(1000px 700px at 80% 20%, rgba(72,60,130,.35), transparent 60%),radial-gradient(800px 600px at 50% 100%, rgba(201,169,106,.14), transparent 60%)}
+.vineta{position:fixed;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at center, transparent 45%, rgba(0,0,0,.65) 100%)}
+
+/* ===== INTRO / CAJA ===== */
+#intro{position:relative;z-index:10;text-align:center;max-width:520px;width:100%}
+.pretitulo{letter-spacing:.5em;text-transform:uppercase;font-size:.78rem;color:var(--dorado);opacity:.9}
+.caja-wrap{position:relative;margin:2rem auto;perspective:1200px;cursor:pointer;width:min(360px,84vw)}
+.caja{position:relative;width:100%;aspect-ratio:1/1.15;transform-style:preserve-3d}
+.sobre-cuerpo{position:absolute;inset:18% 0 0 0;background:linear-gradient(180deg,#241e2e,#17131f);border:1px solid rgba(201,169,106,.45);border-radius:6px 6px 14px 14px;box-shadow:0 30px 80px rgba(0,0,0,.7), inset 0 0 60px rgba(0,0,0,.5);overflow:hidden}
+.sobre-cuerpo::before{content:'';position:absolute;inset:0;background:linear-gradient(115deg, transparent 42%, rgba(233,207,154,.12) 50%, transparent 58%)}
+.sobre-textura{position:absolute;inset:0;opacity:.25;background-image:radial-gradient(rgba(201,169,106,.25) 1px, transparent 1px);background-size:22px 22px}
+.solapa{position:absolute;top:18%;left:0;right:0;height:52%;background:linear-gradient(180deg,#342b45,#241e32);clip-path:polygon(0 0, 50% 62%, 100% 0, 100% 0, 0 0);border-top:1px solid rgba(201,169,106,.5);transform-origin:top center;z-index:3;box-shadow:0 10px 30px rgba(0,0,0,.4);backface-visibility:visible;will-change:transform}
+.carta-mini{position:absolute;left:8%;right:8%;top:26%;bottom:10%;background:linear-gradient(180deg,#f5ecd8,#e8d9b8);color:#2b2135;border-radius:4px;z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1rem;box-shadow:0 10px 30px rgba(0,0,0,.5);will-change:transform}
+.carta-mini h3{font-family:'Italiana',serif;font-weight:400;font-size:1.6rem;line-height:1.1}
+.carta-mini p{font-style:italic;opacity:.7;margin-top:.4rem}
+.sello{position:absolute;left:50%;top:52%;width:92px;height:92px;transform:translate(-50%,-50%);z-index:4;border-radius:50%;background:radial-gradient(circle at 30% 30%, #c95a6b, var(--vino) 55%, #4a1622);display:flex;align-items:center;justify-content:center;font-family:'Italiana',serif;font-size:2.2rem;color:#f5d9b0;box-shadow:0 0 0 6px rgba(201,169,106,.25), 0 0 30px rgba(138,47,68,.8), 0 10px 20px rgba(0,0,0,.6);border:2px dashed rgba(245,217,176,.6)}
+.pulso{position:absolute;left:50%;top:52%;width:92px;height:92px;transform:translate(-50%,-50%);border-radius:50%;border:2px solid var(--dorado2);z-index:3;pointer-events:none}
+.click-msg{margin-top:1.4rem}
+.click-msg h1{font-family:'Italiana',serif;font-weight:400;font-size:clamp(1.8rem,6vw,2.7rem)}
+.click-msg h1 em{color:var(--dorado2);font-style:italic}
+.btn-abrir{margin-top:1.2rem;display:inline-block;font-family:'Italiana',serif;letter-spacing:.28em;text-transform:uppercase;font-size:.9rem;color:#1a1420;background:linear-gradient(180deg,var(--dorado2),var(--dorado));padding:1rem 2.2rem 1rem 2.5rem;border-radius:100px;border:none;cursor:pointer;box-shadow:0 0 25px rgba(201,169,106,.55), 0 10px 25px rgba(0,0,0,.5);transition:transform .3s}
+.btn-abrir:hover{transform:scale(1.05)}
+.hint{margin-top:1rem;font-style:italic;opacity:.6;letter-spacing:.05em}
+#particulas-click{position:fixed;inset:0;pointer-events:none;z-index:20}
+
+/* ===== POEMA ===== */
+#carta{display:none;position:relative;z-index:10;max-width:740px;width:100%;border:1px solid rgba(201,169,106,.35);outline:1px solid rgba(201,169,106,.14);outline-offset:9px;background:linear-gradient(180deg, rgba(28,24,38,.94), rgba(14,13,18,.97));padding:clamp(1.4rem,5vw,3rem) clamp(.9rem,4vw,3rem);text-align:center;box-shadow:0 40px 100px rgba(0,0,0,.7)}
+.orn{letter-spacing:.45em;text-transform:uppercase;font-size:.75rem;color:var(--dorado)}
+#carta h2{font-family:'Italiana',serif;font-weight:400;font-size:clamp(1.9rem,5.5vw,3.1rem);margin:1rem 0 .3rem}
+#carta h2 em{color:var(--dorado2);font-style:italic}
+.sub{font-style:italic;opacity:.65;font-size:1.15rem}
+.divider{display:flex;align-items:center;gap:.8rem;max-width:300px;margin:1.4rem auto;opacity:.8}
+.divider::before,.divider::after{content:'';height:1px;flex:1;background:linear-gradient(90deg,transparent,var(--dorado),transparent)}
+.poema{text-align:left;max-width:600px;margin:0 auto;font-size:clamp(.82rem,2.6vw,1.02rem);line-height:1.55;font-weight:300;letter-spacing:.01em}
+.verso{display:block;padding:.26rem .4rem;border-radius:6px;text-wrap:pretty;overflow-wrap:break-word}
+.verso:hover{background:rgba(201,169,106,.08)}
+.letra{font-family:inherit;font-size:inherit;line-height:inherit;color:inherit;text-shadow:none;font-weight:inherit}
+.resto{font-style:normal;color:inherit}
+.verso.final .resto{font-style:normal;color:inherit}
+.frase{font-family:'Italiana',serif;letter-spacing:.18em;margin-top:.6rem;font-size:1.05rem}
+.acro{margin-top:1.6rem;font-size:.8rem;letter-spacing:.35em;text-transform:uppercase;color:rgba(201,169,106,.75)}
+.pregunta{margin-top:2.2rem;font-family:'Italiana',serif;font-size:clamp(1.6rem,5vw,2.3rem)}
+.botones{margin-top:3.2rem;display:flex;gap:.9rem;justify-content:center;flex-wrap:wrap;opacity:.85}
+.btn-si,.btn-no{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:.95rem;letter-spacing:.08em;padding:.6rem 1.8rem;border-radius:100px;cursor:pointer;border:1px solid rgba(201,169,106,.35);transition:transform .2s}
+.btn-si{background:transparent;color:var(--tinta);border:1px solid rgba(201,169,106,.4);box-shadow:none}
+.btn-si:hover{background:rgba(201,169,106,.12)}
+.btn-no{background:transparent;color:var(--tinta);opacity:.7}
+.firma{margin-top:1.6rem;font-style:italic;opacity:.65}
+#respuesta{display:none;margin-top:1.5rem;font-size:1.35rem;font-style:italic;color:var(--dorado2);line-height:1.6}
+.corazon{font-size:2.5rem;display:block;margin-bottom:.5rem}
+.btn-wa{margin-top:1.2rem;display:inline-block;letter-spacing:.12em;text-transform:uppercase;font-size:.85rem;background:#25D366;color:#fff !important;padding:.9rem 1.8rem;border-radius:100px;text-decoration:none;box-shadow:0 0 20px rgba(37,211,102,.5);font-style:normal}
+@media(max-width:480px){body{padding:1.2rem .7rem}}
+</style>
+</head>
+<body>
+<canvas id="universo"></canvas>
+<div class="nebula"></div>
+<div class="vineta"></div>
+<div id="particulas-click"></div>
+
+<!-- CAJA PREVIA -->
+<section id="intro">
+  <div class="pretitulo">✦ Para ti ✦</div>
+  <div class="caja-wrap" id="cajaBtn" title="Haz clic aquí">
+    <div class="caja" id="caja3d">
+      <div class="carta-mini" id="cartaMini">
+        <h3>Para ti<br>en la noche</h3>
+        <p>un jardín secreto</p>
+      </div>
+      <div class="sobre-cuerpo"><div class="sobre-textura"></div></div>
+      <div class="solapa" id="solapa"></div>
+      <div class="sello" id="sello">♥</div>
+      <div class="pulso" id="pulso"></div>
+    </div>
+  </div>
+  <div class="click-msg">
+    <h1>Tengo algo para ti… <em>haz clic aquí</em></h1>
+    <button class="btn-abrir" id="btnAbrir">✦ Abrir la carta ✦</button>
+    <div class="hint">— toca el sello sellado para revelar el poema —</div>
+  </div>
+</section>
+
+<!-- POEMA -->
+<main id="carta">
+  <div class="orn">✦ Para ti ✦</div>
+  <h2>El <em>jardín nocturno</em></h2>
+  <p class="sub">entre el laberinto y el insomnio</p>
+  <div class="divider">❧</div>
+  <div class="poema" id="poema">
+    <div class="verso"><span class="letra">Q</span><span class="resto">uizás el tiempo sea un jardín que se bifurca en tu mirada,</span></div>
+    <div class="verso"><span class="letra">u</span><span class="resto">mbral de un laberinto donde me pierdo para encontrarte,</span></div>
+    <div class="verso"><span class="letra">i</span><span class="resto">nfinita la tarde en que tu nombre tiembla en mi boca,</span></div>
+    <div class="verso"><span class="letra">e</span><span class="resto">n el espejo, otro yo te sueña y no se atreve a despertarte,</span></div>
+    <div class="verso"><span class="letra">r</span><span class="resto">ecorro la biblioteca de la noche buscándote entre sombras,</span></div>
+    <div class="verso"><span class="letra">e</span><span class="resto">l silencio florece como una rosa negra en mi pecho,</span></div>
+    <div class="verso"><span class="letra">s</span><span class="resto">oy apenas un eco que mendiga tu voz en la oscuridad,</span></div>
+    <div class="verso"><span class="letra">s</span><span class="resto">eré, si me lo permites, el guardián de tus insomnios,</span></div>
+    <div class="verso"><span class="letra">e</span><span class="resto">terno visitante de tus sueños más hondos y callados,</span></div>
+    <div class="verso"><span class="letra">r</span><span class="resto">ecio hombre de la noche, te ofrezco mi herida iluminada,</span></div>
+    <div class="verso"><span class="letra">m</span><span class="resto">ientras el mundo se deshace en ceniza y olvido,</span></div>
+    <div class="verso"><span class="letra">i</span><span class="resto">nvoco tu mano pequeña para cruzar el abismo,</span></div>
+    <div class="verso"><span class="letra">n</span><span class="resto">ada es real sino este instante suspendido ante ti,</span></div>
+    <div class="verso"><span class="letra">o</span><span class="resto">lvido mi muerte un momento y nazco en tu jardín,</span></div>
+    <div class="verso"><span class="letra">v</span><span class="resto">asto es el miedo, más vasta la ternura que te nombra,</span></div>
+    <div class="verso"><span class="letra">i</span><span class="resto">ntacta aún la esperanza, pájaro ciego en la tormenta,</span></div>
+    <div class="verso final"><span class="letra">a</span><span class="resto">mor, ¿si deshojamos juntos la eternidad?</span></div>
+  </div>
+  <div class="divider">❧</div>
+  <div class="botones" id="botones">
+    <button class="btn-si" id="btnSi">Sí</button>
+    <button class="btn-no" id="btnNo">No</button>
+  </div>
+  <div id="respuesta"><span class="corazon">♥</span>Sabía que el laberinto nos llevaría aquí.<br>Eres mi eternidad, mi jardín, mi sí.<br><a class="btn-wa" id="btnWa" href="https://wa.me/573011822651?text=Me%20dijo%20que%20S%C3%8D%20%E2%99%A5%20Vengo%20del%20poema%20del%20jard%C3%ADn%20nocturno" target="_blank">♥ Avisarle por WhatsApp ♥</a><div style="margin-top:.8rem;font-size:1rem;opacity:.7">Si no se abrió WhatsApp solo, toca el botón verde</div></div>
+</main>
+
+<script>
+// --- FONDO ESTRELLADO ---
+const cv=document.getElementById('universo'),ctx=cv.getContext('2d');let W,H,stars=[];
+function resize(){W=cv.width=innerWidth;H=cv.height=innerHeight;stars=Array.from({length:Math.min(220,W/5)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.6+.3,s:Math.random()*.4+.1,tw:Math.random()*Math.PI*2}))}
+resize();addEventListener('resize',resize);
+(function loop(t){ctx.clearRect(0,0,W,H);stars.forEach(st=>{st.tw+=.02;const o=.4+Math.sin(st.tw)*.35;ctx.beginPath();ctx.arc(st.x,st.y,st.r,0,7);ctx.fillStyle=`rgba(233,207,154,${o})`;ctx.fill();st.y+=st.s;if(st.y>H)st.y=0});requestAnimationFrame(loop)})();
+
+// --- GSAP INTRO ---
+gsap.to('#caja3d',{y:-12,duration:2.2,yoyo:true,repeat:-1,ease:'sine.inOut'});
+gsap.to('#pulso',{scale:1.8,opacity:0,duration:1.4,repeat:-1,ease:'power2.out'});
+gsap.to('#sello',{boxShadow:'0 0 0 6px rgba(201,169,106,.25), 0 0 45px rgba(233,207,154,.9), 0 10px 20px rgba(0,0,0,.6)',duration:1.2,yoyo:true,repeat:-1});
+gsap.from('#intro .pretitulo, #intro h1, #btnAbrir, .hint',{y:30,opacity:0,duration:1,stagger:.15,ease:'power3.out'});
+
+let abierto=false;
+function explotarParticulas(x,y){
+  const cont=document.getElementById('particulas-click');
+  for(let i=0;i<40;i++){
+    const p=document.createElement('div');
+    const size=4+Math.random()*8;
+    p.style.cssText=`position:absolute;left:${x}px;top:${y}px;width:${size}px;height:${size}px;border-radius:${Math.random()>.5?'50%':'2px'};background:${['#e9cf9a','#c9a96a','#d9a5b3','#fff'][i%4]};box-shadow:0 0 10px currentColor;pointer-events:none`;
+    cont.appendChild(p);
+    gsap.to(p,{x:(Math.random()-.5)*500,y:(Math.random()-.7)*500,rotation:Math.random()*720,opacity:0,scale:Math.random(),duration:1.2+Math.random(),ease:'power3.out',onComplete:()=>p.remove()});
+  }
+}
+
+function abrirCarta(e){
+  if(abierto) return; abierto=true;
+  gsap.killTweensOf('#caja3d');
+  gsap.set('#caja3d',{y:0});
+  const x=e&&e.clientX?e.clientX:innerWidth/2, y=e&&e.clientY?e.clientY:innerHeight/2;
+  explotarParticulas(x,y);
+  const tl=gsap.timeline({defaults:{ease:'power3.out'}});
+  tl.to('#sello,#pulso',{rotation:180,scale:0,opacity:0,duration:.6,ease:'back.in(1.8)'})
+    .to('#solapa',{rotationX:-180,zIndex:1,duration:.8,ease:'power2.inOut',transformPerspective:800},'-=.15')
+    .to('#cartaMini',{y:'-72%',zIndex:5,duration:1},'-=.25')
+    .to('#caja3d',{y:-8,duration:.4},'<')
+    .to('#intro',{scale:1.08,opacity:0,filter:'blur(10px)',duration:.7,ease:'power3.in',onComplete:()=>{
+      document.getElementById('intro').style.display='none';
+      const carta=document.getElementById('carta');carta.style.display='block';
+      // revelar poema con GSAP
+      gsap.fromTo('#carta',{opacity:0,y:60,scale:.96},{opacity:1,y:0,scale:1,duration:1.1,ease:'power3.out'});
+      gsap.fromTo('#carta h2, #carta .sub, #carta .orn',{opacity:0,y:25},{opacity:1,y:0,duration:.9,stagger:.12,ease:'power3.out',delay:.2});
+      gsap.fromTo('.verso',{opacity:0,x:-35},{opacity:1,x:0,duration:.7,stagger:.14,ease:'power3.out',delay:.5});
+      gsap.fromTo('#botones',{opacity:0,y:20},{opacity:1,y:0,duration:.8,delay:3,ease:'power2.out'});
+      window.scrollTo({top:0,behavior:'smooth'});
+    }});
+}
+document.getElementById('cajaBtn').addEventListener('click',abrirCarta);
+document.getElementById('btnAbrir').addEventListener('click',abrirCarta);
+
+// --- BOTONES SÍ / NO ---
+const btnNo=document.getElementById('btnNo');
+btnNo.addEventListener('mouseover',()=>{
+  const dx=(Math.random()-.5)*220, dy=(Math.random()-.5)*120;
+  gsap.to(btnNo,{x:dx,y:dy,duration:.4,ease:'power3.out'});
+  btnNo.textContent=['¿Segura?','Piénsalo…','No puedes','Di que sí'][Math.floor(Math.random()*4)];
+});
+btnNo.addEventListener('click',()=>{
+  gsap.fromTo(btnNo,{x:-8},{x:0,duration:.4,ease:'elastic.out(1,.3)'});
+  btnNo.textContent='¡Tiene que ser sí! ♥';
+});
+document.getElementById('btnSi').addEventListener('click',(e)=>{
+  explotarParticulas(e.clientX,e.clientY);
+  // --- AVISO A MI WHATSAPP ---
+  const MI_WHATSAPP='573011822651';
+  const MENSAJE='Me dijo que SÍ ♥ Vengo del poema del jardín nocturno';
+  const urlWa=`https://wa.me/${MI_WHATSAPP}?text=${encodeURIComponent(MENSAJE)}`;
+  window.open(urlWa,'_blank');
+  gsap.to('#botones',{opacity:0,y:-15,duration:.5,onComplete:()=>{
+    document.getElementById('botones').style.display='none';
+    const r=document.getElementById('respuesta');r.style.display='block';
+    gsap.fromTo(r,{opacity:0,scale:.8},{opacity:1,scale:1,duration:1,ease:'back.out(1.6)'});
+    gsap.to('.corazon',{scale:1.35,duration:.5,yoyo:true,repeat:-1,ease:'sine.inOut'});
+    // reintento suave a los 1.5s por si el navegador bloqueó el primero
+    // setTimeout(()=>{window.location.href=urlWa},1500);
+  }});
+});
+</script>
+</body>
+</html>
