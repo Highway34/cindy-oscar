@@ -36,11 +36,13 @@ h1 em{color:var(--dorado2);font-style:italic}
 .form{background:rgba(201,169,106,.06);border:1px dashed rgba(201,169,106,.5);border-radius:12px;padding:1.5rem;margin-top:2rem}
 .form h2{font-family:'Italiana',serif;font-weight:400;font-size:1.6rem;margin-bottom:.3rem}
 .form p{font-style:italic;opacity:.7;margin-bottom:1rem}
-.form input,.form textarea{width:100%;background:#17131f;border:1px solid rgba(201,169,106,.35);color:var(--tinta);border-radius:8px;padding:.8rem;font-family:inherit;font-size:1rem;margin-bottom:.8rem}
+.form input,.form textarea,.form select{width:100%;background:#17131f;border:1px solid rgba(201,169,106,.35);color:var(--tinta);border-radius:8px;padding:.8rem;font-family:inherit;font-size:1rem;margin-bottom:.8rem}
+.form select{appearance:none;cursor:pointer}
+.form select option{background:#17131f}
 .form textarea{min-height:140px;resize:vertical}
 .form button{background:linear-gradient(180deg,var(--dorado2),var(--dorado));border:none;border-radius:100px;padding:.9rem 2rem;font-family:'Italiana',serif;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;color:#1a1420}
 .borrar{margin-top:.6rem;background:transparent;border:none;color:var(--rosa);cursor:pointer;font-style:italic;opacity:.7}
-nav.tabs{display:flex;gap:.6rem;justify-content:center;margin:1.2rem 0}
+nav.tabs{display:flex;gap:.6rem;justify-content:center;margin:1.2rem 0;flex-wrap:wrap}
 nav.tabs button{background:transparent;border:1px solid rgba(201,169,106,.4);color:var(--tinta);border-radius:100px;padding:.6rem 1.6rem;cursor:pointer;font-family:'Italiana',serif;letter-spacing:.15em;text-transform:uppercase;font-size:.85rem}
 nav.tabs button.activo{background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;border:none}
 .bienvenida{background:rgba(255,255,255,.03);border-left:3px solid var(--dorado);border-radius:0 12px 12px 0;padding:1.3rem 1.4rem;margin:1.5rem 0;font-style:italic;line-height:1.7}
@@ -49,6 +51,10 @@ nav.tabs button.activo{background:linear-gradient(180deg,var(--dorado2),var(--do
 .ev h3{font-family:'Italiana',serif;font-weight:400;font-size:1.3rem}
 .ev .cuando{color:var(--dorado);font-style:italic;margin:.2rem 0 .5rem}
 .ev a.gcal{display:inline-block;margin-top:.6rem;border:1px solid rgba(201,169,106,.5);color:var(--dorado2);border-radius:100px;padding:.5rem 1.2rem;text-decoration:none;font-style:italic}
+.idea{background:rgba(255,255,255,.03);border:1px solid rgba(217,165,179,.35);border-radius:12px;padding:1.1rem;margin-top:.8rem}
+.idea h3{font-family:'Italiana',serif;font-weight:400;font-size:1.3rem}
+.idea .tipo{display:inline-block;font-size:.8rem;letter-spacing:.15em;text-transform:uppercase;color:var(--rosa);border:1px solid rgba(217,165,179,.5);border-radius:100px;padding:.2rem .8rem;margin:.4rem 0}
+.idea .cuando{color:var(--dorado);font-style:italic;margin:.2rem 0 .5rem;font-size:.9rem}
 footer{text-align:center;margin-top:3rem;font-style:italic;opacity:.6}
 </style>
 </head>
@@ -85,6 +91,7 @@ Si te quedas, arde.</p>
 <nav class="tabs">
 <button id="tabPoemas" class="activo" onclick="mostrar('poemas')">Poemas ♥</button>
 <button id="tabEventos" onclick="mostrar('eventos')">Eventos ♥</button>
+<button id="tabIdeas" onclick="mostrar('ideas')">Ideas ♥</button>
 </nav>
 
 <section id="secPoemas">
@@ -124,6 +131,24 @@ Si te quedas, arde.</p>
 <div id="msgE" style="margin-top:.6rem;font-style:italic;color:var(--dorado2)"></div>
 </div>
 <div id="listaEv"></div>
+</section>
+
+<section id="secIdeas" style="display:none">
+<div class="form">
+<h2>✦ Caja de ideas y mensajitos ✦</h2>
+<p>Mi amor, este es tu espacio ♥ Deja una idea para una cita, una sugerencia para el blog, o simplemente un mensaje bonito. Todo lo que escribas aquí florece en nuestro rincón.</p>
+<input id="sNombre" placeholder="Tu nombre ♥ (opcional)">
+<select id="sTipo">
+<option value="💌 Mensaje bonito">💌 Mensaje bonito</option>
+<option value="💡 Idea para cita">💡 Idea para cita</option>
+<option value="🌙 Sugerencia">🌙 Sugerencia</option>
+<option value="✨ Plan a futuro">✨ Plan a futuro</option>
+</select>
+<textarea id="sTexto" placeholder="Escribe aquí un mensaje amable y bonito…&#10;Ej: Amor, hoy pensé en ti cuando vi la luna… Me encantaría que fuéramos por un helado y miráramos las estrellas juntos ♥&#10;No tengas pena, escribe con el corazón."></textarea>
+<button onclick="agregarIdea()">Guardar con amor ♥</button>
+<div id="msgS" style="margin-top:.6rem;font-style:italic;color:var(--dorado2)"></div>
+</div>
+<div id="listaIdeas"></div>
 </section>
 
 <footer>hecho con amor ♥</footer>
@@ -180,9 +205,12 @@ pintar();
 function mostrar(cual){
   document.getElementById('secPoemas').style.display = cual==='poemas'?'block':'none';
   document.getElementById('secEventos').style.display = cual==='eventos'?'block':'none';
+  document.getElementById('secIdeas').style.display = cual==='ideas'?'block':'none';
   document.getElementById('tabPoemas').classList.toggle('activo', cual==='poemas');
   document.getElementById('tabEventos').classList.toggle('activo', cual==='eventos');
+  document.getElementById('tabIdeas').classList.toggle('activo', cual==='ideas');
   if(cual==='eventos') pintarEv();
+  if(cual==='ideas') pintarIdeas();
 }
 
 // --- EVENTOS + GOOGLE CALENDAR ---
@@ -215,6 +243,34 @@ function agregarEvento(){
   guardarEv(eventos); pintarEv();
   document.getElementById('msgE').textContent='Guardado ♥ tócalo para mandarlo a Google Calendar';
 }
+
+// --- CAJA DE IDEAS Y MENSAJES ---
+function cargarIdeas(){ try{ const g=JSON.parse(localStorage.getItem('ideas-ella')||'[]'); if(Array.isArray(g)) return g; }catch(e){} return []; }
+function guardarIdeas(l){ localStorage.setItem('ideas-ella', JSON.stringify(l)); }
+let ideas = cargarIdeas();
+function esc(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function pintarIdeas(){
+  const c=document.getElementById('listaIdeas'); if(!c) return;
+  c.innerHTML = ideas.length?'':'<p style="font-style:italic;opacity:.6;margin-top:1rem">Aún no hay mensajitos. Sé la primera en dejar uno, amor ♥</p>';
+  ideas.forEach((it,i)=>{
+    const d=document.createElement('div'); d.className='idea';
+    d.innerHTML=`<h3>${esc(it.nombre||'Ella ♥')}</h3><div class="tipo">${esc(it.tipo||'💌 Mensaje bonito')}</div><div class="cuando">${esc(it.fecha||'')}</div><div style="font-style:italic;line-height:1.6;white-space:pre-wrap">${esc(it.texto||'')}</div><button class="borrar" data-i="${i}">borrar</button>`;
+    d.querySelector('.borrar').onclick=()=>{ ideas.splice(i,1); guardarIdeas(ideas); pintarIdeas(); };
+    c.appendChild(d);
+  });
+}
+function agregarIdea(){
+  const n=document.getElementById('sNombre').value.trim()||'Ella ♥';
+  const tp=document.getElementById('sTipo').value;
+  const tx=document.getElementById('sTexto').value.trim();
+  const f=new Date().toISOString().slice(0,10);
+  if(!tx){ document.getElementById('msgS').textContent='Escribe un mensajito primero, amor ♥'; return; }
+  ideas.unshift({nombre:n,tipo:tp,texto:tx,fecha:f});
+  guardarIdeas(ideas); pintarIdeas();
+  document.getElementById('sTexto').value='';
+  document.getElementById('msgS').textContent='Guardado con amor ♥ gracias por escribir';
+}
+pintarIdeas();
 
 // fondo estrellado
 const cv=document.getElementById('stars'),ctx=cv.getContext('2d');let W,H,s=[];
