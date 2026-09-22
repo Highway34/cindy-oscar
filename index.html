@@ -129,8 +129,8 @@ footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
 <header>
 <div class="pret">✦ Nuestro rincón ✦</div>
 <h1>Cindy <em>&</em> Oscar ♥</h1>
-<p class="sub">donde guardo cada poema que te escribo</p>
-<div><span class="contador" id="contador">juntos desde el día del sí ♥</span></div>
+<p class="sub">nuestro blog ♥</p>
+<div><span class="contador" id="contador">nuestras historias, poemas y planes ♥</span></div>
 <div><span class="nube" id="nubeEstado">♥ guardado en esta página + este dispositivo</span>
 <div class="nube-wrap"><details class="nube-cfg" id="nubeCfg">
 <summary>☁ activar blog compartido (ver en ambos lados)</summary>
@@ -298,9 +298,6 @@ function pintar(){
     c.appendChild(d);
   });
   const np=document.getElementById('nPoemas'); if(np) np.textContent=`(${todos.length})`;
-  const inicio = new Date('2026-09-22T12:00:00'); const hoy = new Date();
-  const dias = Math.max(0, Math.floor((hoy-inicio)/86400000));
-  document.getElementById('contador').textContent = dias===0 ? 'juntos desde hoy ♥ el día del sí' : dias===1 ? 'juntos hace 1 día ♥' : `juntos hace ${dias} días ♥`;
 }
 function abrir(i){
   const todos = todosPoemas();
