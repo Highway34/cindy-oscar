@@ -140,6 +140,18 @@ footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
 .mus h3{font-family:'Italiana',serif;font-weight:400;font-size:1.32rem;line-height:1.25}
 .mus iframe{width:100%;border:none;border-radius:12px;margin-top:.7rem;background:#000}
 .mus .artista{font-style:italic;color:var(--dorado2);font-size:.95rem;margin-top:.15rem}
+/* poema efímero diario */
+#efimero{margin:1.2rem 0 0}
+.efi{background:linear-gradient(180deg, rgba(38,30,52,.96), rgba(16,14,22,.98));border:1px solid rgba(143,208,179,.5);border-radius:var(--radio);padding:1.3rem 1.25rem;box-shadow:0 0 0 1px rgba(143,208,179,.12),0 18px 50px rgba(0,0,0,.5);cursor:pointer;position:relative;overflow:hidden}
+.efi::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(500px 160px at 50% -40px, rgba(233,207,154,.16), transparent 70%)}
+.efi .aviso{display:flex;align-items:center;gap:.5rem;font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;color:var(--menta)}
+.efi .nuevo{display:inline-flex;align-items:center;gap:.3rem;background:var(--menta);color:#10231b;border-radius:100px;padding:.15rem .7rem;font-size:.72rem;letter-spacing:.18em;animation:latido 1.6s infinite}
+@keyframes latido{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.07);opacity:.85}}
+.efi h2{font-family:'Italiana',serif;font-weight:400;font-size:1.5rem;margin:.45rem 0 .1rem}
+.efi .estilo{font-style:italic;color:var(--dorado2);font-size:.95rem}
+.efi .texto{white-space:pre-wrap;font-style:italic;line-height:1.75;font-size:1.1rem;margin-top:.6rem;color:var(--tinta)}
+.efi .cuenta{font-style:italic;font-size:.88rem;color:var(--tinta-dim);margin-top:.7rem}
+.efi .acciones{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem}
 section{scroll-margin-top:1rem}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
@@ -172,6 +184,8 @@ section{scroll-margin-top:1rem}
 <figure class="foto-wrap"><div class="foto-marco" id="fotoMarco" title="Toca para ampliar ♥" style="cursor:zoom-in"><img src="foto-nosotros.jpg?v=5" alt="Nosotros juntos ♥" fetchpriority="high" decoding="async" onerror="this.style.display='none'"><figcaption>nosotros ♥ 04 · 09 · 2026 · toca para ampliar</figcaption></div></figure>
 <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src="foto-nosotros.jpg?v=5" alt="Nosotros ampliado ♥"></div>
 </header>
+
+<div id="efimero" aria-label="Poema efímero de hoy" role="status"></div>
 
 <div class="historia">
 <p>Este es <strong>nuestro blog</strong> ♥ aquí guardamos poemas, planes y recuerdos.</p>
@@ -630,6 +644,88 @@ function agregarMusica(){
   linkEl.value=''; notaEl.value='';
 }
 
+// --- POEMA EFÍMERO DIARIO (cambia cada día a las 6am, dura 24h) ---
+// Micro-poemas originales al estilo de Borges, Pizarnik, Pessoa y Woolf, escritos para ella.
+// Rota por día del año: 30 poemas que vuelven cada mes. Para agregar más, añade {t,e,x} aquí.
+const EFIMEROS = [
+{t:"El jardín",e:"Borges",x:"Si el tiempo es un jardín,\nyo me pierdo en cada sendero\nque lleva a tu nombre."},
+{t:"Noche",e:"Pizarnik",x:"La noche me escribe\ncon tu nombre.\nLo borro.\nLo escribe otra vez."},
+{t:"Fingimiento",e:"Pessoa",x:"Fingir es conocerse:\nfinjo que no te extraño\ny en el fingimiento\nte extraño dos veces."},
+{t:"La ola",e:"Woolf",x:"La ola viene y va,\npero el mar se queda.\nAsí tú: vienes, vas,\ny en mí te quedas."},
+{t:"El espejo",e:"Borges",x:"Me miré al espejo\ny detrás de mi cara\nestabas tú, mirándome\ndesde todos mis ayeres."},
+{t:"Silencio",e:"Pizarnik",x:"Haz silencio:\nmi corazón está diciendo\ntu nombre\nen voz bajísima."},
+{t:"El mar",e:"Pessoa",x:"Todo mar es un camino\nque no lleva a ninguna parte.\nMenos el tuyo:\nel tuyo lleva a casa."},
+{t:"El momento",e:"Woolf",x:"Hay un momento,\napenas un parpadeo,\nen que la luz te toca\ny el día queda perdonado."},
+{t:"La eternidad",e:"Borges",x:"Dicen que la eternidad\nes un tigre de fuego.\nYo la vi anoche:\nera tu mano en la mía."},
+{t:"Herida",e:"Pizarnik",x:"Pequeña herida luminosa:\nextrañarte\nun minuto\ncada minuto."},
+{t:"Ser",e:"Pessoa",x:"Ser es no ser\nun momento después.\nSolo hay una certeza:\nesta, tu mano, mi mano."},
+{t:"La habitación",e:"Woolf",x:"Una habitación propia,\nuna lámpara encendida\ny tu carta en la mesa:\neso es la felicidad."},
+{t:"El laberinto",e:"Borges",x:"Construí un laberinto\npara esconder mi corazón.\nEntraste riendo\ny ya no quiero salir."},
+{t:"Sombra",e:"Pizarnik",x:"Mi sombra te busca\naun dormida.\nPerdónala:\nnunca aprendió a estar sin ti."},
+{t:"Las flores",e:"Pessoa",x:"Las flores no se preguntan\npor qué florecen.\nYo tampoco:\nte amo y basta."},
+{t:"El faro",e:"Woolf",x:"A lo lejos, un faro.\nMás cerca, tu voz.\nNavego entre dos luces\ny ninguna me pierde."},
+{t:"El otro",e:"Borges",x:"Soñé que era otro\nque te amaba de otro modo.\nDesperté: era yo,\namándote igual."},
+{t:"Palabra",e:"Pizarnik",x:"Guardé una palabra\npara no decirte adiós.\nEs esta:\nquédate."},
+{t:"La ventana",e:"Pessoa",x:"Miro por la ventana\ny el mundo es suficiente.\nPero cuando miras tú,\nel mundo sobra y basta."},
+{t:"Las horas",e:"Woolf",x:"Las horas pasan\ncomo nubes altas.\nSolo una se detiene:\nla que paso contigo."},
+{t:"Los ríos",e:"Borges",x:"Somos dos ríos\nque el tiempo quiso juntar.\nEl mar nos espera:\ntu orilla es mi lugar."},
+{t:"Ventana",e:"Pizarnik",x:"Afuera llueve.\nAdentro, tu recuerdo\nme seca\ncon manos de sol."},
+{t:"Nada",e:"Pessoa",x:"Dicen que no somos nada.\nSea: entonces nada\ncabe entero\nen tu abrazo."},
+{t:"El jardín que respira",e:"Woolf",x:"El jardín respira\ncuando entras en él.\nLas flores lo saben:\nse vuelven a mirarte."},
+{t:"La moneda",e:"Borges",x:"Te di una moneda\ncon mi cara gastada.\nGuárdala: es la prueba\nde que el azar te amaba."},
+{t:"Naufragio",e:"Pizarnik",x:"Naufragué en tus ojos\na propósito.\nNo mandes barcos:\nquiero quedarme."},
+{t:"Viaje",e:"Pessoa",x:"Viajar es preciso,\namar es necesario.\nYa viajé bastante:\nahora me quedo en ti."},
+{t:"Medianoche",e:"Woolf",x:"Medianoche en punto:\nla casa duerme, el mundo calla.\nSolo mi corazón\nsigue despierto, diciéndote."},
+{t:"El punto",e:"Borges",x:"En un punto del cuarto\ncabe el universo entero:\nel lunar de tu mejilla\ndonde me pierdo y me encuentro."},
+{t:"Insomnio",e:"Pizarnik",x:"Las tres de la mañana\nme preguntan por ti.\nLes digo que sueñas\ny se calman."}
+];
+function efiBase(){
+  const a=new Date(); const b=new Date(a);
+  if(b.getHours()<6) b.setDate(b.getDate()-1); // antes de las 6am vale el de ayer
+  return b;
+}
+function efiKey(){
+  const b=efiBase();
+  const m=String(b.getMonth()+1).padStart(2,'0'), d=String(b.getDate()).padStart(2,'0');
+  return b.getFullYear()+'-'+m+'-'+d;
+}
+function efiPoema(){
+  const b=efiBase();
+  const ini=new Date(b.getFullYear(),0,1);
+  const doy=Math.floor((b-ini)/86400000);
+  return EFIMEROS[doy % EFIMEROS.length];
+}
+function efiCuentaTxt(){
+  try{
+    const a=new Date(); const t=new Date(a);
+    t.setHours(6,0,0,0); if(a>=t) t.setDate(t.getDate()+1);
+    const diff=t-a, h=Math.floor(diff/3600000), m=Math.floor(diff%3600000/60000);
+    return '✦ se borra en '+h+'h '+m+'m · mañana a las 6am llega otro ♥';
+  }catch(e){ return '✦ dura solo hoy ♥'; }
+}
+function pintarEfimero(){
+  const c=document.getElementById('efimero'); if(!c) return;
+  const key=efiKey(), p=efiPoema();
+  let visto=''; try{ visto=localStorage.getItem('efimero-visto')||''; }catch(e){}
+  const esNuevo=(visto!==key);
+  c.innerHTML='<div class="efi" id="efiCard"><div class="aviso">✦ poema efímero · solo hoy '+(esNuevo?'<span class="nuevo">● nuevo</span>':'')+'</div><h2>'+esc(p.t)+'</h2><div class="estilo">al estilo de '+esc(p.e)+' ♥</div><div class="texto">'+esc(p.x)+'</div><div class="cuenta" id="efiCuenta">'+esc(efiCuentaTxt())+'</div><div class="acciones"><button class="pill" id="efiGuardar">♥ Guardarlo para siempre</button></div></div>';
+  document.getElementById('efiCard').onclick=(e)=>{
+    try{ localStorage.setItem('efimero-visto', key); }catch(err){}
+    if(e.target && e.target.id==='efiGuardar'){ guardarEfimero(key, p); return; }
+    const n=c.querySelector('.nuevo'); if(n) n.style.display='none';
+  };
+}
+function guardarEfimero(key, p){
+  const titulo='Efímero · '+p.t+' ('+p.e+')';
+  const yaLocal=lista.some(x=>(x.titulo||'')===titulo && (x.fecha||'')===key);
+  const yaNube=(typeof poemasNube!=='undefined'?poemasNube:[]).some(x=>(x.titulo||'')===titulo && (x.fecha||'')===key);
+  if(yaLocal||yaNube){ toast('msg','Ya lo guardaste en tu corazón ♥'); return; }
+  const obj={titulo:titulo,fecha:key,texto:p.x+'\n\n(al estilo de '+p.e+', poema efímero del '+key+')',lid:'L'+Date.now()};
+  if(nube.on){ nubeAdd('poemas', obj).then(()=>{ toast('msg','Efímero guardado ☁♥ vivirá para siempre'); }); }
+  else{ lista.unshift(obj); guardar(lista); pintar(); toast('msg','Efímero guardado en este dispositivo ♥'); }
+}
+setInterval(()=>{ const el=document.getElementById('efiCuenta'); if(el) el.textContent=efiCuentaTxt(); },30000);
+
 // --- NUBE COMPARTIDA (Firebase, opcional) ---
 // 1) hardcode aquí si quieres, o 2) pega 1 vez en la cajita ☁ de arriba (se guarda en localStorage)
 const FIREBASE_CONFIG_BUILT = null;
@@ -708,7 +804,7 @@ async function nubeDel(col, id){
 (function initCfgBox(){ try{ const s=localStorage.getItem('firebase-config'); if(s){ const t=document.getElementById('fCfg'); if(t) t.value=s; } }catch(e){} })();
 initNube();
 nubeEstado();
-pintarIdeas(); pintarEv(); pintarMusica();
+pintarIdeas(); pintarEv(); pintarMusica(); pintarEfimero();
 try{ actualizarCuenta(); }catch(e){}
 // --- LIGHTBOX foto ---
 (function initLight(){
