@@ -9,6 +9,10 @@
 <meta property="og:title" content="Nuestro Rincón ♥ Cindy & Oscar">
 <meta property="og:description" content="Poemas, eventos e ideas guardados con amor.">
 <meta property="og:type" content="website">
+<meta property="og:image" content="foto-nosotros.jpg">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♥</text></svg>">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -119,6 +123,19 @@ footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
 .foto-marco img{width:100%;height:290px;object-fit:cover;border-radius:9px;display:block;background:#222}
 .foto-marco figcaption{text-align:center;color:#5b4a3a;font-style:italic;font-size:.95rem;margin-top:.5rem}
 .foto-marco::after{content:'♥';position:absolute;top:-12px;right:-10px;background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;box-shadow:0 5px 15px rgba(0,0,0,.4)}
+.cuenta{margin:.7rem auto 0;display:none;border:1px solid rgba(143,208,179,.5);border-radius:100px;padding:.5rem 1.2rem;font-style:italic;background:rgba(143,208,179,.1);font-size:.98rem}
+.cuenta.on{display:inline-block}
+.toolbar{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
+.toolbar input{flex:1 1 180px;background:var(--fondo2);border:1px solid rgba(201,169,106,.35);color:var(--tinta);border-radius:100px;padding:.65rem 1.1rem;font-family:inherit;font-style:italic;font-size:.95rem;min-height:44px}
+.toolbar input:focus{outline:none;border-color:var(--dorado2);box-shadow:var(--foco)}
+.toolbar .pill{white-space:nowrap}
+.like{margin-top:.6rem;display:inline-flex;align-items:center;gap:.4rem;background:transparent;border:1px solid rgba(217,165,179,.45);color:var(--rosa);border-radius:100px;padding:.3rem .9rem;cursor:pointer;font-style:italic;font-size:.92rem;min-height:36px}
+.like.liked{background:rgba(217,165,179,.15);border-color:var(--rosa)}
+.like:focus-visible{outline:none;box-shadow:var(--foco)}
+#lightbox{display:none;position:fixed;inset:0;z-index:50;background:rgba(0,0,0,.88);align-items:center;justify-content:center;padding:1rem;cursor:zoom-out}
+#lightbox img{max-width:min(92vw,700px);max-height:86vh;border-radius:12px;box-shadow:0 30px 80px rgba(0,0,0,.7)}
+.fade{animation:subir .3s ease}
+section{scroll-margin-top:1rem}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -131,6 +148,7 @@ footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
 <h1>Cindy <em>&</em> Oscar ♥</h1>
 <p class="sub">nuestro blog ♥</p>
 <div><span class="contador" id="contador">desde el 18 sep ♥</span></div>
+<div><span class="cuenta" id="cuentaRegresiva"></span></div>
 <div><span class="nube" id="nubeEstado">♥ guardado en esta página + este dispositivo</span>
 <div class="nube-wrap"><details class="nube-cfg" id="nubeCfg">
 <summary>☁ activar blog compartido (ver en ambos lados)</summary>
@@ -146,7 +164,8 @@ footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
 <div style="font-style:italic;font-size:.85rem;opacity:.75;margin-top:.4rem">Cómo conseguirla: Firebase Console → Crear proyecto “cindy-oscar” → Build → Firestore Database → Crear base en modo producción → Web &lt;/&gt; → copiar firebaseConfig. Reglas: allow read, write: if true (solo Uds. tienen el link).</div>
 </div>
 </details></div></div>
-<figure class="foto-wrap"><div class="foto-marco"><img src="foto-nosotros.jpg?v=5" alt="Nosotros juntos ♥" fetchpriority="high" decoding="async" onerror="this.style.display='none'"><figcaption>nosotros ♥ 04 · 09 · 2026</figcaption></div></figure>
+<figure class="foto-wrap"><div class="foto-marco" id="fotoMarco" title="Toca para ampliar ♥" style="cursor:zoom-in"><img src="foto-nosotros.jpg?v=5" alt="Nosotros juntos ♥" fetchpriority="high" decoding="async" onerror="this.style.display='none'"><figcaption>nosotros ♥ 04 · 09 · 2026 · toca para ampliar</figcaption></div></figure>
+<div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src="foto-nosotros.jpg?v=5" alt="Nosotros ampliado ♥"></div>
 </header>
 
 <div class="historia">
@@ -175,6 +194,11 @@ Si te quedas, arde.</p>
 </nav>
 
 <section id="secPoemas" aria-label="Poemas">
+<div class="toolbar">
+<input id="buscarPoema" placeholder="Buscar poema… ej. luna" oninput="pintar()" aria-label="Buscar poema">
+<button class="pill" onclick="poemaSorpresa()" title="Abrir un poema al azar ♥">✦ Sorpresa ♥</button>
+<button class="pill" onclick="exportarRespaldo()" title="Descargar respaldo JSON">⭳ Respaldo</button>
+</div>
 <div class="grid" id="lista"></div>
 
 <div id="visor" role="dialog" aria-modal="false" aria-labelledby="vTitulo">
@@ -283,17 +307,59 @@ function todosPoemas(){
   return [...fijos,...nubeArr,...loc];
 }
 
+function getLikes(){ return store.get('likes-poemas', {}); }
+function toggleLike(key, btn){
+  try{
+    const l = getLikes(); if(l[key]) delete l[key]; else l[key]=1;
+    store.set('likes-poemas', l); pintar();
+  }catch(e){}
+}
+function poemaSorpresa(){
+  const todos = todosPoemas(); if(!todos.length) return;
+  const p = todos[Math.floor(Math.random()*todos.length)];
+  document.getElementById('vTitulo').textContent=p.titulo;
+  document.getElementById('vFecha').textContent=fmtFecha(p.fecha);
+  document.getElementById('vTexto').textContent=p.texto;
+  document.getElementById('visor').style.display='block';
+  document.getElementById('visor').scrollIntoView({behavior:'smooth',block:'center'});
+}
+function exportarRespaldo(){
+  try{
+    const data = {poemas:lista, eventos:eventos||[], ideas:ideas||[], fecha:new Date().toISOString()};
+    const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download='respaldo-nuestro-rincon.json'; a.click();
+    setTimeout(()=>URL.revokeObjectURL(a.href),2000);
+    toast('msg','Respaldo descargado ♥ guárdalo bonito');
+  }catch(e){ toast('msg','No se pudo exportar ♥'); }
+}
+
 function pintar(){
   const c = document.getElementById('lista'); c.innerHTML='';
-  const todos = todosPoemas();
+  const q = ((document.getElementById('buscarPoema')||{}).value||'').toLowerCase().trim();
+  const likes = getLikes();
+  let todos = todosPoemas();
+  if(q) todos = todos.filter(p=>((p.titulo||'')+' '+(p.texto||'')).toLowerCase().includes(q));
+  if(q && !todos.length){ c.innerHTML='<div class="empty">No encontré ese poema, amor ♥<br>Prueba con “luna”, “jardín” o “sí”.</div>'; }
   todos.forEach((p)=>{
+    const key=(p.titulo||'')+'|'+(p.fecha||'');
+    const liked=!!likes[key];
     const d=document.createElement('div'); d.className='card'; d.tabIndex=0;
     d.setAttribute('role','button'); d.setAttribute('aria-label','Leer '+p.titulo);
     const badge = p.origen==='fijo' ? '<span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dorado2)">♥ en la página</span>' : p.origen==='nube' ? '<span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--menta)">☁ compartido</span>' : '<span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.6">solo este dispositivo</span>';
-    d.innerHTML=`<h3>${esc(p.titulo)}</h3><div class="fecha">${esc(fmtFecha(p.fecha))} · ${badge}</div><p>${esc((p.texto||'').slice(0,110))}…</p><span class="ver">leer ♥</span>${(p.origen==='local'||p.origen==='nube')?'<br><button class="borrar">borrar</button>':''}`;
+    d.innerHTML=`<h3>${esc(p.titulo)}</h3><div class="fecha">${esc(fmtFecha(p.fecha))} · ${badge}</div><p>${esc((p.texto||'').slice(0,110))}…</p><span class="ver">leer ♥</span><div><button class="like${liked?' liked':''}" aria-label="Me encanta">♥ ${liked?'1':''} me encanta</button></div>${(p.origen==='local'||p.origen==='nube')?'<div><button class="borrar">borrar</button></div>':''}`;
     const idxReal = p.origen==='local' ? lista.findIndex(x=>(x.lid||x.titulo+x.fecha)===(p.lid||p.titulo+p.fecha)) : -1;
     const open=()=>{ document.getElementById('vTitulo').textContent=p.titulo; document.getElementById('vFecha').textContent=fmtFecha(p.fecha); document.getElementById('vTexto').textContent=p.texto; document.getElementById('visor').style.display='block'; document.getElementById('visor').scrollIntoView({behavior:'smooth',block:'center'}); };
-    d.onclick=(e)=>{ if(e.target.classList.contains('borrar')){ if(p.origen==='local'){ if(idxReal>-1) lista.splice(idxReal,1); guardar(lista); pintar(); } else if(p.origen==='nube'){ nubeDel('poemas', p.id); } return;} open(); };
+    d.onclick=(e)=>{
+      if(e.target.classList.contains('like')){ toggleLike(key); return; }
+      if(e.target.classList.contains('borrar')){
+        if(!confirm('¿Borrar “'+p.titulo+'”? ♥')) return;
+        if(p.origen==='local'){ if(idxReal>-1) lista.splice(idxReal,1); guardar(lista); pintar(); }
+        else if(p.origen==='nube'){ nubeDel('poemas', p.id); }
+        return;
+      }
+      open();
+    };
     d.onkeydown=(e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } };
     c.appendChild(d);
   });
@@ -317,6 +383,27 @@ function actualizarContador(){
   }catch(e){}
 }
 actualizarContador(); setInterval(actualizarContador,30000);
+// --- CUENTA REGRESIVA próximo evento fijo ---
+function actualizarCuenta(){
+  try{
+    const el=document.getElementById('cuentaRegresiva'); if(!el) return;
+    if(typeof EVENTOS_FIJOS==='undefined'||!EVENTOS_FIJOS.length){ el.classList.remove('on'); return; }
+    const ahora=new Date();
+    const futuros=EVENTOS_FIJOS.map(e=>{
+      const h=(e.horaI||'19:00');
+      return {e, d:new Date(e.fecha+'T'+h+':00')};
+    }).filter(x=>x.d>ahora).sort((a,b)=>a.d-b.d);
+    if(!futuros.length){ el.textContent='♥ sin próximos eventos fijos — dime y fijamos uno'; el.classList.add('on'); return; }
+    const {e, d}=futuros[0];
+    const diff=d-ahora;
+    const dias=Math.floor(diff/86400000);
+    const hs=Math.floor(diff%86400000/3600000);
+    const ms=Math.floor(diff%3600000/60000);
+    el.textContent=`✦ faltan ${dias}d ${hs}h ${ms}m para “${e.titulo}” ♥`;
+    el.classList.add('on');
+  }catch(e){}
+}
+setInterval(actualizarCuenta,30000);
 function abrir(i){
   const todos = todosPoemas();
   const p = todos[i]; if(!p) return;
@@ -342,9 +429,13 @@ pintar();
 
 // --- TABS con hash (sin sticky, se va al hacer scroll) ---
 function mostrar(cual){
-  document.getElementById('secPoemas').style.display = cual==='poemas'?'block':'none';
-  document.getElementById('secEventos').style.display = cual==='eventos'?'block':'none';
-  document.getElementById('secIdeas').style.display = cual==='ideas'?'block':'none';
+  const secs={poemas:'secPoemas',eventos:'secEventos',ideas:'secIdeas'};
+  Object.entries(secs).forEach(([k,id])=>{
+    const s=document.getElementById(id);
+    const show=(k===cual);
+    s.style.display=show?'block':'none';
+    if(show){ s.classList.remove('fade'); void s.offsetWidth; s.classList.add('fade'); }
+  });
   document.getElementById('tabPoemas').classList.toggle('activo', cual==='poemas');
   document.getElementById('tabEventos').classList.toggle('activo', cual==='eventos');
   document.getElementById('tabIdeas').classList.toggle('activo', cual==='ideas');
@@ -383,8 +474,8 @@ function pintarEv(){
     const d=document.createElement('div'); d.className='ev';
     const badge=ev.origen==='fijo'?'<div class="tipo" style="display:inline-block;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dorado2);border:1px solid rgba(201,169,106,.5);border-radius:100px;padding:.22rem .8rem;margin:.4rem 0">♥ en la página</div>':ev.origen==='nube'?'<div class="tipo" style="display:inline-block;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--menta);border:1px solid rgba(143,208,179,.5);border-radius:100px;padding:.22rem .8rem;margin:.4rem 0">☁ compartido</div>':'<div class="tipo" style="display:inline-block;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--tinta-dim);border:1px dashed rgba(236,226,204,.35);border-radius:100px;padding:.22rem .8rem;margin:.4rem 0">solo en este dispositivo</div>';
     d.innerHTML=`<h3>${esc(ev.titulo)}</h3>${badge}<div class="cuando">${esc(fmtFecha(ev.fecha))} · ${esc(ev.horaI)}–${esc(ev.horaF)}${ev.lugar?' · '+esc(ev.lugar):''}</div><div class="desc">${esc(ev.desc||'')}</div><div class="acciones"><a class="pill" target="_blank" rel="noopener" href="${gcalLink(ev)}">＋ Google Calendar</a><a class="pill wa" target="_blank" rel="noopener" href="${waEvento(ev)}">Enviar por WhatsApp ♥</a>${ev.origen==='fijo'?'':'<button class="borrar">borrar</button>'}</div>`;
-    if(ev.origen==='local'){ d.querySelector('.borrar').onclick=()=>{ const idx=eventos.findIndex(x=>(x.lid||x.titulo+x.fecha)===(ev.lid||ev.titulo+ev.fecha)); if(idx>-1) eventos.splice(idx,1); guardarEv(eventos); pintarEv(); }; }
-    if(ev.origen==='nube'){ d.querySelector('.borrar').onclick=()=>nubeDel('eventos', ev.id); }
+    if(ev.origen==='local'){ d.querySelector('.borrar').onclick=()=>{ if(!confirm('¿Borrar “'+ev.titulo+'”? ♥')) return; const idx=eventos.findIndex(x=>(x.lid||x.titulo+x.fecha)===(ev.lid||ev.titulo+ev.fecha)); if(idx>-1) eventos.splice(idx,1); guardarEv(eventos); pintarEv(); }; }
+    if(ev.origen==='nube'){ d.querySelector('.borrar').onclick=()=>{ if(!confirm('¿Borrar “'+ev.titulo+'” de la nube? ♥')) return; nubeDel('eventos', ev.id); }; }
     c.appendChild(d);
   });
   const n=document.getElementById('nEv'); if(n) n.textContent=`(${todos.length})`;
@@ -427,8 +518,8 @@ function pintarIdeas(){
     const d=document.createElement('div'); d.className='idea';
     const badge=it.origen==='fijo'?'<div class="cuando">♥ fijo en la página · '+esc(fmtFecha(it.fecha))+'</div>':it.origen==='nube'?'<div class="cuando">☁ compartido · '+esc(fmtFecha(it.fecha))+'</div>':'<div class="cuando">solo en este dispositivo · '+esc(fmtFecha(it.fecha))+'</div>';
     d.innerHTML=`<h3>${esc(it.nombre||'Ella ♥')}</h3><div class="tipo">${esc(it.tipo||'💌 Mensaje bonito')}</div>${badge}<div class="texto">${esc(it.texto||'')}</div><div class="acciones"><a class="pill wa" target="_blank" rel="noopener" href="${waIdea(it)}">Enviar por WhatsApp ♥</a>${it.origen==='fijo'?'':'<button class="borrar">borrar</button>'}</div>`;
-    if(it.origen==='local'){ d.querySelector('.borrar').onclick=()=>{ const idx=ideas.findIndex(x=>(x.lid||x.texto+x.fecha)===(it.lid||it.texto+it.fecha)); if(idx>-1) ideas.splice(idx,1); guardarIdeas(ideas); pintarIdeas(); }; }
-    if(it.origen==='nube'){ d.querySelector('.borrar').onclick=()=>nubeDel('ideas', it.id); }
+    if(it.origen==='local'){ d.querySelector('.borrar').onclick=()=>{ if(!confirm('¿Borrar este mensajito? ♥')) return; const idx=ideas.findIndex(x=>(x.lid||x.texto+x.fecha)===(it.lid||it.texto+it.fecha)); if(idx>-1) ideas.splice(idx,1); guardarIdeas(ideas); pintarIdeas(); }; }
+    if(it.origen==='nube'){ d.querySelector('.borrar').onclick=()=>{ if(!confirm('¿Borrar este mensajito de la nube? ♥')) return; nubeDel('ideas', it.id); }; }
     c.appendChild(d);
   });
   const n=document.getElementById('nIdeas'); if(n) n.textContent=`(${todos.length})`;
@@ -521,6 +612,14 @@ async function nubeDel(col, id){
 initNube();
 nubeEstado();
 pintarIdeas(); pintarEv();
+try{ actualizarCuenta(); }catch(e){}
+// --- LIGHTBOX foto ---
+(function initLight(){
+  const marco=document.getElementById('fotoMarco');
+  const lb=document.getElementById('lightbox');
+  if(marco&&lb){ marco.addEventListener('click',()=>{ lb.style.display='flex'; }); }
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&lb){ lb.style.display='none'; } });
+})();
 
 // --- AMBIENTE CHILL (pad suave, sin internet) ---
 let musCtx=null, musOn=false, musTimer=null;
@@ -560,12 +659,13 @@ function musLoop(){
     let W,H,DPR;
     let estrellas=[], lluvia=[];
     function rs(){
-      DPR = Math.min(2, window.devicePixelRatio||1);
+      DPR = Math.min(window.innerWidth<600?1.5:2, window.devicePixelRatio||1);
       W = window.innerWidth; H = window.innerHeight;
       cv.width = W*DPR; cv.height = H*DPR;
       cv.style.width = W+'px'; cv.style.height = H+'px';
       ctx.setTransform(DPR,0,0,DPR,0,0);
-      const nE = W<600?70:120, nL = W<600?45:80;
+      const isMovil = W<600;
+      const nE = isMovil?40:120, nL = isMovil?25:80;
       estrellas = Array.from({length:nE},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.3+.4,tw:Math.random()*Math.PI*2,vs:.3+Math.random()*.7}));
       lluvia = Array.from({length:nL},()=>({x:Math.random()*W,y:Math.random()*H,r:1+Math.random()*2.2,v:.5+Math.random()*1.3,sw:Math.random()*Math.PI*2,sa:.3+Math.random()*.7,a:.35+Math.random()*.45}));
     }
@@ -579,10 +679,12 @@ function musLoop(){
         ctx.fillStyle = `rgba(233,207,154,${a.toFixed(2)})`; ctx.fill();
       });
       // lluvia dorada que cae con vaivén
+      const conBrillo = W>600;
       lluvia.forEach(p=>{
         ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,7);
-        ctx.save(); ctx.shadowColor='rgba(233,207,154,.9)'; ctx.shadowBlur=8;
-        ctx.fillStyle = `rgba(233,207,154,${p.a})`; ctx.fill(); ctx.restore();
+        if(conBrillo){ ctx.save(); ctx.shadowColor='rgba(233,207,154,.9)'; ctx.shadowBlur=8;
+        ctx.fillStyle = `rgba(233,207,154,${p.a})`; ctx.fill(); ctx.restore(); }
+        else { ctx.fillStyle = `rgba(233,207,154,${p.a})`; ctx.fill(); }
         p.y += p.v; p.sw += .02; p.x += Math.sin(p.sw)*p.sa*.4;
         if(p.y > H+6){ p.y = -6; p.x = Math.random()*W; }
         if(p.x > W+6) p.x = -6; if(p.x < -6) p.x = W+6;
