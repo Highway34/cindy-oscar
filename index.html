@@ -566,10 +566,11 @@ function agregarIdea(){
 // NOTE: pintar inicial se llama después de init nube (abajo)
 
 // --- MÚSICA FIJA EN LA PÁGINA (Spotify, la ven los dos) ---
-// Baby I'm Yours verificado: open.spotify.com/track/0SzvmWfOhoxZVGrmvb56YL
-// La 2ª ("Pedrería de asombro / Carlo Mazzili") no se encontró en Spotify: pégala abajo con el formulario y dime el link y la fijo aquí ♥
+// Baby I'm Yours: open.spotify.com/track/0SzvmWfOhoxZVGrmvb56YL
+// Pedrería de Asombro (Carlo Mazzilli, ApanaDubs): open.spotify.com/track/72Z4GxF5vSQXV8IwdGbJCJ
 const MUSICA_FIJA = [
-{titulo:"Baby I'm Yours", artista:"Arctic Monkeys ♥ nuestra canción", tipo:"track", id:"0SzvmWfOhoxZVGrmvb56YL", nota:"Baby, I'm yours hasta que las estrellas caigan ♥", fijo:true}
+{titulo:"Baby I'm Yours", artista:"Arctic Monkeys ♥ nuestra canción", tipo:"track", id:"0SzvmWfOhoxZVGrmvb56YL", nota:"Baby, I'm yours hasta que las estrellas caigan ♥", fijo:true},
+{titulo:"Pedrería de Asombro", artista:"Carlo Mazzilli, ApanaDubs ♥", tipo:"track", id:"72Z4GxF5vSQXV8IwdGbJCJ", nota:"Nuestra pedrería de asombro ♥", fijo:true}
 ];
 // --- MÚSICA user (localStorage + nube opcional) ---
 function cargarMusica(){ const g=store.get('musica-ella', []); return Array.isArray(g)?g:[]; }
