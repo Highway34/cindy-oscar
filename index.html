@@ -47,6 +47,18 @@ h1 em{color:var(--dorado2);font-style:italic}
 .tbtn:focus-visible{outline:none;box-shadow:var(--foco)}
 .nube-info{position:relative;margin:.6rem auto 0;max-width:520px;background:#f5ecd8;color:#2b2135;border-radius:14px;padding:.9rem 1.1rem;font-style:italic;line-height:1.6;text-align:center;box-shadow:0 18px 50px rgba(0,0,0,.5);animation:subir .25s ease}
 .nube-info::before{content:'';position:absolute;top:-7px;left:50%;transform:translateX(-50%) rotate(45deg);width:14px;height:14px;background:#f5ecd8;border-left:1px solid rgba(0,0,0,.1);border-top:1px solid rgba(0,0,0,.1)}
+/* campanita poema nuevo */
+#campana{position:fixed;top:14px;right:14px;z-index:40;width:50px;height:50px;border-radius:50%;border:1px solid rgba(201,169,106,.65);background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;font-size:1.35rem;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center}
+#campana:focus-visible{outline:none;box-shadow:var(--foco)}
+#campana.hay-nuevo{animation:campanear 1.4s infinite}
+@keyframes campanear{0%,100%{transform:rotate(0)}10%{transform:rotate(14deg)}20%{transform:rotate(-12deg)}30%{transform:rotate(8deg)}40%{transform:rotate(-6deg)}50%{transform:rotate(0)}}
+#campanaDot{position:absolute;top:4px;right:4px;width:13px;height:13px;border-radius:50%;background:#e5484d;border:2px solid #1a1420;display:none}
+#campana.hay-nuevo #campanaDot{display:block}
+#campanaPanel{display:none;position:fixed;top:70px;right:14px;z-index:40;max-width:min(86vw,300px);background:#f5ecd8;color:#2b2135;border-radius:14px;padding:1rem 1.1rem;box-shadow:0 20px 60px rgba(0,0,0,.6);cursor:pointer;text-align:left;animation:subir .25s ease}
+#campanaPanel .cp-aviso{font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:#8a2f44}
+#campanaPanel .cp-titulo{font-family:'Italiana',serif;font-size:1.3rem;margin:.2rem 0;line-height:1.2}
+#campanaPanel .cp-fecha{font-style:italic;opacity:.65;font-size:.9rem}
+#campanaPanel .cp-cta{display:inline-block;margin-top:.5rem;font-style:italic;color:#8a2f44}
 .nube{display:inline-block;margin:.6rem auto 0;font-style:italic;font-size:.92rem;color:var(--tinta-dim);border:1px dashed rgba(201,169,106,.4);border-radius:100px;padding:.35rem 1rem}
 .nube.on{color:var(--menta);border-color:rgba(143,208,179,.55)}
 .nube-wrap{margin-top:.6rem}
@@ -175,6 +187,8 @@ section{scroll-margin-top:1rem}
 </head>
 <body>
 <canvas id="stars" aria-hidden="true"></canvas>
+<button id="campana" aria-label="Notificaciones de poemas" title="Poema nuevo ♥" onclick="toggleCampana()">🔔<span id="campanaDot"></span></button>
+<div id="campanaPanel" role="button" tabindex="0" aria-label="Abrir poema nuevo" onclick="abrirPoemaNuevo()"></div>
 <div class="nebula" aria-hidden="true"></div>
 <div class="wrap">
 <header>
@@ -208,7 +222,6 @@ section{scroll-margin-top:1rem}
 </header>
 
 <div id="efimero" aria-label="Poema efímero de hoy" role="status"></div>
-<div id="avisoNuevoTop" style="display:none;margin:1rem 0 0;text-align:center;cursor:pointer;background:linear-gradient(180deg,rgba(143,208,179,.22),rgba(143,208,179,.1));border:1px solid rgba(143,208,179,.65);border-radius:14px;padding:.9rem 1.1rem;box-shadow:0 0 24px rgba(143,208,179,.25),0 18px 50px rgba(0,0,0,.5)" role="button" tabindex="0" aria-label="Hay poema nuevo, toca para leerlo"></div>
 <div id="aniv" aria-label="Aniversario del 18" role="status"></div>
 
 <div class="historia">
@@ -243,7 +256,6 @@ Si te quedas, arde.</p>
 <button class="pill" onclick="poemaSorpresa()" title="Abrir un poema al azar ♥">✦ Sorpresa ♥</button>
 <button class="pill" onclick="exportarRespaldo()" title="Descargar respaldo JSON">⭳ Respaldo</button>
 </div>
-<div id="avisoNuevo" style="display:none;margin-top:.8rem;text-align:center;font-style:italic;background:rgba(143,208,179,.12);border:1px solid rgba(143,208,179,.55);color:var(--menta);border-radius:12px;padding:.7rem 1rem"></div>
 <div class="grid" id="lista"></div>
 
 <div id="visor" role="dialog" aria-modal="false" aria-labelledby="vTitulo">
@@ -404,9 +416,9 @@ function pintar(){
   const q = ((document.getElementById('buscarPoema')||{}).value||'').toLowerCase().trim();
   const likes = getLikes();
   let todos = todosPoemas();
-  // ordenar: más recientes primero (sin romper fijos viejos del todo, solo aviso)
+  // ordenar: más recientes primero
   todos = todos.slice().sort((a,b)=>((b.fecha||'').localeCompare(a.fecha||'')));
-  // aviso de poema nuevo (últimos 7 días) — arriba + en sección, clic abre el poema
+  // campanita poema nuevo (últimos 7 días)
   try{
     const ahora = new Date(); ahora.setHours(12,0,0,0);
     const nuevos = todos.filter(p=>{
@@ -415,31 +427,15 @@ function pintar(){
       const diff = Math.floor((ahora - d)/86400000);
       return diff>=0 && diff<=7;
     });
-    const abrirNuevo = (p)=>{
-      mostrar('poemas');
-      document.getElementById('vTitulo').textContent=p.titulo;
-      document.getElementById('vFecha').textContent=fmtFecha(p.fecha);
-      document.getElementById('vTexto').textContent=p.texto;
-      document.getElementById('visor').style.display='block';
-      setTimeout(()=>{ document.getElementById('visor').scrollIntoView({behavior:'smooth',block:'center'}); },50);
-    };
-    const av = document.getElementById('avisoNuevo');
-    if(av){
-      if(nuevos.length && !q){
-        av.style.display='block';
-        av.textContent = '✦ Hay poema nuevo ♥ “'+nuevos[0].titulo+'” — '+fmtFecha(nuevos[0].fecha)+' · tócalo para leerlo';
-        av.style.cursor='pointer';
-        av.onclick=()=>abrirNuevo(nuevos[0]);
-      } else { av.style.display='none'; }
+    window.poemaNuevoActual = nuevos.length ? nuevos[0] : null;
+    const camp = document.getElementById('campana');
+    const panel = document.getElementById('campanaPanel');
+    if(camp){
+      if(nuevos.length){ camp.classList.add('hay-nuevo'); }
+      else { camp.classList.remove('hay-nuevo'); if(panel) panel.style.display='none'; }
     }
-    const top = document.getElementById('avisoNuevoTop');
-    if(top){
-      if(nuevos.length){
-        top.style.display='block';
-        top.innerHTML = '<div style="font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--menta)">✦ Hay poema nuevo ✦</div><div style="font-family:Italiana,serif;font-size:1.35rem;margin:.2rem 0">“'+esc(nuevos[0].titulo)+'” ♥</div><div style="font-style:italic;opacity:.85;font-size:.95rem">Toca aquí para leerlo · '+esc(fmtFecha(nuevos[0].fecha))+'</div>';
-        top.onclick=()=>abrirNuevo(nuevos[0]);
-        top.onkeydown=(e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); abrirNuevo(nuevos[0]); } };
-      } else { top.style.display='none'; }
+    if(panel && nuevos.length && panel.style.display==='block'){
+      panel.innerHTML = '<div class="cp-aviso">✦ poema nuevo ✦</div><div class="cp-titulo">“'+esc(nuevos[0].titulo)+'” ♥</div><div class="cp-fecha">'+esc(fmtFecha(nuevos[0].fecha))+'</div><span class="cp-cta">Toca para leerlo ♥</span>';
     }
   }catch(e){}
   if(q) todos = todos.filter(p=>((p.titulo||'')+' '+(p.texto||'')).toLowerCase().includes(q));
@@ -509,6 +505,33 @@ function toggleNube(id, btn){
     nube.style.display='block';
     nubeAbiertaId=id;
     if(btn) btn.classList.add('activo');
+  }catch(e){}
+}
+// --- CAMPANITA poema nuevo ---
+function toggleCampana(){
+  try{
+    const panel=document.getElementById('campanaPanel');
+    const p=window.poemaNuevoActual;
+    if(!p){
+      panel.innerHTML='<div class="cp-aviso">♥ sin novedades</div><div class="cp-titulo">Estamos al día</div><div class="cp-fecha">No hay poemas nuevos esta semana</div>';
+      panel.style.display = panel.style.display==='block' ? 'none' : 'block';
+      return;
+    }
+    if(panel.style.display==='block'){ panel.style.display='none'; return; }
+    panel.innerHTML='<div class="cp-aviso">✦ poema nuevo ✦</div><div class="cp-titulo">“'+esc(p.titulo)+'” ♥</div><div class="cp-fecha">'+esc(fmtFecha(p.fecha))+'</div><span class="cp-cta">Toca para leerlo ♥</span>';
+    panel.style.display='block';
+  }catch(e){}
+}
+function abrirPoemaNuevo(){
+  try{
+    const p=window.poemaNuevoActual; if(!p) return;
+    document.getElementById('campanaPanel').style.display='none';
+    mostrar('poemas');
+    document.getElementById('vTitulo').textContent=p.titulo;
+    document.getElementById('vFecha').textContent=fmtFecha(p.fecha);
+    document.getElementById('vTexto').textContent=p.texto;
+    document.getElementById('visor').style.display='block';
+    setTimeout(()=>{ document.getElementById('visor').scrollIntoView({behavior:'smooth',block:'center'}); },60);
   }catch(e){}
 }
 // --- CUENTA REGRESIVA próximo evento fijo ---
