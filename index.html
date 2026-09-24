@@ -38,7 +38,8 @@ header{text-align:center;padding:2.2rem 0 1rem}
 h1{font-family:'Italiana',serif;font-weight:400;font-size:clamp(2.4rem,7vw,4rem);margin:.7rem 0;line-height:1.05;letter-spacing:.01em}
 h1 em{color:var(--dorado2);font-style:italic}
 .sub{font-style:italic;color:var(--tinta-dim);font-size:1.2rem}
-.contador{margin:1.1rem auto 0;display:inline-block;border:1px solid rgba(201,169,106,.45);border-radius:100px;padding:.6rem 1.5rem;font-style:italic;background:rgba(201,169,106,.1);font-size:1.02rem}
+.contador{margin:0;display:inline-flex;align-items:center;border:1px solid rgba(201,169,106,.45);border-radius:100px;padding:.35rem .9rem;font-style:italic;background:rgba(201,169,106,.1);font-size:.88rem}
+.tiempos{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-top:.8rem;max-width:640px;margin-left:auto;margin-right:auto}
 .nube{display:inline-block;margin:.6rem auto 0;font-style:italic;font-size:.92rem;color:var(--tinta-dim);border:1px dashed rgba(201,169,106,.4);border-radius:100px;padding:.35rem 1rem}
 .nube.on{color:var(--menta);border-color:rgba(143,208,179,.55)}
 .nube-wrap{margin-top:.6rem}
@@ -123,8 +124,8 @@ footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
 .foto-marco img{width:100%;height:290px;object-fit:cover;border-radius:9px;display:block;background:#222}
 .foto-marco figcaption{text-align:center;color:#5b4a3a;font-style:italic;font-size:.95rem;margin-top:.5rem}
 .foto-marco::after{content:'♥';position:absolute;top:-12px;right:-10px;background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.9rem;box-shadow:0 5px 15px rgba(0,0,0,.4)}
-.cuenta{margin:.7rem auto 0;display:none;border:1px solid rgba(143,208,179,.5);border-radius:100px;padding:.5rem 1.2rem;font-style:italic;background:rgba(143,208,179,.1);font-size:.98rem}
-.cuenta.on{display:inline-block}
+.cuenta{margin:0;display:none;border:1px solid rgba(143,208,179,.5);border-radius:100px;padding:.35rem .9rem;font-style:italic;background:rgba(143,208,179,.1);font-size:.85rem}
+.cuenta.on{display:inline-flex;align-items:center}
 .toolbar{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:1rem}
 .toolbar input{flex:1 1 180px;background:var(--fondo2);border:1px solid rgba(201,169,106,.35);color:var(--tinta);border-radius:100px;padding:.65rem 1.1rem;font-family:inherit;font-style:italic;font-size:.95rem;min-height:44px}
 .toolbar input:focus{outline:none;border-color:var(--dorado2);box-shadow:var(--foco)}
@@ -173,9 +174,7 @@ section{scroll-margin-top:1rem}
 <div class="pret">✦ Nuestro rincón ✦</div>
 <h1>Cindy <em>&</em> Oscar ♥</h1>
 <p class="sub">nuestro blog ♥</p>
-<div><span class="contador" id="contador">desde el 18 sep ♥</span></div>
-<div><span class="cuenta" id="cuentaRegresiva"></span></div>
-<div><span class="cuenta" id="cuenta18"></span></div>
+<div class="tiempos"><span class="contador" id="contador">desde el 18 sep ♥</span><span class="cuenta" id="cuentaRegresiva"></span><span class="cuenta" id="cuenta18"></span></div>
 <div><span class="nube" id="nubeEstado">♥ guardado en esta página + este dispositivo</span>
 <div class="nube-wrap"><details class="nube-cfg" id="nubeCfg">
 <summary>☁ activar blog compartido (ver en ambos lados)</summary>
