@@ -230,6 +230,7 @@ Si te quedas, arde.</p>
 <button class="pill" onclick="poemaSorpresa()" title="Abrir un poema al azar ♥">✦ Sorpresa ♥</button>
 <button class="pill" onclick="exportarRespaldo()" title="Descargar respaldo JSON">⭳ Respaldo</button>
 </div>
+<div id="avisoNuevo" style="display:none;margin-top:.8rem;text-align:center;font-style:italic;background:rgba(143,208,179,.12);border:1px solid rgba(143,208,179,.55);color:var(--menta);border-radius:12px;padding:.7rem 1rem"></div>
 <div class="grid" id="lista"></div>
 
 <div id="visor" role="dialog" aria-modal="false" aria-labelledby="vTitulo">
@@ -326,7 +327,8 @@ Si te quedas, arde.</p>
 const DEFAULT = [
 {titulo:"Bienvenida a nuestro blog", fecha:"2026-09-22", texto:"Quédate.\nLa noche es pequeña,\ncabe en tus manos.\n\nNo digas nada.\nMírame hasta que el silencio\naprenda tu nombre.\n\nEsta casa es de papel y luna:\nsi te vas, se apaga.\nSi te quedas, arde.", fijo:true},
 {titulo:"El jardín nocturno", fecha:"2026-09-18", texto:"Quizás el tiempo sea un jardín que se bifurca en tu mirada,\numbral de un laberinto donde me pierdo para encontrarte…\n\n(Poema completo en la página original → toca arriba “Abrir el poema original”)\n\nAmor, ¿si deshojamos juntos la eternidad?", fijo:true},
-{titulo:"Sí, somos novios", fecha:"2026-09-22", texto:"Me dijiste que sí.\nY el laberinto se volvió jardín,\nel insomnio se volvió calma,\ny la noche se volvió nuestra.\n\nEsto apenas empieza.", fijo:true}
+{titulo:"Sí, somos novios", fecha:"2026-09-22", texto:"Me dijiste que sí.\nY el laberinto se volvió jardín,\nel insomnio se volvió calma,\ny la noche se volvió nuestra.\n\nEsto apenas empieza.", fijo:true},
+{titulo:"Los pequeños detalles", fecha:"2026-09-24", texto:"No son las lunas grandes las que me salvan,\nson tus pequeños detalles:\ntu risa a media tarde,\ntu mensaje de buenos días,\ntu mano buscando la mía sin mirar.\n\nUn café compartido me sabe a eternidad,\nuna mirada tuya me ordena el mundo,\nun “te quiero” bajito me llena más\nque mil poemas juntos.\n\nSi la felicidad vive en alguna parte,\nvive ahí: en lo pequeño contigo.", fijo:true}
 ];
 
 /* storage seguro */
@@ -389,6 +391,27 @@ function pintar(){
   const q = ((document.getElementById('buscarPoema')||{}).value||'').toLowerCase().trim();
   const likes = getLikes();
   let todos = todosPoemas();
+  // ordenar: más recientes primero (sin romper fijos viejos del todo, solo aviso)
+  todos = todos.slice().sort((a,b)=>((b.fecha||'').localeCompare(a.fecha||'')));
+  // aviso de poema nuevo (últimos 7 días)
+  try{
+    const ahora = new Date(); ahora.setHours(12,0,0,0);
+    const nuevos = todos.filter(p=>{
+      if(!p.fecha) return false;
+      const d = new Date(p.fecha+'T12:00:00');
+      const diff = Math.floor((ahora - d)/86400000);
+      return diff>=0 && diff<=7;
+    });
+    const av = document.getElementById('avisoNuevo');
+    if(av){
+      if(nuevos.length && !q){
+        av.style.display='block';
+        av.textContent = '✦ Hay poema nuevo ♥ “'+nuevos[0].titulo+'” — '+fmtFecha(nuevos[0].fecha)+' · tócalo para leerlo';
+        av.style.cursor='pointer';
+        av.onclick=()=>{ const el=c.firstChild; if(el){ el.scrollIntoView({behavior:'smooth',block:'center'}); } };
+      } else { av.style.display='none'; }
+    }
+  }catch(e){}
   if(q) todos = todos.filter(p=>((p.titulo||'')+' '+(p.texto||'')).toLowerCase().includes(q));
   if(q && !todos.length){ c.innerHTML='<div class="empty">No encontré ese poema, amor ♥<br>Prueba con “luna”, “jardín” o “sí”.</div>'; }
   todos.forEach((p)=>{
@@ -396,8 +419,16 @@ function pintar(){
     const liked=!!likes[key];
     const d=document.createElement('div'); d.className='card'; d.tabIndex=0;
     d.setAttribute('role','button'); d.setAttribute('aria-label','Leer '+p.titulo);
+    let esNuevo=false;
+    try{
+      const ahora2=new Date(); ahora2.setHours(12,0,0,0);
+      const dp=new Date(p.fecha+'T12:00:00');
+      const diff2=Math.floor((ahora2-dp)/86400000);
+      esNuevo = diff2>=0 && diff2<=7;
+    }catch(e){}
+    const tagNuevo = esNuevo ? '<span style="display:inline-block;background:var(--menta);color:#10231b;border-radius:100px;padding:.1rem .7rem;font-size:.7rem;letter-spacing:.16em;margin-left:.5rem;vertical-align:middle">✦ NUEVO</span>' : '';
     const badge = p.origen==='fijo' ? '<span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dorado2)">♥ en la página</span>' : p.origen==='nube' ? '<span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--menta)">☁ compartido</span>' : '<span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.6">solo este dispositivo</span>';
-    d.innerHTML=`<h3>${esc(p.titulo)}</h3><div class="fecha">${esc(fmtFecha(p.fecha))} · ${badge}</div><p>${esc((p.texto||'').slice(0,110))}…</p><span class="ver">leer ♥</span><div><button class="like${liked?' liked':''}" aria-label="Me encanta">♥ ${liked?'1':''} me encanta</button></div>${(p.origen==='local'||p.origen==='nube')?'<div><button class="borrar">borrar</button></div>':''}`;
+    d.innerHTML=`<h3>${esc(p.titulo)}${tagNuevo}</h3><div class="fecha">${esc(fmtFecha(p.fecha))} · ${badge}</div><p>${esc((p.texto||'').slice(0,110))}…</p><span class="ver">leer ♥</span><div><button class="like${liked?' liked':''}" aria-label="Me encanta">♥ ${liked?'1':''} me encanta</button></div>${(p.origen==='local'||p.origen==='nube')?'<div><button class="borrar">borrar</button></div>':''}`;
     const idxReal = p.origen==='local' ? lista.findIndex(x=>(x.lid||x.titulo+x.fecha)===(p.lid||p.titulo+p.fecha)) : -1;
     const open=()=>{ document.getElementById('vTitulo').textContent=p.titulo; document.getElementById('vFecha').textContent=fmtFecha(p.fecha); document.getElementById('vTexto').textContent=p.texto; document.getElementById('visor').style.display='block'; document.getElementById('visor').scrollIntoView({behavior:'smooth',block:'center'}); };
     d.onclick=(e)=>{
