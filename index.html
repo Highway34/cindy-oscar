@@ -40,6 +40,13 @@ h1 em{color:var(--dorado2);font-style:italic}
 .sub{font-style:italic;color:var(--tinta-dim);font-size:1.2rem}
 .contador{margin:0;display:inline-flex;align-items:center;border:1px solid rgba(201,169,106,.45);border-radius:100px;padding:.35rem .9rem;font-style:italic;background:rgba(201,169,106,.1);font-size:.88rem}
 .tiempos{display:flex;flex-wrap:wrap;gap:.4rem;justify-content:center;margin-top:.8rem;max-width:640px;margin-left:auto;margin-right:auto}
+.tiempos-botones{display:flex;gap:.5rem;justify-content:center;margin-top:.8rem;max-width:640px;margin-left:auto;margin-right:auto}
+.tbtn{flex:1 1 0;white-space:nowrap;background:rgba(0,0,0,.38);border:1px solid var(--borde);color:var(--tinta-dim);border-radius:13px;padding:.7rem .3rem;cursor:pointer;font-family:'Italiana',serif;letter-spacing:.08em;text-transform:uppercase;font-size:.78rem;min-height:48px;transition:.22s;line-height:1.2}
+.tbtn:hover{color:var(--dorado2);border-color:var(--dorado2)}
+.tbtn.activo{background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;box-shadow:0 6px 20px rgba(201,169,106,.35)}
+.tbtn:focus-visible{outline:none;box-shadow:var(--foco)}
+.nube-info{position:relative;margin:.6rem auto 0;max-width:520px;background:#f5ecd8;color:#2b2135;border-radius:14px;padding:.9rem 1.1rem;font-style:italic;line-height:1.6;text-align:center;box-shadow:0 18px 50px rgba(0,0,0,.5);animation:subir .25s ease}
+.nube-info::before{content:'';position:absolute;top:-7px;left:50%;transform:translateX(-50%) rotate(45deg);width:14px;height:14px;background:#f5ecd8;border-left:1px solid rgba(0,0,0,.1);border-top:1px solid rgba(0,0,0,.1)}
 .nube{display:inline-block;margin:.6rem auto 0;font-style:italic;font-size:.92rem;color:var(--tinta-dim);border:1px dashed rgba(201,169,106,.4);border-radius:100px;padding:.35rem 1rem}
 .nube.on{color:var(--menta);border-color:rgba(143,208,179,.55)}
 .nube-wrap{margin-top:.6rem}
@@ -174,7 +181,13 @@ section{scroll-margin-top:1rem}
 <div class="pret">✦ Nuestro rincón ✦</div>
 <h1>Cindy <em>&</em> Oscar ♥</h1>
 <p class="sub">nuestro blog ♥</p>
-<div class="tiempos"><span class="contador" id="contador">desde el 18 sep ♥</span><span class="cuenta" id="cuentaRegresiva"></span><span class="cuenta" id="cuenta18"></span></div>
+<div class="tiempos-botones" role="group" aria-label="Tiempos">
+<button class="tbtn" id="btnContador" onclick="toggleNube('contador',this)">♥ Nosotros</button>
+<button class="tbtn" id="btnProximo" onclick="toggleNube('cuentaRegresiva',this)">✦ Próximo plan</button>
+<button class="tbtn" id="btnMes" onclick="toggleNube('cuenta18',this)">♥ Nuestro mes</button>
+</div>
+<div id="nubeInfo" class="nube-info" style="display:none" role="status"></div>
+<div style="display:none" aria-hidden="true"><span class="contador" id="contador">desde el 18 sep ♥</span><span class="cuenta" id="cuentaRegresiva"></span><span class="cuenta" id="cuenta18"></span></div>
 <div><span class="nube" id="nubeEstado">♥ guardado en esta página + este dispositivo</span>
 <div class="nube-wrap"><details class="nube-cfg" id="nubeCfg">
 <summary>☁ activar blog compartido (ver en ambos lados)</summary>
@@ -481,6 +494,23 @@ function actualizarContador(){
   }catch(e){}
 }
 actualizarContador(); setInterval(actualizarContador,30000);
+// --- BOTONES TIEMPOS con nubecita ---
+let nubeAbiertaId = null;
+function toggleNube(id, btn){
+  try{
+    const nube = document.getElementById('nubeInfo');
+    const src = document.getElementById(id);
+    const txt = src ? src.textContent.trim() : '';
+    document.querySelectorAll('.tbtn').forEach(b=>b.classList.remove('activo'));
+    if(nubeAbiertaId===id){
+      nube.style.display='none'; nubeAbiertaId=null; return;
+    }
+    nube.textContent = txt || '♥ pronto, amor';
+    nube.style.display='block';
+    nubeAbiertaId=id;
+    if(btn) btn.classList.add('activo');
+  }catch(e){}
+}
 // --- CUENTA REGRESIVA próximo evento fijo ---
 function actualizarCuenta(){
   try{
