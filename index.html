@@ -196,6 +196,7 @@ section{scroll-margin-top:1rem}
 </header>
 
 <div id="efimero" aria-label="Poema efímero de hoy" role="status"></div>
+<div id="avisoNuevoTop" style="display:none;margin:1rem 0 0;text-align:center;cursor:pointer;background:linear-gradient(180deg,rgba(143,208,179,.22),rgba(143,208,179,.1));border:1px solid rgba(143,208,179,.65);border-radius:14px;padding:.9rem 1.1rem;box-shadow:0 0 24px rgba(143,208,179,.25),0 18px 50px rgba(0,0,0,.5)" role="button" tabindex="0" aria-label="Hay poema nuevo, toca para leerlo"></div>
 <div id="aniv" aria-label="Aniversario del 18" role="status"></div>
 
 <div class="historia">
@@ -393,7 +394,7 @@ function pintar(){
   let todos = todosPoemas();
   // ordenar: más recientes primero (sin romper fijos viejos del todo, solo aviso)
   todos = todos.slice().sort((a,b)=>((b.fecha||'').localeCompare(a.fecha||'')));
-  // aviso de poema nuevo (últimos 7 días)
+  // aviso de poema nuevo (últimos 7 días) — arriba + en sección, clic abre el poema
   try{
     const ahora = new Date(); ahora.setHours(12,0,0,0);
     const nuevos = todos.filter(p=>{
@@ -402,14 +403,31 @@ function pintar(){
       const diff = Math.floor((ahora - d)/86400000);
       return diff>=0 && diff<=7;
     });
+    const abrirNuevo = (p)=>{
+      mostrar('poemas');
+      document.getElementById('vTitulo').textContent=p.titulo;
+      document.getElementById('vFecha').textContent=fmtFecha(p.fecha);
+      document.getElementById('vTexto').textContent=p.texto;
+      document.getElementById('visor').style.display='block';
+      setTimeout(()=>{ document.getElementById('visor').scrollIntoView({behavior:'smooth',block:'center'}); },50);
+    };
     const av = document.getElementById('avisoNuevo');
     if(av){
       if(nuevos.length && !q){
         av.style.display='block';
         av.textContent = '✦ Hay poema nuevo ♥ “'+nuevos[0].titulo+'” — '+fmtFecha(nuevos[0].fecha)+' · tócalo para leerlo';
         av.style.cursor='pointer';
-        av.onclick=()=>{ const el=c.firstChild; if(el){ el.scrollIntoView({behavior:'smooth',block:'center'}); } };
+        av.onclick=()=>abrirNuevo(nuevos[0]);
       } else { av.style.display='none'; }
+    }
+    const top = document.getElementById('avisoNuevoTop');
+    if(top){
+      if(nuevos.length){
+        top.style.display='block';
+        top.innerHTML = '<div style="font-size:.78rem;letter-spacing:.22em;text-transform:uppercase;color:var(--menta)">✦ Hay poema nuevo ✦</div><div style="font-family:Italiana,serif;font-size:1.35rem;margin:.2rem 0">“'+esc(nuevos[0].titulo)+'” ♥</div><div style="font-style:italic;opacity:.85;font-size:.95rem">Toca aquí para leerlo · '+esc(fmtFecha(nuevos[0].fecha))+'</div>';
+        top.onclick=()=>abrirNuevo(nuevos[0]);
+        top.onkeydown=(e)=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); abrirNuevo(nuevos[0]); } };
+      } else { top.style.display='none'; }
     }
   }catch(e){}
   if(q) todos = todos.filter(p=>((p.titulo||'')+' '+(p.texto||'')).toLowerCase().includes(q));
