@@ -1,0 +1,25 @@
+{
+  "name": "Nuestro Rincón ♥ Cindy & Oscar",
+  "short_name": "Cindy & Oscar ♥",
+  "description": "Nuestro blog ♥ poemas, eventos e ideas con amor",
+  "start_url": "https://highway34.github.io/cindy-oscar/",
+  "scope": "https://highway34.github.io/cindy-oscar/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0e0d12",
+  "theme_color": "#0e0d12",
+  "icons": [
+    {
+      "src": "icono.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "foto-nosotros.jpg",
+      "sizes": "any",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}
