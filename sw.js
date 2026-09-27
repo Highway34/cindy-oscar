@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v1';
+const CACHE = 'rincon-v2'; // v2: solo track Cualquiera en su sano juicio ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
