@@ -698,11 +698,11 @@ function agregarIdea(){
 // --- MÚSICA FIJA EN LA PÁGINA (Spotify, la ven los dos) ---
 // Baby I'm Yours: open.spotify.com/track/0SzvmWfOhoxZVGrmvb56YL
 // Pedrería de Asombro (Carlo Mazzilli, ApanaDubs): open.spotify.com/track/72Z4GxF5vSQXV8IwdGbJCJ
-// Mi para ti (Bunbury - Posible): open.spotify.com/album/6y51xN4nZ30u9695vunGAP
+// Cualquiera en su sano juicio (Bunbury): open.spotify.com/track/58aohHRqfzaKC9T0qh3WEF
 const MUSICA_FIJA = [
 {titulo:"Baby I'm Yours", artista:"Arctic Monkeys ♥ nuestra canción", tipo:"track", id:"0SzvmWfOhoxZVGrmvb56YL", nota:"Baby, I'm yours hasta que las estrellas caigan ♥", fijo:true},
 {titulo:"Pedrería de Asombro", artista:"Carlo Mazzilli, ApanaDubs ♥", tipo:"track", id:"72Z4GxF5vSQXV8IwdGbJCJ", nota:"Nuestra pedrería de asombro ♥", fijo:true},
-{titulo:"Posible", artista:"Bunbury ♥", tipo:"album", id:"6y51xN4nZ30u9695vunGAP", nota:"Mi para ti, de Cindy a Oscar ♥", fijo:true}
+{titulo:"Cualquiera en su sano juicio (se habría vuelto loco por ti)", artista:"Bunbury ♥", tipo:"track", id:"58aohHRqfzaKC9T0qh3WEF", nota:"Mi para ti, de Cindy a Oscar ♥", fijo:true}
 ];
 // --- MÚSICA user (localStorage + nube opcional) ---
 function cargarMusica(){ const g=store.get('musica-ella', []); return Array.isArray(g)?g:[]; }
