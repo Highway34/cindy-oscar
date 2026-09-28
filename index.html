@@ -78,8 +78,9 @@ details.nube-cfg summary:hover{color:var(--dorado2);border-color:var(--dorado2)}
 .bienvenida{background:rgba(255,255,255,.032);border-left:3px solid var(--dorado);border-radius:0 var(--radio) var(--radio) 0;padding:1.25rem 1.35rem;margin:1.2rem 0;font-style:italic;line-height:1.75}
 .bienvenida h2{font-family:'Italiana',serif;font-weight:400;font-size:1.35rem;margin-bottom:.5rem;font-style:normal;letter-spacing:.02em}
 /* tabs - caja elegante que se va al hacer scroll */
-nav.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;max-width:640px;margin:1.2rem auto;padding:5px;background:rgba(0,0,0,.38);border:1px solid var(--borde);border-radius:18px}
-nav.tabs button{background:transparent;border:none;color:var(--tinta-dim);border-radius:13px;padding:.85rem .4rem;cursor:pointer;font-family:'Italiana',serif;letter-spacing:.1em;text-transform:uppercase;font-size:.82rem;min-height:48px;transition:.22s;line-height:1.2}
+nav.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;max-width:640px;margin:1.2rem auto;padding:5px;background:rgba(0,0,0,.38);border:1px solid var(--borde);border-radius:18px}
+nav.tabs button{background:transparent;border:none;color:var(--tinta-dim);border-radius:13px;padding:.85rem .3rem;cursor:pointer;font-family:'Italiana',serif;letter-spacing:.08em;text-transform:uppercase;font-size:.74rem;min-height:48px;transition:.22s;line-height:1.2}
+@media(max-width:560px){nav.tabs button{font-size:.66rem;padding:.75rem .2rem;letter-spacing:.04em}}
 nav.tabs button:hover{color:var(--dorado2);background:rgba(201,169,106,.1)}
 nav.tabs button.activo{background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;box-shadow:0 6px 20px rgba(201,169,106,.35)}
 nav.tabs button:focus-visible{outline:none;box-shadow:var(--foco)}
@@ -163,6 +164,21 @@ footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
 .mus h3{font-family:'Italiana',serif;font-weight:400;font-size:1.32rem;line-height:1.25}
 .mus iframe{width:100%;border:none;border-radius:12px;margin-top:.7rem;background:#000}
 .mus .artista{font-style:italic;color:var(--dorado2);font-size:.95rem;margin-top:.15rem}
+/* planes a futuro */
+.plan-bar{background:rgba(0,0,0,.35);border:1px solid var(--borde);border-radius:100px;height:14px;overflow:hidden;margin-top:.8rem}
+.plan-bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--dorado2),var(--dorado));transition:width .4s ease}
+.plan-prog{font-style:italic;color:var(--dorado2);margin-top:.4rem;text-align:center}
+.plan{background:rgba(255,255,255,.032);border:1px solid var(--borde);border-radius:var(--radio);padding:.9rem 1rem;margin-top:.7rem;display:flex;gap:.8rem;align-items:flex-start;border-left:3px solid var(--dorado);animation:subir .3s ease}
+.plan.hecho{opacity:.75;border-left-color:var(--menta)}
+.plan.hecho .plan-t{color:var(--menta)}
+.plan-check{flex:0 0 auto;width:30px;height:30px;border-radius:50%;border:2px solid var(--dorado);background:transparent;color:transparent;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;min-width:30px;transition:.2s}
+.plan.hecho .plan-check{background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;border-color:var(--dorado2)}
+.plan-check:focus-visible{outline:none;box-shadow:var(--foco)}
+.plan-body{flex:1;min-width:0}
+.plan-t{font-family:'Italiana',serif;font-size:1.2rem;line-height:1.3}
+.plan.hecho .plan-t{text-decoration:line-through}
+.plan .acciones{margin-top:.5rem}
+.plan .pill{font-size:.82rem;min-height:38px;padding:.4rem .9rem}
 /* poema efímero diario */
 #efimero{margin:1.2rem 0 0}
 .efi{background:linear-gradient(180deg, rgba(38,30,52,.96), rgba(16,14,22,.98));border:1px solid rgba(143,208,179,.5);border-radius:var(--radio);padding:1.3rem 1.25rem;box-shadow:0 0 0 1px rgba(143,208,179,.12),0 18px 50px rgba(0,0,0,.5);cursor:pointer;position:relative;overflow:hidden}
@@ -251,6 +267,7 @@ Si te quedas, arde.</p>
 <button id="tabEventos" onclick="mostrar('eventos')">✦ Eventos <span class="n" id="nEv"></span></button>
 <button id="tabIdeas" onclick="mostrar('ideas')">✉ Ideas <span class="n" id="nIdeas"></span></button>
 <button id="tabMusica" onclick="mostrar('musica')">♪ Música <span class="n" id="nMus"></span></button>
+<button id="tabPlanes" onclick="mostrar('planes')">✨ Planes <span class="n" id="nPlanes"></span></button>
 </nav>
 
 <section id="secPoemas" aria-label="Poemas">
@@ -346,6 +363,23 @@ Si te quedas, arde.</p>
 </div>
 </section>
 
+<section id="secPlanes" style="display:none" aria-label="Planes a futuro">
+<div class="form">
+<h2>✨ Planes a futuro ♥</h2>
+<p>Nuestra lista de sueños por cumplir. Toca el círculo para chulearlo ♥ y mándalo a eventos cuando le pongamos fecha.</p>
+<div class="plan-bar" aria-hidden="true"><i id="planBarFill"></i></div>
+<div class="plan-prog" id="planProg"></div>
+<div class="hint">💡 <b>♥</b> = chuleado / cumplido. <b>＋ Evento</b> = lo manda a la pestaña Eventos con el título listo, solo eliges fecha y guardas.</div>
+<label class="lbl" for="pNuevo">Agregar otro plan</label>
+<div class="row2">
+<div style="flex:3 1 200px"><input id="pNuevo" placeholder="Ej. Picnic en el parque ♥" autocomplete="off"></div>
+<div style="flex:1 1 120px;display:flex;align-items:flex-end"><button class="btn" style="margin-top:0;width:100%" onclick="agregarPlan()">＋ Añadir</button></div>
+</div>
+<div id="msgP" class="msg" aria-live="polite"></div>
+</div>
+<div id="listaPlanes"></div>
+</section>
+
 <footer><div class="orn">✦ ♥ ✦</div><div>Cindy & Oscar · hecho con amor, para siempre</div></footer>
 </div>
 <button id="musBtn" aria-label="Ambiente chill" title="Ambiente chill ♥">♪</button>
@@ -405,7 +439,7 @@ function poemaSorpresa(){
 }
 function exportarRespaldo(){
   try{
-    const data = {poemas:lista, eventos:eventos||[], ideas:ideas||[], musica:musica||[], fecha:new Date().toISOString()};
+    const data = {poemas:lista, eventos:eventos||[], ideas:ideas||[], musica:musica||[], planesChecks:store.get('planes-checks',{}), planesCustom:store.get('planes-custom',[]), fecha:new Date().toISOString()};
     const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
     const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
     a.download='respaldo-nuestro-rincon.json'; a.click();
@@ -583,7 +617,7 @@ pintar();
 
 // --- TABS con hash (sin sticky, se va al hacer scroll) ---
 function mostrar(cual){
-  const secs={poemas:'secPoemas',eventos:'secEventos',ideas:'secIdeas',musica:'secMusica'};
+  const secs={poemas:'secPoemas',eventos:'secEventos',ideas:'secIdeas',musica:'secMusica',planes:'secPlanes'};
   Object.entries(secs).forEach(([k,id])=>{
     const s=document.getElementById(id);
     if(!s) return;
@@ -595,12 +629,14 @@ function mostrar(cual){
   document.getElementById('tabEventos').classList.toggle('activo', cual==='eventos');
   document.getElementById('tabIdeas').classList.toggle('activo', cual==='ideas');
   const tm=document.getElementById('tabMusica'); if(tm) tm.classList.toggle('activo', cual==='musica');
+  const tp=document.getElementById('tabPlanes'); if(tp) tp.classList.toggle('activo', cual==='planes');
   if(('#'+cual)!==location.hash){ history.replaceState(null,'','#'+cual); }
   if(cual==='eventos') pintarEv();
   if(cual==='ideas') pintarIdeas();
   if(cual==='musica') pintarMusica();
+  if(cual==='planes') pintarPlanes();
 }
-(function initTab(){ const h=(location.hash||'').replace('#',''); if(['poemas','eventos','ideas','musica'].includes(h)) mostrar(h); })();
+(function initTab(){ const h=(location.hash||'').replace('#',''); if(['poemas','eventos','ideas','musica','planes'].includes(h)) mostrar(h); })();
 
 // --- EVENTOS FIJOS EN LA PÁGINA (los ve todo el mundo) ---
 // Para fijar uno para siempre, dime "fija este evento: ..." y yo lo agrego aquí y lo publico ♥
@@ -760,6 +796,68 @@ function agregarMusica(){
   if(nube.on){ nubeAdd('musica', obj).then(()=>{ toast('msgM','Guardada en el blog compartido ☁♥'); }); }
   else{ musica.unshift(obj); guardarMusica(musica); pintarMusica(); toast('msgM','Guardada en este dispositivo ♥ dime y la fijo en la página'); }
   linkEl.value=''; notaEl.value='';
+}
+
+// --- PLANES A FUTURO (chuleables + mandar a eventos) ---
+const PLANES_FIJOS = [
+{t:"🎨 Pintura cerámica"},{t:"⛰️ Monserrate"},
+{t:"🛵 Pueblear"},{t:"📚 Ir a la biblioteca"},
+{t:"🎢 Salitre Mágico"},{t:"🎬 Cinemateca, muchas veces"},
+{t:"🍷 Cenas, muchas veces"},{t:"🪐 Planetario"},
+{t:"🎭 Teatro"},{t:"🎤 Stand up comedy"},
+{t:"🎳 Bolos"},{t:"🏓 Ping pong"},
+{t:"🏎️ Karts"},{t:"🐉 Comida china"},
+{t:"🎈 Globos en México"},{t:"🏺 Clase de cerámica"},
+{t:"🍇 Catar vinos"},{t:"🖼️ Museos"},
+{t:"💍 Casarnos ♥"}
+];
+function planesChecks(){ const g=store.get('planes-checks',{}); return (g&&typeof g==='object')?g:{}; }
+function planesCustom(){ const g=store.get('planes-custom',[]); return Array.isArray(g)?g:[]; }
+function todosPlanes(){
+  const cust=planesCustom().map((t,i)=>({t:t,key:'C'+i,custom:i}));
+  const fijos=PLANES_FIJOS.map((p,i)=>({t:p.t,key:'F'+i}));
+  return [...fijos,...cust];
+}
+function pintarPlanes(){
+  const c=document.getElementById('listaPlanes'); if(!c) return;
+  const checks=planesChecks();
+  const todos=todosPlanes();
+  const hechos=todos.filter(p=>checks[p.key]).length;
+  c.innerHTML='';
+  todos.forEach((p)=>{
+    const hecho=!!checks[p.key];
+    const d=document.createElement('div'); d.className='plan'+(hecho?' hecho':'');
+    d.innerHTML='<button class="plan-check" aria-label="Chulear plan" aria-pressed="'+hecho+'">'+(hecho?'♥':'')+'</button><div class="plan-body"><div class="plan-t">'+esc(p.t)+'</div><div class="acciones"><button class="pill">＋ Añadir a eventos ♥</button>'+(p.custom!==undefined?'<button class="borrar">borrar</button>':'')+'</div></div>';
+    const btns=d.querySelectorAll('button');
+    btns[0].onclick=()=>togglePlan(p.key);
+    btns[1].onclick=()=>planAEvento(p.t);
+    if(p.custom!==undefined&&btns[2]){ btns[2].onclick=()=>{ if(!confirm('¿Borrar “'+p.t+'”? ♥')) return; const arr=planesCustom(); arr.splice(p.custom,1); store.set('planes-custom',arr); pintarPlanes(); }; }
+    c.appendChild(d);
+  });
+  const pct=todos.length?Math.round(hechos/todos.length*100):0;
+  const bar=document.getElementById('planBarFill'); if(bar) bar.style.width=pct+'%';
+  const prog=document.getElementById('planProg'); if(prog) prog.textContent=todos.length?('♥ '+hechos+' de '+todos.length+' cumplidos ('+pct+'%)'):'Aún no hay planes, amor ♥';
+  const np=document.getElementById('nPlanes'); if(np) np.textContent='('+hechos+'/'+todos.length+')';
+}
+function togglePlan(key){
+  const ch=planesChecks(); if(ch[key]) delete ch[key]; else ch[key]=1;
+  store.set('planes-checks',ch); pintarPlanes();
+}
+function agregarPlan(){
+  const el=document.getElementById('pNuevo'); const t=(el.value||'').trim();
+  if(!t){ toast('msgP','Escríbelo primero, amor ♥'); return; }
+  const arr=planesCustom(); arr.push(t); store.set('planes-custom',arr);
+  el.value=''; pintarPlanes(); toast('msgP','Plan guardado ♥ a cumplirlo juntos');
+}
+function planAEvento(titulo){
+  mostrar('eventos');
+  setTimeout(()=>{
+    const et=document.getElementById('eTitulo'); if(et) et.value=titulo.replace(/^[^\s]+\s/,'');
+    const ed=document.getElementById('eDesc'); if(ed&&!ed.value) ed.value='De nuestra lista de planes a futuro ♥ '+titulo;
+    toast('msgE','♥ Listo para agendar “'+titulo+'” — elige fecha y guarda');
+    const form=document.querySelector('#secEventos .form'); if(form) form.scrollIntoView({behavior:'smooth',block:'start'});
+    if(et) et.focus({preventScroll:true});
+  },80);
 }
 
 // --- POEMA EFÍMERO DIARIO (cambia cada día a las 6am, dura 24h) ---
@@ -968,7 +1066,7 @@ async function nubeDel(col, id){
 (function initCfgBox(){ try{ const s=localStorage.getItem('firebase-config'); if(s){ const t=document.getElementById('fCfg'); if(t) t.value=s; } }catch(e){} })();
 initNube();
 nubeEstado();
-pintarIdeas(); pintarEv(); pintarMusica(); pintarEfimero(); pintarAniv();
+pintarIdeas(); pintarEv(); pintarMusica(); pintarPlanes(); pintarEfimero(); pintarAniv();
 try{ actualizarCuenta(); }catch(e){}
 try{ actualizarCuenta18(); }catch(e){}
 // --- LIGHTBOX foto ---
