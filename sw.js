@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v2'; // v2: solo track Cualquiera en su sano juicio ♥
+const CACHE = 'rincon-v3'; // v3: poema Quiero amarte 29 sep ♥ fuerza refresco
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
