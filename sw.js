@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v3'; // v3: poema Quiero amarte 29 sep ♥ fuerza refresco
+const CACHE = 'rincon-v4'; // v4: campana siempre muestra el último poema ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });

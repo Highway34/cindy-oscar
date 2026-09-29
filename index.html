@@ -459,11 +459,17 @@ function diffDiasFecha(f){
 }
 // tolera reloj movido ±2 días para que la campana sí avise ♥
 function esNuevoFecha(f){ const dd=diffDiasFecha(f); return dd<=7 && dd>=-2; }
-function poemaNuevo(){
+// último poema publicado (el más reciente por fecha) — la campana siempre lo muestra ♥
+function ultimoPoema(){
   try{
     const todos=todosPoemas().slice().sort((a,b)=>((b.fecha||'').localeCompare(a.fecha||'')));
-    const n=todos.filter(p=>p.fecha && esNuevoFecha(p.fecha));
-    return n.length?n[0]:null;
+    return todos.length?todos[0]:null;
+  }catch(e){ return null; }
+}
+function poemaNuevo(){
+  try{
+    const u=ultimoPoema();
+    return (u && u.fecha && esNuevoFecha(u.fecha)) ? u : null;
   }catch(e){ return null; }
 }
 
@@ -474,18 +480,20 @@ function pintar(){
   let todos = todosPoemas();
   // ordenar: más recientes primero
   todos = todos.slice().sort((a,b)=>((b.fecha||'').localeCompare(a.fecha||'')));
-  // campanita poema nuevo (últimos 7 días, tolera reloj movido)
+  // campanita: suena si el último está fresquito, pero SIEMPRE muestra el último ♥
   try{
-    const nuevos = todos.filter(p=>p.fecha && esNuevoFecha(p.fecha));
-    window.poemaNuevoActual = nuevos.length ? nuevos[0] : null;
+    const u = ultimoPoema();
+    const n = (u && u.fecha && esNuevoFecha(u.fecha)) ? u : null;
+    window.poemaNuevoActual = u;
     const camp = document.getElementById('campana');
     const panel = document.getElementById('campanaPanel');
     if(camp){
-      if(nuevos.length){ camp.classList.add('hay-nuevo'); }
+      if(n){ camp.classList.add('hay-nuevo'); }
       else { camp.classList.remove('hay-nuevo'); if(panel) panel.style.display='none'; }
     }
-    if(panel && nuevos.length && panel.style.display==='block'){
-      panel.innerHTML = '<div class="cp-aviso">✦ poema nuevo ✦</div><div class="cp-titulo">“'+esc(nuevos[0].titulo)+'” ♥</div><div class="cp-fecha">'+esc(fmtFecha(nuevos[0].fecha))+'</div><span class="cp-cta">Toca para leerlo ♥</span>';
+    if(panel && u && panel.style.display==='block'){
+      const aviso = n ? '✦ poema nuevo ✦' : '♥ último poema ♥';
+      panel.innerHTML = '<div class="cp-aviso">'+aviso+'</div><div class="cp-titulo">“'+esc(u.titulo)+'” ♥</div><div class="cp-fecha">'+esc(fmtFecha(u.fecha))+'</div><span class="cp-cta">Toca para leerlo ♥</span>';
     }
   }catch(e){}
   if(q) todos = todos.filter(p=>((p.titulo||'')+' '+(p.texto||'')).toLowerCase().includes(q));
@@ -556,21 +564,23 @@ function toggleNube(id, btn){
 function toggleCampana(){
   try{
     const panel=document.getElementById('campanaPanel');
-    const p=poemaNuevo() || window.poemaNuevoActual;
+    const p=ultimoPoema();
     if(p) window.poemaNuevoActual=p;
     if(!p){
-      panel.innerHTML='<div class="cp-aviso">♥ sin novedades</div><div class="cp-titulo">Estamos al día</div><div class="cp-fecha">No hay poemas nuevos esta semana</div>';
+      panel.innerHTML='<div class="cp-aviso">♥ sin novedades</div><div class="cp-titulo">Estamos al día</div><div class="cp-fecha">Aún no hay poemas, amor ♥</div>';
       panel.style.display = panel.style.display==='block' ? 'none' : 'block';
       return;
     }
     if(panel.style.display==='block'){ panel.style.display='none'; return; }
-    panel.innerHTML='<div class="cp-aviso">✦ poema nuevo ✦</div><div class="cp-titulo">“'+esc(p.titulo)+'” ♥</div><div class="cp-fecha">'+esc(fmtFecha(p.fecha))+'</div><span class="cp-cta">Toca para leerlo ♥</span>';
+    const esN = p.fecha ? esNuevoFecha(p.fecha) : false;
+    const aviso = esN ? '✦ poema nuevo ✦' : '♥ último poema ♥';
+    panel.innerHTML='<div class="cp-aviso">'+aviso+'</div><div class="cp-titulo">“'+esc(p.titulo)+'” ♥</div><div class="cp-fecha">'+esc(fmtFecha(p.fecha))+'</div><span class="cp-cta">Toca para leerlo ♥</span>';
     panel.style.display='block';
   }catch(e){}
 }
 function abrirPoemaNuevo(){
   try{
-    const p=window.poemaNuevoActual; if(!p) return;
+    const p=ultimoPoema() || window.poemaNuevoActual; if(!p) return;
     document.getElementById('campanaPanel').style.display='none';
     mostrar('poemas');
     document.getElementById('vTitulo').textContent=p.titulo;
