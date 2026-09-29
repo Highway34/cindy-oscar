@@ -449,6 +449,24 @@ function exportarRespaldo(){
   }catch(e){ toast('msg','No se pudo exportar ♥'); }
 }
 
+function diffDiasFecha(f){
+  try{
+    const ahora=new Date(); ahora.setHours(12,0,0,0);
+    const d=new Date(f+'T12:00:00');
+    if(isNaN(d)) return 999;
+    return Math.floor((ahora-d)/86400000);
+  }catch(e){ return 999; }
+}
+// tolera reloj movido ±2 días para que la campana sí avise ♥
+function esNuevoFecha(f){ const dd=diffDiasFecha(f); return dd<=7 && dd>=-2; }
+function poemaNuevo(){
+  try{
+    const todos=todosPoemas().slice().sort((a,b)=>((b.fecha||'').localeCompare(a.fecha||'')));
+    const n=todos.filter(p=>p.fecha && esNuevoFecha(p.fecha));
+    return n.length?n[0]:null;
+  }catch(e){ return null; }
+}
+
 function pintar(){
   const c = document.getElementById('lista'); c.innerHTML='';
   const q = ((document.getElementById('buscarPoema')||{}).value||'').toLowerCase().trim();
@@ -456,15 +474,9 @@ function pintar(){
   let todos = todosPoemas();
   // ordenar: más recientes primero
   todos = todos.slice().sort((a,b)=>((b.fecha||'').localeCompare(a.fecha||'')));
-  // campanita poema nuevo (últimos 7 días)
+  // campanita poema nuevo (últimos 7 días, tolera reloj movido)
   try{
-    const ahora = new Date(); ahora.setHours(12,0,0,0);
-    const nuevos = todos.filter(p=>{
-      if(!p.fecha) return false;
-      const d = new Date(p.fecha+'T12:00:00');
-      const diff = Math.floor((ahora - d)/86400000);
-      return diff>=0 && diff<=7;
-    });
+    const nuevos = todos.filter(p=>p.fecha && esNuevoFecha(p.fecha));
     window.poemaNuevoActual = nuevos.length ? nuevos[0] : null;
     const camp = document.getElementById('campana');
     const panel = document.getElementById('campanaPanel');
@@ -484,12 +496,7 @@ function pintar(){
     const d=document.createElement('div'); d.className='card'; d.tabIndex=0;
     d.setAttribute('role','button'); d.setAttribute('aria-label','Leer '+p.titulo);
     let esNuevo=false;
-    try{
-      const ahora2=new Date(); ahora2.setHours(12,0,0,0);
-      const dp=new Date(p.fecha+'T12:00:00');
-      const diff2=Math.floor((ahora2-dp)/86400000);
-      esNuevo = diff2>=0 && diff2<=7;
-    }catch(e){}
+    try{ esNuevo = p.fecha ? esNuevoFecha(p.fecha) : false; }catch(e){}
     const tagNuevo = esNuevo ? '<span style="display:inline-block;background:var(--menta);color:#10231b;border-radius:100px;padding:.1rem .7rem;font-size:.7rem;letter-spacing:.16em;margin-left:.5rem;vertical-align:middle">✦ NUEVO</span>' : '';
     const badge = p.origen==='fijo' ? '<span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--dorado2)">♥ en la página</span>' : p.origen==='nube' ? '<span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--menta)">☁ compartido</span>' : '<span style="font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;opacity:.6">solo este dispositivo</span>';
     d.innerHTML=`<h3>${esc(p.titulo)}${tagNuevo}</h3><div class="fecha">${esc(fmtFecha(p.fecha))} · ${badge}</div><p>${esc((p.texto||'').slice(0,110))}…</p><span class="ver">leer ♥</span><div><button class="like${liked?' liked':''}" aria-label="Me encanta">♥ ${liked?'1':''} me encanta</button></div>${(p.origen==='local'||p.origen==='nube')?'<div><button class="borrar">borrar</button></div>':''}`;
@@ -549,7 +556,8 @@ function toggleNube(id, btn){
 function toggleCampana(){
   try{
     const panel=document.getElementById('campanaPanel');
-    const p=window.poemaNuevoActual;
+    const p=poemaNuevo() || window.poemaNuevoActual;
+    if(p) window.poemaNuevoActual=p;
     if(!p){
       panel.innerHTML='<div class="cp-aviso">♥ sin novedades</div><div class="cp-titulo">Estamos al día</div><div class="cp-fecha">No hay poemas nuevos esta semana</div>';
       panel.style.display = panel.style.display==='block' ? 'none' : 'block';
