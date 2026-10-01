@@ -236,8 +236,8 @@ section{scroll-margin-top:1rem}
 <div style="font-style:italic;font-size:.85rem;opacity:.75;margin-top:.4rem">Cómo conseguirla: Firebase Console → Crear proyecto “cindy-oscar” → Build → Firestore Database → Crear base en modo producción → Web &lt;/&gt; → copiar firebaseConfig. Reglas: allow read, write: if true (solo Uds. tienen el link).</div>
 </div>
 </details></div></div>
-<figure class="foto-wrap"><div class="foto-marco" id="fotoMarco" title="Toca para ampliar ♥" style="cursor:zoom-in"><img src="foto-nosotros.jpg?v=5" alt="Nosotros juntos ♥" fetchpriority="high" decoding="async" onerror="this.style.display='none'"><figcaption>nosotros ♥ 04 · 09 · 2026 · toca para ampliar</figcaption></div></figure>
-<div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src="foto-nosotros.jpg?v=5" alt="Nosotros ampliado ♥"></div>
+<figure class="foto-wrap"><div class="foto-marco" id="fotoMarco" title="Toca para ampliar ♥" style="cursor:zoom-in"><img src="foto-nosotros.jpg?v=6" alt="Nosotros juntos ♥" fetchpriority="high" decoding="async" onerror="this.style.display='none'"><figcaption>nosotros ♥ 18 · 09 · 2026 · toca para ampliar</figcaption></div></figure>
+<div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src="foto-nosotros.jpg?v=6" alt="Nosotros ampliado ♥"></div>
 </header>
 
 <div id="efimero" aria-label="Poema efímero de hoy" role="status"></div>
@@ -930,20 +930,12 @@ function efiPoema(){
   const doy=Math.floor((b-ini)/86400000);
   return EFIMEROS[doy % EFIMEROS.length];
 }
-function efiCuentaTxt(){
-  try{
-    const a=new Date(); const t=new Date(a);
-    t.setHours(7,30,0,0); if(a>=t) t.setDate(t.getDate()+1);
-    const diff=t-a, h=Math.floor(diff/3600000), m=Math.floor(diff%3600000/60000);
-    return '✦ se borra en '+h+'h '+m+'m · mañana a las 7:30am llega otro ♥';
-  }catch(e){ return '✦ dura solo hoy ♥'; }
-}
 function pintarEfimero(){
   const c=document.getElementById('efimero'); if(!c) return;
   const key=efiKey(), p=efiPoema();
   let visto=''; try{ visto=localStorage.getItem('efimero-visto')||''; }catch(e){}
   const esNuevo=(visto!==key);
-  c.innerHTML='<div class="efi" id="efiCard"><div class="aviso">✦ poema efímero · solo hoy '+(esNuevo?'<span class="nuevo">● nuevo</span>':'')+'</div><h2>'+esc(p.t)+'</h2><div class="texto">'+esc(p.x)+'</div><div class="cuenta" id="efiCuenta">'+esc(efiCuentaTxt())+'</div><div class="acciones"><button class="pill" id="efiGuardar">♥ Guardarlo para siempre</button></div></div>';
+  c.innerHTML='<div class="efi" id="efiCard"><div class="aviso">✦ poema efímero · solo hoy '+(esNuevo?'<span class="nuevo">● nuevo</span>':'')+'</div><h2>'+esc(p.t)+'</h2><div class="texto">'+esc(p.x)+'</div><div class="acciones"><button class="pill" id="efiGuardar">♥ Guardarlo para siempre</button></div></div>';
   document.getElementById('efiCard').onclick=(e)=>{
     try{ localStorage.setItem('efimero-visto', key); }catch(err){}
     if(e.target && e.target.id==='efiGuardar'){ guardarEfimero(key, p); return; }
@@ -962,7 +954,6 @@ function guardarEfimero(key, p){
 let efiKeyActual = null;
 try{ efiKeyActual = efiKey(); }catch(e){}
 setInterval(()=>{
-  const el=document.getElementById('efiCuenta'); if(el) el.textContent=efiCuentaTxt();
   try{
     const k=efiKey();
     if(efiKeyActual!==k){ efiKeyActual=k; pintarEfimero(); }
