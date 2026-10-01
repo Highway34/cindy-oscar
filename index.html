@@ -879,7 +879,7 @@ function planAEvento(titulo){
   },80);
 }
 
-// --- POEMA EFÍMERO DIARIO (cambia cada día a las 6am, dura 24h) ---
+// --- POEMA EFÍMERO DIARIO (cambia cada día a las 7:30am, dura 24h) ---
 // 30 micro-poemas originales al estilo de Pizarnik, escritos para ella.
 // Rota por día del año. Para agregar más, añade {t,x} aquí.
 const EFIMEROS = [
@@ -916,7 +916,7 @@ const EFIMEROS = [
 ];
 function efiBase(){
   const a=new Date(); const b=new Date(a);
-  if(b.getHours()<6) b.setDate(b.getDate()-1); // antes de las 6am vale el de ayer
+  if(b.getHours()*60+b.getMinutes()<450) b.setDate(b.getDate()-1); // antes de las 7:30am vale el de ayer
   return b;
 }
 function efiKey(){
@@ -933,9 +933,9 @@ function efiPoema(){
 function efiCuentaTxt(){
   try{
     const a=new Date(); const t=new Date(a);
-    t.setHours(6,0,0,0); if(a>=t) t.setDate(t.getDate()+1);
+    t.setHours(7,30,0,0); if(a>=t) t.setDate(t.getDate()+1);
     const diff=t-a, h=Math.floor(diff/3600000), m=Math.floor(diff%3600000/60000);
-    return '✦ se borra en '+h+'h '+m+'m · mañana a las 6am llega otro ♥';
+    return '✦ se borra en '+h+'h '+m+'m · mañana a las 7:30am llega otro ♥';
   }catch(e){ return '✦ dura solo hoy ♥'; }
 }
 function pintarEfimero(){
@@ -959,7 +959,15 @@ function guardarEfimero(key, p){
   if(nube.on){ nubeAdd('poemas', obj).then(()=>{ toast('msg','Efímero guardado ☁♥ vivirá para siempre'); }); }
   else{ lista.unshift(obj); guardar(lista); pintar(); toast('msg','Efímero guardado en este dispositivo ♥'); }
 }
-setInterval(()=>{ const el=document.getElementById('efiCuenta'); if(el) el.textContent=efiCuentaTxt(); },30000);
+let efiKeyActual = null;
+try{ efiKeyActual = efiKey(); }catch(e){}
+setInterval(()=>{
+  const el=document.getElementById('efiCuenta'); if(el) el.textContent=efiCuentaTxt();
+  try{
+    const k=efiKey();
+    if(efiKeyActual!==k){ efiKeyActual=k; pintarEfimero(); }
+  }catch(e){}
+},30000);
 
 // --- ANIVERSARIO CADA 18 (novios desde el 18 sep 2026) ---
 // El 18 de cada mes muestra fiesta automática con el mensaje del mes #N.
