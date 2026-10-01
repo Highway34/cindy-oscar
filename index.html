@@ -236,7 +236,8 @@ section{scroll-margin-top:1rem}
 <div style="font-style:italic;font-size:.85rem;opacity:.75;margin-top:.4rem">Cómo conseguirla: Firebase Console → Crear proyecto “cindy-oscar” → Build → Firestore Database → Crear base en modo producción → Web &lt;/&gt; → copiar firebaseConfig. Reglas: allow read, write: if true (solo Uds. tienen el link).</div>
 </div>
 </details></div></div>
-<figure class="foto-wrap"><div class="foto-marco" id="fotoMarco" title="Toca para ampliar ♥" style="cursor:zoom-in"><img src="foto-nosotros.jpg?v=6" alt="Nosotros juntos ♥" fetchpriority="high" decoding="async" onerror="this.style.display='none'"><figcaption>nosotros ♥ 18 · 09 · 2026 · toca para ampliar</figcaption></div></figure>
+<figure class="foto-wrap"><div class="foto-marco" id="fotoMarco" title="Toca para ampliar ♥" style="cursor:zoom-in"><img src="foto-04-09-2026.jpg?v=1" alt="Nosotros juntos ♥ 4 sep" fetchpriority="high" decoding="async" onerror="this.style.display='none'"><figcaption>nosotros ♥ 04 · 09 · 2026 · toca para ampliar</figcaption></div></figure>
+<figure class="foto-wrap"><div class="foto-marco" id="fotoMarco2" title="Toca para ampliar ♥" style="cursor:zoom-in;transform:rotate(2deg)"><img src="foto-nosotros.jpg?v=6" alt="Nosotros juntos ♥ 18 sep" decoding="async" onerror="this.style.display='none'"><figcaption>nosotros ♥ 18 · 09 · 2026 · toca para ampliar</figcaption></div></figure>
 <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src="foto-nosotros.jpg?v=6" alt="Nosotros ampliado ♥"></div>
 </header>
 
@@ -880,39 +881,40 @@ function planAEvento(titulo){
 }
 
 // --- POEMA EFÍMERO DIARIO (cambia cada día a las 7:30am, dura 24h) ---
-// 30 micro-poemas originales al estilo de Pizarnik, escritos para ella.
+// 30 micro-poemas alegres y románticos, escritos para ella.
+// Estilo luminoso: ojos, cejas y mirada que me gustan.
 // Rota por día del año. Para agregar más, añade {t,x} aquí.
 const EFIMEROS = [
-{t:"Noche",x:"La noche me escribe\ncon tu nombre.\nLo borro.\nLo escribe otra vez."},
-{t:"Silencio",x:"Haz silencio:\nmi corazón está diciendo\ntu nombre\nen voz bajísima."},
-{t:"Herida",x:"Pequeña herida luminosa:\nextrañarte\nun minuto\ncada minuto."},
-{t:"Sombra",x:"Mi sombra te busca\naun dormida.\nPerdónala:\nnunca aprendió a estar sin ti."},
-{t:"Palabra",x:"Guardé una palabra\npara no decirte adiós.\nEs esta:\nquédate."},
-{t:"Ventana",x:"Afuera llueve.\nAdentro, tu recuerdo\nme seca\ncon manos de sol."},
-{t:"Naufragio",x:"Naufragué en tus ojos\na propósito.\nNo mandes barcos:\nquiero quedarme."},
-{t:"Insomnio",x:"Las tres de la mañana\nme preguntan por ti.\nLes digo que sueñas\ny se calman."},
-{t:"Espejo",x:"En el espejo\nno estoy.\nEstás tú\nmirándome desde mi cara."},
-{t:"Jardín",x:"El jardín de noche\nme devuelve tu risa\nentre las hojas.\nLa guardo."},
-{t:"Pájaro",x:"Un pájaro canta\ntu nombre al amanecer.\nLe pido silencio:\naún sueñas."},
-{t:"Miedo",x:"Tengo miedo\nde que la alegría\nsea un pájaro\nque no vuelve.\nQuédate y la espantamos."},
-{t:"Nombre",x:"Escribo tu nombre\nen el vaho del vidrio.\nSe borra.\nLo escribo otra vez."},
-{t:"Luna",x:"La luna es una herida\nblanca en el cielo.\nLa mía es pequeña\ny dice tu nombre."},
-{t:"Carta",x:"Te escribo cartas\nque no envío.\nLas doblo\ndentro de mi corazón."},
-{t:"Lluvia",x:"Llueve leve,\ncomo si el cielo\ntambién extrañara\ntus manos."},
-{t:"Ausencia",x:"Tu ausencia\nes una habitación\ncon la luz encendida.\nTe espero ahí."},
-{t:"Voz",x:"Tu voz vive\nen mi oído izquierdo.\nDel derecho\ncuelga el silencio."},
-{t:"Sueño",x:"Soñé que me soñabas.\nDesperté\ndentro de tu sueño.\nNo quiero salir."},
-{t:"Piel",x:"Mi piel recuerda\nlo que mi memoria\naún no sabe:\ntu abrazo."},
-{t:"Tiempo",x:"El tiempo pasa\nde puntillas\npara no despertar\nnuestro amor."},
-{t:"Estrella",x:"Cayó una estrella.\nPedí un deseo\ntan bajito\nque solo tú lo oíste."},
-{t:"Puerta",x:"Dejé la puerta\nentreabierta\npor si tu recuerdo\nquiere entrar."},
-{t:"Mar",x:"El mar me dijo\ntu nombre\nen un idioma\nque solo yo entiendo."},
-{t:"Frío",x:"Hace frío\ndel lado tuyo\nde la cama.\nVen a calentarlo."},
-{t:"Risa",x:"Tu risa\nes una lámpara\nque enciendo\ncuando anochece en mí."},
-{t:"Manos",x:"Mis manos vacías\naprendieron\nla forma exacta\nde extrañarte."},
-{t:"Otoño",x:"Caen las hojas.\nCada una\nlleva escrita\nuna sílaba de tu nombre."},
-{t:"Desvelo",x:"Cuento ovejas\nque saltan\nuna cerca\ncon tu nombre."},
-{t:"Corazón",x:"Mi corazón\nes una casa pequeña:\ntú vives en todos\nsus cuartos."}
+{t:"Mirada que amanece",x:"Abres los ojos\ny amanece dos veces:\nen el cielo\ny en mi pecho."},
+{t:"Tus ojos",x:"Tus ojos me miran\ny todo se ordena:\nel café sabe mejor,\nla vida canta bajito."},
+{t:"Tus cejas",x:"Tus cejas bonitas,\narco perfecto:\nmi refugio favorito,\nmi fiesta de cada día."},
+{t:"Lo que me gusta",x:"Me gustan tus ojos,\nme gustan tus cejas:\ncuando me miras así,\nme quedo a vivir ahí."},
+{t:"Fiesta en tu mirada",x:"Hay fiesta en tu mirada:\nbrillan tus ojos,\nríen tus cejas,\ny yo bailo contigo."},
+{t:"Arco perfecto",x:"Tus cejas dibujan\nun arco de alegría:\ndebajo viven tus ojos,\nmis dos lunas favoritas."},
+{t:"Luz de tus ojos",x:"No necesito sol:\ntus ojos me alumbran,\ntus cejas me abrigan,\ny ando feliz todo el día."},
+{t:"Buenos días",x:"Buenos días, mi amor:\nque tus ojos manden hoy,\nque tus cejas digan sí,\ny que el día nos sonría."},
+{t:"Café contigo",x:"Un café contigo,\nmirándote a los ojos:\nse me sube la risa,\nse me queda tu brillo."},
+{t:"Domingo",x:"Domingo perfecto:\ntus ojos cerquita,\ntus cejas en alto de risa,\ny tiempo para quererte."},
+{t:"Caminito",x:"Vamos de la mano:\nyo miro el camino,\ntú me miras a mí,\ny llegamos felices."},
+{t:"Estrellas en ti",x:"Dicen que hay estrellas:\nyo ya las encontré,\nviven en tus ojos,\nlas cuidan tus cejas."},
+{t:"Pintura",x:"Si te pintara,\nempezaría por tus ojos,\nseguiría tus cejas,\ny firmaría: mi amor."},
+{t:"Jardín feliz",x:"Tu mirada es jardín:\nflorecen tus ojos,\nlas cejas son puente,\ny yo paseo feliz."},
+{t:"Mensajito",x:"Me llegó tu mensaje\ny tus ojos brillaban\nhasta en las palabras:\nte leo y sonrío."},
+{t:"Abrazo",x:"Te abrazo fuerte\ny por encima del hombro\nveo tus ojos felices\ny tus cejas en fiesta."},
+{t:"Bailar",x:"Bailamos bajito,\ntus ojos me guían,\ntus cejas marcan el ritmo:\nno quiero otra pista."},
+{t:"Plan bonito",x:"Mi plan de hoy:\nmirar tus ojos,\nadmirar tus cejas\ny cumplirlo contigo."},
+{t:"Futuro",x:"Pienso en futuro\ny te veo riendo:\ntus ojos brillando,\ntus cejas bailando."},
+{t:"Canción",x:"Tu mirada es canción:\ntus ojos el coro,\ntus cejas el ritmo,\ny yo la canto feliz."},
+{t:"Sol",x:"Salió el sol:\nse miró en tus ojos\ny dijo: qué bonito brillas,\nme quedo aquí contigo."},
+{t:"Tarde bonita",x:"Tarde bonita:\ntus ojos color miel,\ntus cejas perfectas\ny helado para dos."},
+{t:"Noche feliz",x:"Llega la noche:\ntus ojos la encienden,\ntus cejas la adornan\ny la hacemos nuestra."},
+{t:"Sueño bonito",x:"Que sueñes bonito:\ncon ojos que brillan,\ncon cejas que ríen,\nconmigo a tu lado."},
+{t:"Despertar",x:"Despertar contigo:\nbuscar tus ojos,\nencontrar tus cejas\ny empezar feliz."},
+{t:"Viaje",x:"Viajemos lejos:\ntus ojos la ventana,\ntus cejas el paisaje,\ny el amor el camino."},
+{t:"Picnic",x:"Picnic en el parque:\ntú, yo y tu mirada.\nTus ojos el postre,\ntus cejas la fiesta."},
+{t:"Monserrate",x:"Subamos juntos:\nla ciudad abajo,\ntus ojos arriba,\ntus cejas mi abrigo."},
+{t:"Cine",x:"En el cine oscuro\nlo que más brilla\nson tus ojos, mi amor,\ny tus cejas que ríen."},
+{t:"Para siempre",x:"Te elijo hoy:\ntus ojos, tus cejas,\ntu risa, tu forma:\nmi para siempre eres tú."}
 ];
 function efiBase(){
   const a=new Date(); const b=new Date(a);
@@ -1089,9 +1091,17 @@ try{ actualizarCuenta(); }catch(e){}
 try{ actualizarCuenta18(); }catch(e){}
 // --- LIGHTBOX foto ---
 (function initLight(){
-  const marco=document.getElementById('fotoMarco');
   const lb=document.getElementById('lightbox');
-  if(marco&&lb){ marco.addEventListener('click',()=>{ lb.style.display='flex'; }); }
+  const lbImg=document.getElementById('lightboxImg');
+  document.querySelectorAll('.foto-marco').forEach(marco=>{
+    marco.addEventListener('click',()=>{
+      try{
+        const im=marco.querySelector('img');
+        if(im&&lbImg) lbImg.src=im.src;
+      }catch(e){}
+      if(lb) lb.style.display='flex';
+    });
+  });
   document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&lb){ lb.style.display='none'; } });
 })();
 
