@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v8'; // v8: fuerza refresco efimeros + 2 fotos ♥
+const CACHE = 'rincon-v9'; // v9: nuevo efimero Miercoles contigo 7 oct ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
