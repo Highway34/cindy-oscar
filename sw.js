@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v9'; // v9: nuevo efimero Miercoles contigo 7 oct ♥
+const CACHE = 'rincon-v10'; // v10: pausa efimero 13-15 oct, vuelve viernes 16 ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });

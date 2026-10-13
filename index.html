@@ -881,6 +881,8 @@ function planAEvento(titulo){
 }
 
 // --- POEMA EFÍMERO DIARIO (cambia cada día a las 7:30am, dura 24h) ---
+// Pausa: 13-15 oct 2026 sin efímero, vuelve el viernes 16 oct ♥
+const EFIMERO_PAUSA = ["2026-10-13","2026-10-14","2026-10-15"];
 // 30 micro-poemas alegres y románticos, escritos para ella.
 // Estilo luminoso: ojos, cejas y mirada que me gustan.
 // Rota por día del año. Para agregar más, añade {t,x} aquí.
@@ -935,6 +937,7 @@ function efiPoema(){
 function pintarEfimero(){
   const c=document.getElementById('efimero'); if(!c) return;
   const key=efiKey(), p=efiPoema();
+  if(typeof EFIMERO_PAUSA!=='undefined' && EFIMERO_PAUSA.includes(key)){ c.innerHTML=''; return; }
   let visto=''; try{ visto=localStorage.getItem('efimero-visto')||''; }catch(e){}
   const esNuevo=(visto!==key);
   c.innerHTML='<div class="efi" id="efiCard"><div class="aviso">✦ poema efímero · solo hoy '+(esNuevo?'<span class="nuevo">● nuevo</span>':'')+'</div><h2>'+esc(p.t)+'</h2><div class="texto">'+esc(p.x)+'</div><div class="acciones"><button class="pill" id="efiGuardar">♥ Guardarlo para siempre</button></div></div>';
