@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v10'; // v10: pausa efimero 13-15 oct, vuelve viernes 16 ♥
+const CACHE = 'rincon-v11'; // v11: Cartas abrir cuando, ruleta de citas, frasco razones, swipe y chispas ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });

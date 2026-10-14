@@ -78,9 +78,13 @@ details.nube-cfg summary:hover{color:var(--dorado2);border-color:var(--dorado2)}
 .bienvenida{background:rgba(255,255,255,.032);border-left:3px solid var(--dorado);border-radius:0 var(--radio) var(--radio) 0;padding:1.25rem 1.35rem;margin:1.2rem 0;font-style:italic;line-height:1.75}
 .bienvenida h2{font-family:'Italiana',serif;font-weight:400;font-size:1.35rem;margin-bottom:.5rem;font-style:normal;letter-spacing:.02em}
 /* tabs - caja elegante que se va al hacer scroll */
-nav.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:5px;max-width:640px;margin:1.2rem auto;padding:5px;background:rgba(0,0,0,.38);border:1px solid var(--borde);border-radius:18px}
-nav.tabs button{background:transparent;border:none;color:var(--tinta-dim);border-radius:13px;padding:.85rem .3rem;cursor:pointer;font-family:'Italiana',serif;letter-spacing:.08em;text-transform:uppercase;font-size:.74rem;min-height:48px;transition:.22s;line-height:1.2}
-@media(max-width:560px){nav.tabs button{font-size:.66rem;padding:.75rem .2rem;letter-spacing:.04em}}
+nav.tabs{display:grid;grid-template-columns:repeat(6,1fr);gap:4px;max-width:720px;margin:1.2rem auto;padding:5px;background:rgba(0,0,0,.38);border:1px solid var(--borde);border-radius:18px}
+nav.tabs button{background:transparent;border:none;color:var(--tinta-dim);border-radius:13px;padding:.85rem .25rem;cursor:pointer;font-family:'Italiana',serif;letter-spacing:.06em;text-transform:uppercase;font-size:.72rem;min-height:48px;transition:.22s;line-height:1.2}
+@media(max-width:640px){
+  nav.tabs{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;justify-content:flex-start;padding:5px}
+  nav.tabs::-webkit-scrollbar{display:none}
+  nav.tabs button{flex:0 0 auto;min-width:78px;font-size:.65rem;padding:.75rem .35rem;letter-spacing:.04em;scroll-snap-align:center}
+}
 nav.tabs button:hover{color:var(--dorado2);background:rgba(201,169,106,.1)}
 nav.tabs button.activo{background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;box-shadow:0 6px 20px rgba(201,169,106,.35)}
 nav.tabs button:focus-visible{outline:none;box-shadow:var(--foco)}
@@ -201,6 +205,71 @@ footer .orn{color:var(--dorado);letter-spacing:.4em;margin-bottom:.5rem}
 .aniv .cf{position:absolute;top:-24px;font-size:1rem;pointer-events:none;animation:caer linear infinite}
 @keyframes caer{to{transform:translateY(320px) rotate(40deg);opacity:.2}}
 section{scroll-margin-top:1rem}
+
+/* --- Frasco de Razones --- */
+.frasco-card{background:linear-gradient(180deg, rgba(32,25,42,.95), rgba(16,13,22,.98));border:1px solid rgba(233,207,154,.45);border-radius:var(--radio);padding:1.6rem 1.4rem;text-align:center;box-shadow:var(--sombra);position:relative;overflow:hidden;margin-bottom:1.6rem}
+.frasco-card::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(400px 180px at 50% 0%, rgba(201,169,106,.15), transparent 70%)}
+.frasco-icono{font-size:2.4rem;margin-bottom:.3rem;animation:balanceo 3s ease-in-out infinite}
+@keyframes balanceo{0%,100%{transform:rotate(0deg)}25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+.frasco-card h2{font-family:'Italiana',serif;font-weight:400;font-size:1.75rem;margin-bottom:.3rem;color:var(--dorado2)}
+.frasco-card p{font-style:italic;color:var(--tinta-dim);max-width:540px;margin:0 auto 1.2rem;font-size:1.02rem}
+.frasco-papelito{background:#fdf6e9;color:#2c2033;border-radius:12px;padding:1.4rem 1.2rem;max-width:520px;margin:0 auto;box-shadow:0 12px 35px rgba(0,0,0,.45);border:1px solid rgba(201,169,106,.5);min-height:100px;display:flex;flex-direction:column;justify-content:center;align-items:center;transition:transform .25s ease;position:relative}
+.frasco-papelito.desplegar{animation:papelitoDesplegar .35s ease}
+@keyframes papelitoDesplegar{0%{opacity:0;transform:scale(.92) translateY(8px)}100%{opacity:1;transform:scale(1) translateY(0)}}
+.frasco-num{font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:#8a2f44;margin-bottom:.35rem}
+.frasco-texto{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:1.22rem;line-height:1.6;color:#1d1524}
+.frasco-contador{margin-top:.85rem;font-style:italic;font-size:.85rem;color:var(--dorado)}
+
+/* --- Cartas Abrir Cuando --- */
+.cartas-intro{margin:1.4rem 0 .8rem;text-align:center}
+.cartas-intro h2{font-family:'Italiana',serif;font-size:1.8rem;color:var(--dorado2);margin-bottom:.3rem}
+.cartas-intro p{font-style:italic;color:var(--tinta-dim);font-size:1.02rem}
+.cartas-grid{display:grid;grid-template-columns:1fr;gap:1rem;margin-top:1.1rem}
+@media(min-width:640px){.cartas-grid{grid-template-columns:1fr 1fr}}
+.carta-sobre{background:linear-gradient(135deg, rgba(28,24,36,.95), rgba(18,15,24,.98));border:1px solid var(--borde);border-radius:var(--radio);padding:1.35rem 1.2rem;cursor:pointer;transition:transform .22s,border-color .22s,box-shadow .22s;display:flex;flex-direction:column;gap:.4rem;position:relative;overflow:hidden}
+.carta-sobre:hover,.carta-sobre:focus-within{transform:translateY(-3px);border-color:var(--dorado2);box-shadow:0 14px 40px rgba(0,0,0,.6)}
+.carta-sobre::before{content:'';position:absolute;top:0;right:0;width:40px;height:40px;background:linear-gradient(135deg, transparent 50%, rgba(201,169,106,.15) 50%);border-bottom-left-radius:8px}
+.carta-top{display:flex;align-items:center;justify-content:space-between}
+.carta-emoji{font-size:1.8rem}
+.carta-sello{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:.2rem .75rem;border-radius:100px;font-style:italic}
+.carta-sello.sellada{background:rgba(201,169,106,.14);color:var(--dorado2);border:1px solid rgba(201,169,106,.4)}
+.carta-sello.leida{background:rgba(143,208,179,.14);color:var(--menta);border:1px solid rgba(143,208,179,.4)}
+.carta-sobre h3{font-family:'Italiana',serif;font-weight:400;font-size:1.4rem;line-height:1.25;margin-top:.2rem}
+.carta-sobre .abrir-cta{margin-top:.5rem;display:inline-flex;align-items:center;gap:.3rem;color:var(--dorado2);font-size:.88rem;letter-spacing:.15em;text-transform:uppercase;font-style:italic}
+
+/* --- Visor de Carta --- */
+#cartaVisor{display:none;margin-top:1.4rem;background:#faf3e3;color:#251a2e;border-radius:var(--radio);padding:2.2rem 1.6rem;box-shadow:0 30px 90px rgba(0,0,0,.7);border:1px solid rgba(201,169,106,.6);animation:subir .35s ease;position:relative}
+#cartaVisor .carta-sello-top{width:42px;height:42px;border-radius:50%;background:linear-gradient(180deg,#9e384e,#782133);color:#faf3e3;display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin:0 auto .8rem;box-shadow:0 6px 18px rgba(0,0,0,.3)}
+#cartaVisor .carta-para{text-align:center;font-style:italic;color:#6b5344;font-size:.95rem;margin-bottom:.4rem;letter-spacing:.05em}
+#cartaVisor h2{font-family:'Italiana',serif;font-weight:400;text-align:center;font-size:1.95rem;line-height:1.2;color:#1f1627}
+#cartaVisor .fecha-v{text-align:center;font-style:italic;opacity:.65;margin:.35rem 0 1.2rem}
+#cartaVisor .texto{white-space:pre-wrap;line-height:1.85;font-size:1.15rem;max-width:620px;margin:0 auto;color:#201729}
+#cartaVisor .texto::first-letter{font-family:'Italiana',serif;font-size:1.7em;color:var(--vino)}
+#cartaVisor .carta-firma{max-width:620px;margin:1.4rem auto 0;text-align:right;font-style:italic;color:#6b5344;font-size:1.05rem}
+#cartaVisor .cerrar{display:block;margin:1.6rem auto 0;background:transparent;border:1px solid #8a2f44;color:#8a2f44;border-radius:100px;padding:.7rem 2rem;cursor:pointer;font-family:inherit;font-style:italic;font-size:1rem;min-height:44px;transition:.2s}
+#cartaVisor .cerrar:hover{background:var(--vino);color:#fff}
+
+/* --- Ruleta de Citas en Planes --- */
+.ruleta-card{background:linear-gradient(180deg, rgba(28,24,38,.92), rgba(15,13,20,.96));border:1px solid rgba(201,169,106,.4);border-radius:var(--radio);padding:1.3rem 1.25rem;margin-bottom:1.4rem;box-shadow:var(--sombra)}
+.ruleta-header{display:flex;gap:.8rem;align-items:center;margin-bottom:.9rem}
+.ruleta-icon{font-size:2rem;flex-shrink:0}
+.ruleta-header h3{font-family:'Italiana',serif;font-size:1.35rem;color:var(--dorado2);line-height:1.2}
+.ruleta-header p{font-style:italic;color:var(--tinta-dim);font-size:.92rem;margin-top:.15rem}
+.ruleta-display{background:rgba(0,0,0,.45);border:1px dashed var(--dorado);border-radius:12px;padding:1.1rem 1rem;text-align:center;font-family:'Italiana',serif;font-size:1.45rem;color:var(--dorado2);min-height:68px;display:flex;align-items:center;justify-content:center;transition:all .2s ease;letter-spacing:.02em}
+.ruleta-display.girando{animation:ruletaSpin .12s infinite alternate;border-color:var(--rosa);color:var(--tinta)}
+@keyframes ruletaSpin{0%{transform:scale(0.98);opacity:.85}100%{transform:scale(1.02);opacity:1}}
+.ruleta-display.ganador{animation:ganadorPop .45s ease;border-color:var(--menta);color:var(--menta);box-shadow:0 0 25px rgba(143,208,179,.25)}
+@keyframes ganadorPop{0%{transform:scale(0.85);opacity:0}50%{transform:scale(1.06)}100%{transform:scale(1);opacity:1}}
+.ruleta-acciones{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;margin-top:1rem}
+
+/* --- Efecto Tap / Click de Corazones y Chispas --- */
+.sparkle-tap{position:fixed;pointer-events:none;user-select:none;z-index:99999;font-size:1.25rem;transform:translate(-50%, -50%);animation:sparkleFloat .85s cubic-bezier(.22,1,.36,1) forwards}
+@keyframes sparkleFloat{
+  0%{opacity:1;transform:translate(-50%, -50%) scale(.6) rotate(0deg)}
+  50%{opacity:.95;transform:translate(calc(-50% + var(--dx, 0px)), calc(-50% - 35px)) scale(1.15) rotate(var(--rot, 15deg))}
+  100%{opacity:0;transform:translate(calc(-50% + var(--dx, 0px)), calc(-50% - 65px)) scale(.85) rotate(var(--rot, 30deg))}
+}
+
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}html{scroll-behavior:auto}}
 </style>
 </head>
@@ -269,6 +338,7 @@ Si te quedas, arde.</p>
 <button id="tabIdeas" onclick="mostrar('ideas')">✉ Ideas <span class="n" id="nIdeas"></span></button>
 <button id="tabMusica" onclick="mostrar('musica')">♪ Música <span class="n" id="nMus"></span></button>
 <button id="tabPlanes" onclick="mostrar('planes')">✨ Planes <span class="n" id="nPlanes"></span></button>
+<button id="tabCartas" onclick="mostrar('cartas')">💌 Cartas <span class="n" id="nCartas"></span></button>
 </nav>
 
 <section id="secPoemas" aria-label="Poemas">
@@ -365,6 +435,21 @@ Si te quedas, arde.</p>
 </section>
 
 <section id="secPlanes" style="display:none" aria-label="Planes a futuro">
+<div class="ruleta-card">
+<div class="ruleta-header">
+<span class="ruleta-icon">🎲</span>
+<div>
+<h3>Ruleta de Citas: ¿Qué hacemos hoy? ♥</h3>
+<p>¿No saben qué hacer hoy? Dejen que el amor y el destino elijan un plan de nuestra lista.</p>
+</div>
+</div>
+<div class="ruleta-display" id="ruletaDisplay">✦ Toca el botón para girar la ruleta ✦</div>
+<div class="ruleta-acciones">
+<button class="btn" style="margin-top:0" id="btnGirarRuleta" onclick="girarRuleta()">✦ Girar Ruleta ♥</button>
+<button class="pill" id="btnAgendarRuleta" style="display:none" onclick="agendarPlanRuleta()">＋ Agendar esta cita ♥</button>
+</div>
+</div>
+
 <div class="form">
 <h2>✨ Planes a futuro ♥</h2>
 <p>Nuestra lista de sueños por cumplir. Toca el círculo para chulearlo ♥ y mándalo a eventos cuando le pongamos fecha.</p>
@@ -379,6 +464,51 @@ Si te quedas, arde.</p>
 <div id="msgP" class="msg" aria-live="polite"></div>
 </div>
 <div id="listaPlanes"></div>
+</section>
+
+<section id="secCartas" style="display:none" aria-label="Cartas para ti">
+<div class="frasco-card">
+<div class="frasco-icono">🏺</div>
+<h2>✦ Frasco de razones por las que te amo ✦</h2>
+<p>Para esos días en que quieras recordar por qué eres mi persona favorita en este mundo. Saca un papelito cuando quieras ♥</p>
+<div id="frascoDisplay" class="frasco-papelito">
+<span class="frasco-num" id="frascoNum">♥ Razón de amor ♥</span>
+<div class="frasco-texto" id="frascoTexto">Toca el botón para sacar un papelito del frasco…</div>
+</div>
+<div style="text-align:center;margin-top:1rem">
+<button class="btn" onclick="sacarRazon()">✦ Sacar un papelito ♥</button>
+</div>
+<div class="frasco-contador" id="frascoContador">50 razones guardadas para ti</div>
+</div>
+
+<div class="cartas-intro">
+<h2>💌 Cartas: “Abrir cuando…”</h2>
+<p>Pequeños pedacitos de mí guardados en sobres sellados. Prométeme que solo abrirás cada una cuando llegue el momento exacto ♥</p>
+</div>
+<div class="cartas-grid" id="listaCartas"></div>
+
+<div id="cartaVisor" role="dialog" aria-modal="false" aria-labelledby="cvTitulo">
+<div class="carta-sello-top">♥</div>
+<div class="carta-para">Para: Mi niña hermosa, Cindy ♥</div>
+<h2 id="cvTitulo"></h2>
+<div class="fecha-v" id="cvCuando"></div>
+<div class="texto" id="cvTexto"></div>
+<div class="carta-firma">Con todo mi amor,<br>— Oscar ♥</div>
+<button class="cerrar" onclick="cerrarCarta()">Doblar y guardar carta ♥</button>
+</div>
+
+<div class="form">
+<h2>✦ Escribir una nueva carta para ella</h2>
+<p>Crea un sobre nuevo para una ocasión especial.</p>
+<label class="lbl" for="cTitulo">Ocasión / Título</label>
+<input id="cTitulo" placeholder="Ej. Abrir cuando cumplamos 6 meses…" autocomplete="off">
+<label class="lbl" for="cEmoji">Ícono del sobre</label>
+<input id="cEmoji" placeholder="Ej. 💌, 🌙, ✨, 🌸, ☕" value="💌" style="max-width:120px">
+<label class="lbl" for="cTexto">Contenido de la carta</label>
+<textarea id="cTexto" placeholder="Escribe aquí con todo tu corazón…"></textarea>
+<button class="btn" onclick="agregarCarta()">Sellar y guardar sobre ♥</button>
+<div id="msgC" class="msg" aria-live="polite"></div>
+</div>
 </section>
 
 <footer><div class="orn">✦ ♥ ✦</div><div>Cindy & Oscar · hecho con amor, para siempre</div></footer>
@@ -441,7 +571,7 @@ function poemaSorpresa(){
 }
 function exportarRespaldo(){
   try{
-    const data = {poemas:lista, eventos:eventos||[], ideas:ideas||[], musica:musica||[], planesChecks:store.get('planes-checks',{}), planesCustom:store.get('planes-custom',[]), fecha:new Date().toISOString()};
+    const data = {poemas:lista, eventos:eventos||[], ideas:ideas||[], musica:musica||[], planesChecks:store.get('planes-checks',{}), planesCustom:store.get('planes-custom',[]), cartasCustom:store.get('cartas-custom',[]), cartasLeidas:store.get('cartas-leidas',{}), fecha:new Date().toISOString()};
     const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
     const a = document.createElement('a'); a.href=URL.createObjectURL(blob);
     a.download='respaldo-nuestro-rincon.json'; a.click();
@@ -637,7 +767,7 @@ pintar();
 
 // --- TABS con hash (sin sticky, se va al hacer scroll) ---
 function mostrar(cual){
-  const secs={poemas:'secPoemas',eventos:'secEventos',ideas:'secIdeas',musica:'secMusica',planes:'secPlanes'};
+  const secs={poemas:'secPoemas',eventos:'secEventos',ideas:'secIdeas',musica:'secMusica',planes:'secPlanes',cartas:'secCartas'};
   Object.entries(secs).forEach(([k,id])=>{
     const s=document.getElementById(id);
     if(!s) return;
@@ -650,13 +780,17 @@ function mostrar(cual){
   document.getElementById('tabIdeas').classList.toggle('activo', cual==='ideas');
   const tm=document.getElementById('tabMusica'); if(tm) tm.classList.toggle('activo', cual==='musica');
   const tp=document.getElementById('tabPlanes'); if(tp) tp.classList.toggle('activo', cual==='planes');
+  const tc=document.getElementById('tabCartas'); if(tc) tc.classList.toggle('activo', cual==='cartas');
   if(('#'+cual)!==location.hash){ history.replaceState(null,'','#'+cual); }
+  const btnActivo=document.getElementById('tab'+cual.charAt(0).toUpperCase()+cual.slice(1));
+  if(btnActivo && btnActivo.scrollIntoView){ try{ btnActivo.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); }catch(e){} }
   if(cual==='eventos') pintarEv();
   if(cual==='ideas') pintarIdeas();
   if(cual==='musica') pintarMusica();
   if(cual==='planes') pintarPlanes();
+  if(cual==='cartas') pintarCartas();
 }
-(function initTab(){ const h=(location.hash||'').replace('#',''); if(['poemas','eventos','ideas','musica','planes'].includes(h)) mostrar(h); })();
+(function initTab(){ const h=(location.hash||'').replace('#',''); if(['poemas','eventos','ideas','musica','planes','cartas'].includes(h)) mostrar(h); })();
 
 // --- EVENTOS FIJOS EN LA PÁGINA (los ve todo el mundo) ---
 // Para fijar uno para siempre, dime "fija este evento: ..." y yo lo agrego aquí y lo publico ♥
@@ -880,6 +1014,347 @@ function planAEvento(titulo){
   },80);
 }
 
+// --- RULETA DE CITAS: ¿QUÉ HACEMOS HOY? ---
+let ruletaGirando = false;
+let planGanadorActual = null;
+function girarRuleta(){
+  if(ruletaGirando) return;
+  const display = document.getElementById('ruletaDisplay');
+  const btn = document.getElementById('btnGirarRuleta');
+  const btnAg = document.getElementById('btnAgendarRuleta');
+  if(!display) return;
+  const checks = planesChecks();
+  const todos = todosPlanes();
+  let pool = todos.filter(p => !checks[p.key]);
+  if(!pool.length) pool = todos;
+  if(!pool.length) pool = [{t:"☕ Tomar un café y mirarnos a los ojos ♥"}, {t:"🌙 Caminata bajo las estrellas"}, {t:"🍦 Ir por un helado juntos"}];
+  ruletaGirando = true;
+  display.className = 'ruleta-display girando';
+  if(btn) btn.disabled = true;
+  if(btnAg) btnAg.style.display = 'none';
+  let iter = 0;
+  const maxIter = 22;
+  const interval = setInterval(()=>{
+    const rand = pool[Math.floor(Math.random()*pool.length)];
+    display.textContent = rand.t;
+    iter++;
+    if(iter >= maxIter){
+      clearInterval(interval);
+      const ganador = pool[Math.floor(Math.random()*pool.length)];
+      planGanadorActual = ganador.t;
+      display.className = 'ruleta-display ganador';
+      display.textContent = '✦ ¡El destino eligió: “' + ganador.t + '”! ♥ ✦';
+      ruletaGirando = false;
+      if(btn){ btn.disabled = false; btn.textContent = '↺ Girar de nuevo ♥'; }
+      if(btnAg){ btnAg.style.display = 'inline-flex'; }
+      try{
+        const rect = display.getBoundingClientRect();
+        for(let i=0; i<6; i++){
+          setTimeout(()=>{
+            if(window.spawnSparkle) spawnSparkle(rect.left + Math.random()*rect.width, rect.top + Math.random()*rect.height);
+          }, i*100);
+        }
+      }catch(e){}
+    }
+  }, 75);
+}
+function agendarPlanRuleta(){
+  if(planGanadorActual) planAEvento(planGanadorActual);
+}
+
+// --- FRASCO DE RAZONES POR LAS QUE TE AMO ---
+const RAZONES_DEFAULT = [
+  "Tus ojos color miel: me miran y me desarmas en un segundo.",
+  "Tus cejas hermosas que dibujan el arco más perfecto cuando te ríes.",
+  "La manera en que me buscas la mano al caminar sin tener que mirar.",
+  "Cuando te da un poquito de pena y te tapas la cara con las manos.",
+  "Tu risa espontánea, que tiene el poder de alegrar cualquier día nublado.",
+  "El brillo que tienen tus ojos cuando te emocionas contándome una historia.",
+  "Ese “te quiero” bajito que me dices al oído antes de despedirnos.",
+  "La paz inmensa que siento cuando me recuesto a tu lado y todo se calma.",
+  "Que me hagas querer ser una mejor versión de mí mismo cada día.",
+  "La forma en que compartimos un café y se nos olvida por completo el tiempo.",
+  "Tus abrazos que me reinician la vida y me quitan cualquier cansancio.",
+  "Que seas mi primer pensamiento al despertar y el último al acostarme.",
+  "Tu inteligencia y la manera tan única y bonita en que ves el mundo.",
+  "Que eres mi refugio, mi lugar seguro y mi hogar favorito.",
+  "Tu ternura infinita con los pequeños detalles de la vida.",
+  "El olor de tu perfume que se queda guardado en mi ropa.",
+  "Que seas la musa de todos mis poemas y pensamientos bonitos.",
+  "La complicidad de nuestras miradas cuando estamos rodeados de gente.",
+  "Que me dijiste que sí aquel 18 de septiembre y llenaste mi mundo de luz.",
+  "Tu voz suave cuando tienes sueño y me hablas despacito.",
+  "Que cada plan a tu lado, por sencillo que sea, se vuelve inolvidable.",
+  "La emoción y carita de niña feliz cuando te doy un detalle o helado.",
+  "Que puedo ser completamente yo contigo, sin máscaras ni temores.",
+  "Tus mensajes de buenos días que me iluminan la jornada entera.",
+  "Cómo se te achinan los ojos y arrugas la nariz cuando te ríes con ganas.",
+  "Que compartes tus sueños y anhelos más profundos conmigo.",
+  "Tu paciencia, comprensión y la dulzura infinita con la que me tratas.",
+  "El calor de tus manitas cuando hace frío en la noche.",
+  "Que me inspiras a soñar en un futuro lleno de momentos mágicos juntos.",
+  "Cómo se ve la luz del atardecer reflejada en tu cabello y en tu piel.",
+  "Que hasta el silencio a tu lado es cómodo, cálido y reconfortante.",
+  "Tu sentido del humor y los momentos en que nos reímos de tonterías.",
+  "La pasión y dedicación con la que defiendes lo que amas.",
+  "Ese gesto travieso que haces con la mirada antes de decir una broma.",
+  "Que cada día contigo me enseña una forma más bonita de amar.",
+  "La seguridad y fuerza que me das con solo apretarme la mano.",
+  "Que eres mi persona favorita para ver películas juntos en la Cinemateca.",
+  "Tu carita de concentración hermosa cuando estás haciendo algo que te gusta.",
+  "Que caminar a tu lado por cualquier calle se convierte en una aventura.",
+  "La forma en que encajas perfecta en mi pecho cuando nos abrazamos fuerte.",
+  "Que me escuchas con tanta atención y cariño cuando te hablo.",
+  "Tu bondad genuina y el gran corazón que tienes con quienes te rodean.",
+  "Que eres hermosa por fuera, pero por dentro eres un millón de veces más bella.",
+  "Nuestras canciones en Spotify que ahora llevan tu nombre en cada acorde.",
+  "Que cuando no estás cerca, todo me recuerda a ti.",
+  "El sonido de tus carcajadas que se me queda resonando en el corazón.",
+  "Que somos un equipo invencible que se apoya en las buenas y en las malas.",
+  "La ilusión de cumplir juntos cada sueño de nuestra lista a futuro.",
+  "Que amarte es lo más fácil, hermoso y natural que me ha pasado en la vida.",
+  "Simplemente por ser tú: Cindy, el amor de mi vida y mi para siempre."
+];
+
+function sacarRazon(){
+  const display = document.getElementById('frascoDisplay');
+  const numEl = document.getElementById('frascoNum');
+  const txtEl = document.getElementById('frascoTexto');
+  if(!display) return;
+  const idx = Math.floor(Math.random() * RAZONES_DEFAULT.length);
+  const r = RAZONES_DEFAULT[idx];
+  display.classList.remove('desplegar');
+  void display.offsetWidth;
+  display.classList.add('desplegar');
+  if(numEl) numEl.textContent = '♥ Razón #' + (idx + 1) + ' de ' + RAZONES_DEFAULT.length + ' ♥';
+  if(txtEl) txtEl.textContent = '“' + r + '”';
+  try{
+    const rect = display.getBoundingClientRect();
+    if(window.spawnSparkle){
+      spawnSparkle(rect.left + rect.width/2, rect.top + 20);
+      spawnSparkle(rect.left + rect.width/2 - 30, rect.top + 40);
+      spawnSparkle(rect.left + rect.width/2 + 30, rect.top + 40);
+    }
+  }catch(e){}
+}
+
+// --- CARTAS: ABRIR CUANDO... ---
+const CARTAS_DEFAULT = [
+  {
+    id: "extranar",
+    emoji: "💌",
+    titulo: "Abrir cuando me extrañes",
+    cuando: "Para cuando sientas mi ausencia",
+    texto: "Hola, mi amor.\n\nSi estás leyendo esto es porque tus ojos me están buscando y por ahora no puedo tenerte entre mis brazos. Quiero que cierres los ojos un momento y sientas que estoy ahí contigo.\n\nNo importa qué tan lejos estemos o qué hora sea: mi mente siempre encuentra la manera de volver a ti. A tu risa, a tus gestos, a cómo me miras y haces que todo lo demás se detenga.\n\nTe amo inmensamente, Cindy. Pronto nos veremos y te daré ese abrazo fuerte que te debo. Mientras tanto, acuérdate de que mi corazón late contigo a cada segundo."
+  },
+  {
+    id: "dia-pesado",
+    emoji: "🌧️",
+    titulo: "Abrir cuando hayas tenido un día pesado",
+    cuando: "Para soltar el cansancio y respirar",
+    texto: "Respira, mi niña linda.\n\nSuelta los hombros, deja el peso del día afuera y ponte cómoda. Los días difíciles existen, pero no definen quién eres ni lo maravillosa y fuerte que eres.\n\nEstoy tan orgulloso de ti, de cómo das lo mejor incluso cuando estás cansada. Hoy solo descansa, tómate algo calientito y date permiso de no resolver nada más por hoy.\n\nAquí estoy para escucharte si quieres desahogarte, o para acompañarte en silencio si solo quieres compañía. Te amo mucho, todo va a estar bien."
+  },
+  {
+    id: "no-dormir",
+    emoji: "🌙",
+    titulo: "Abrir cuando no puedas dormir",
+    cuando: "Para arrullarte con amor en la noche",
+    texto: "Shhh… ya es de noche, mi amor.\n\nDeja que la mente descanse. ¿Sabías que cada noche antes de dormir repaso en mi cabeza las cosas bonitas del día y casi siempre tú estás en todas?\n\nImagínate que estamos bajo un cielo despejado lleno de estrellas, con una cobija suave y el sonido de la brisa. No hay prisa, no hay pendientes. Solo estamos tú y yo.\n\nCierra tus ojitos bonitos. Mañana será un día lindo y yo voy a seguir aquí para quererte. Dulces sueños, mi cielo."
+  },
+  {
+    id: "dudar",
+    emoji: "✨",
+    titulo: "Abrir cuando dudes de lo increíble que eres",
+    cuando: "Para mirarte a través de mis ojos",
+    texto: "Detente ahí mismo.\n\nSi tu cabecita te está haciendo dudar de tu valor, vengo a recordarte la verdad: eres una mujer extraordinaria, inteligente, tierna, talentosa y con una luz que ilumina a cualquiera que tenga la suerte de conocerte.\n\nNo hay nadie como tú. Me fascinas completa: tu forma de pensar, tu ternura, tu determinación y hasta tus dudas te hacen real y única. Mírate en el espejo con los ojos con los que yo te veo y vas a ver lo perfecta que eres.\n\nNunca lo olvides: eres mi mayor orgullo."
+  },
+  {
+    id: "desacuerdo",
+    emoji: "🤍",
+    titulo: "Abrir cuando tengamos un malentendido",
+    cuando: "Para recordar que somos un equipo",
+    texto: "Amor mío.\n\nSi estamos pasando por un momento incómodo o un desacuerdo, quiero que recuerdes algo fundamental: no somos tú contra mí, somos tú y yo como equipo contra cualquier diferencia.\n\nMi amor por ti no cambia por un momento difícil. Te escucho, te respeto y quiero que estemos bien. Dame un abrazo (o pidámonos disculpas si hace falta), hablemos con calma y recordemos por qué elegimos caminar juntos.\n\nEres lo más valioso para mí y siempre voy a elegir cuidarte y entendernos."
+  },
+  {
+    id: "sonrisa",
+    emoji: "🎉",
+    titulo: "Abrir cuando necesites una sonrisa",
+    cuando: "Para sacarte una sonrisa tonta",
+    texto: "¿Sabes qué me hace sonreír como un tonto en cualquier momento del día? Acordarme de tus caritas, de cuando te da pena algo y te tapas la cara, o de tus risas espontáneas.\n\nSi hoy necesitas una sonrisa, acuérdate de que tienes a alguien aquí que está perdidamente enamorado de ti, dispuesto a hacer los bailes más ridículos, los chistes más malos y los planes más locos solo para escucharte reír.\n\n¡Sonríe, que con tus ojos y tus cejas bonitas el mundo se ve mil veces mejor!"
+  },
+  {
+    id: "aniversario",
+    emoji: "💍",
+    titulo: "Abrir el 18 de nuestro aniversario",
+    cuando: "Para celebrar nuestro amor cada 18",
+    texto: "¡Feliz 18, mi amor! ♥\n\nCada mes que sumamos desde aquel 18 de septiembre es una confirmación de que decirnos “sí” ha sido una de las decisiones más hermosas y felices de mi vida.\n\nGracias por cada café, cada mirada, cada caminata y cada poema que ha nacido gracias a ti. Brindo por este mes que celebramos y por todos los que nos faltan por construir juntos.\n\nTe amo con todo mi ser, hoy y siempre."
+  }
+];
+
+function cargarCartas(){ const g=store.get('cartas-custom', []); return Array.isArray(g)?g:[]; }
+function guardarCartas(l){ store.set('cartas-custom', l); }
+function cartasLeidas(){ const g=store.get('cartas-leidas', {}); return (g&&typeof g==='object')?g:{}; }
+
+function todasCartas(){
+  const cust = cargarCartas().map((c,i)=>({...c, custom:i, id: c.id||('C'+i)}));
+  return [...CARTAS_DEFAULT, ...cust];
+}
+
+function pintarCartas(){
+  const c = document.getElementById('listaCartas'); if(!c) return;
+  const leidas = cartasLeidas();
+  const todos = todasCartas();
+  c.innerHTML = '';
+  todos.forEach((carta)=>{
+    const esLeida = !!leidas[carta.id];
+    const d = document.createElement('div');
+    d.className = 'carta-sobre';
+    d.tabIndex = 0;
+    d.setAttribute('role', 'button');
+    d.setAttribute('aria-label', 'Abrir carta: ' + carta.titulo);
+    d.innerHTML = `
+      <div class="carta-top">
+        <span class="carta-emoji">${carta.emoji||'💌'}</span>
+        <span class="carta-sello ${esLeida?'leida':'sellada'}">${esLeida?'Leída ♥':'Sellada ♥'}</span>
+      </div>
+      <h3>${esc(carta.titulo)}</h3>
+      <div style="font-style:italic;color:var(--tinta-dim);font-size:.9rem">${esc(carta.cuando||'Para un momento especial')}</div>
+      <span class="abrir-cta">Abrir sobre ♥</span>
+      ${carta.custom!==undefined?'<div><button class="borrar" style="margin-top:.4rem">borrar sobre</button></div>':''}
+    `;
+    const open = () => {
+      leidas[carta.id] = 1;
+      store.set('cartas-leidas', leidas);
+      pintarCartas();
+      abrirCarta(carta);
+    };
+    d.onclick = (e) => {
+      if(e.target.classList.contains('borrar')){
+        if(!confirm('¿Borrar este sobre? ♥')) return;
+        const arr = cargarCartas();
+        arr.splice(carta.custom, 1);
+        guardarCartas(arr);
+        pintarCartas();
+        return;
+      }
+      open();
+    };
+    d.onkeydown = (e) => { if(e.key==='Enter'||e.key===' '){ e.preventDefault(); open(); } };
+    c.appendChild(d);
+  });
+  const nc = document.getElementById('nCartas');
+  if(nc) nc.textContent = '(' + todos.length + ')';
+}
+
+function abrirCarta(carta){
+  const cv = document.getElementById('cartaVisor'); if(!cv) return;
+  document.getElementById('cvTitulo').textContent = carta.titulo;
+  document.getElementById('cvCuando').textContent = carta.cuando || 'Escrita con amor ♥';
+  document.getElementById('cvTexto').textContent = carta.texto;
+  cv.style.display = 'block';
+  setTimeout(()=>{ cv.scrollIntoView({behavior:'smooth', block:'center'}); }, 60);
+  try{
+    if(window.spawnSparkle){
+      const rect = cv.getBoundingClientRect();
+      spawnSparkle(rect.left + rect.width/2, rect.top + 30);
+    }
+  }catch(e){}
+}
+
+function cerrarCarta(){
+  const cv = document.getElementById('cartaVisor');
+  if(cv) cv.style.display = 'none';
+}
+document.addEventListener('keydown', e => { if(e.key==='Escape') cerrarCarta(); });
+
+function agregarCarta(){
+  const t = (document.getElementById('cTitulo')||{}).value.trim();
+  const em = (document.getElementById('cEmoji')||{}).value.trim() || '💌';
+  const x = (document.getElementById('cTexto')||{}).value.trim();
+  if(!t || !x){ toast('msgC', 'Escribe el título y tu carta, amor ♥'); return; }
+  const obj = {titulo: t, emoji: em, cuando: 'Carta especial para ti', texto: x, id: 'cust_' + Date.now()};
+  const arr = cargarCartas();
+  arr.push(obj);
+  guardarCartas(arr);
+  document.getElementById('cTitulo').value = '';
+  document.getElementById('cTexto').value = '';
+  pintarCartas();
+  toast('msgC', 'Sobre sellado y guardado ♥');
+}
+
+// --- CORAZONES Y CHISPAS AL TOCAR LA PANTALLA ---
+function spawnSparkle(x, y){
+  try{
+    const SIMBOLOS = ['♥', '✦', '✨', '💖', '🌸', '🤍'];
+    const COLORES = ['#e9cf9a', '#d9a5b3', '#8fd0b3', '#c9a96a', '#f5ecd8'];
+    const s = document.createElement('span');
+    s.className = 'sparkle-tap';
+    s.textContent = SIMBOLOS[Math.floor(Math.random() * SIMBOLOS.length)];
+    s.style.left = x + 'px';
+    s.style.top = y + 'px';
+    s.style.color = COLORES[Math.floor(Math.random() * COLORES.length)];
+    const dx = (Math.random() - 0.5) * 45;
+    const rot = (Math.random() - 0.5) * 60;
+    s.style.setProperty('--dx', dx + 'px');
+    s.style.setProperty('--rot', rot + 'deg');
+    document.body.appendChild(s);
+    setTimeout(() => { if(s && s.parentNode) s.remove(); }, 850);
+  }catch(e){}
+}
+window.spawnSparkle = spawnSparkle;
+
+(function initTapSparkles(){
+  document.addEventListener('pointerdown', (e) => {
+    const tag = (e.target.tagName || '').toLowerCase();
+    if(tag === 'input' || tag === 'textarea' || tag === 'select') return;
+    spawnSparkle(e.clientX, e.clientY);
+    if(Math.random() > 0.45){
+      setTimeout(() => spawnSparkle(e.clientX + (Math.random() - 0.5) * 25, e.clientY + (Math.random() - 0.5) * 25), 90);
+    }
+  }, {passive: true});
+})();
+
+// --- GESTOS SWIPE ENTRE PESTAÑAS ---
+(function initSwipeGestures(){
+  const TABS_ORDEN = ['poemas', 'eventos', 'ideas', 'musica', 'planes', 'cartas'];
+  let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
+
+  document.addEventListener('touchstart', (e) => {
+    if(e.touches.length !== 1) return;
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchStartTime = Date.now();
+  }, {passive: true});
+
+  document.addEventListener('touchend', (e) => {
+    if(e.changedTouches.length !== 1) return;
+    const tag = (e.target.tagName || '').toLowerCase();
+    if(tag === 'input' || tag === 'textarea' || tag === 'select' || e.target.isContentEditable) return;
+    const v = document.getElementById('visor');
+    if(v && v.style.display === 'block') return;
+    const cv = document.getElementById('cartaVisor');
+    if(cv && cv.style.display === 'block') return;
+    const lb = document.getElementById('lightbox');
+    if(lb && lb.style.display === 'flex') return;
+
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    const dt = Date.now() - touchStartTime;
+
+    if(Math.abs(dx) > 55 && Math.abs(dx) > Math.abs(dy) * 1.4 && dt < 600){
+      const h = (location.hash || '#poemas').replace('#', '');
+      const idx = TABS_ORDEN.indexOf(h);
+      if(idx !== -1){
+        if(dx < 0 && idx < TABS_ORDEN.length - 1){
+          mostrar(TABS_ORDEN[idx + 1]);
+        } else if(dx > 0 && idx > 0){
+          mostrar(TABS_ORDEN[idx - 1]);
+        }
+      }
+    }
+  }, {passive: true});
+})();
+
 // --- POEMA EFÍMERO DIARIO (cambia cada día a las 7:30am, dura 24h) ---
 // Pausa: 13-15 oct 2026 sin efímero, vuelve el viernes 16 oct ♥
 const EFIMERO_PAUSA = ["2026-10-13","2026-10-14","2026-10-15"];
@@ -1089,7 +1564,7 @@ async function nubeDel(col, id){
 (function initCfgBox(){ try{ const s=localStorage.getItem('firebase-config'); if(s){ const t=document.getElementById('fCfg'); if(t) t.value=s; } }catch(e){} })();
 initNube();
 nubeEstado();
-pintarIdeas(); pintarEv(); pintarMusica(); pintarPlanes(); pintarEfimero(); pintarAniv();
+pintarIdeas(); pintarEv(); pintarMusica(); pintarPlanes(); pintarCartas(); pintarEfimero(); pintarAniv();
 try{ actualizarCuenta(); }catch(e){}
 try{ actualizarCuenta18(); }catch(e){}
 // --- LIGHTBOX foto ---
