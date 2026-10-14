@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v11'; // v11: Cartas abrir cuando, ruleta de citas, frasco razones, swipe y chispas ♥
+const CACHE = 'rincon-v12'; // v12: Lluvia dorada fluida y animaciones activadas en PC ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
