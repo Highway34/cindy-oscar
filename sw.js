@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v12'; // v12: Lluvia dorada fluida y animaciones activadas en PC ♥
+const CACHE = 'rincon-v13'; // v13: Caminata Cerro de Guadalupe sabado 17 oct 7:30am ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
