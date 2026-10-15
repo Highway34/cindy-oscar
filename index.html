@@ -1389,7 +1389,7 @@ const EFIMEROS = [
 {t:"Paraguas",x:"Si llueve afuera, no importa:\nnos inventamos un techo de risas\ny caminamos despacio,\nmojándonos de pura alegría."},
 {t:"El mapa",x:"Busqué en libros antiguos\nla definición del asombro.\nEra sencillo:\nverte despertar a mi lado."},
 {t:"Naufragio",x:"Naufragué en tu orilla\nsin pedir auxilio.\nQué fortuna tan honda\nhaber encallado en tu ternura."},
-{t:"Juego",x:"Jugamos a querernos\ncon la seriedad de los niños:\nsin trampas, sin miedos,\ncon todo el corazón abierto."},
+{t:"Jueves",x:"De todas las horas y todos los caminos,\nagradezco esta suerte limpia:\ndespertar sabiendo que existes,\nque nos queremos\ny que el mundo, contigo, vuelve a ser un milagro."},
 {t:"Eternidad",x:"Dicen que la eternidad es inalcanzable.\nYo la toqué ayer\nen los tres segundos\nque duró tu abrazo."},
 {t:"Voz",x:"Tu voz tiene la textura\nde las cosas que no mienten.\nLa escucho y el día\nse vuelve más amable."},
 {t:"La esquina",x:"En cualquier esquina de la ciudad\nte reconocería:\nno por cómo caminas,\nsino por la luz que dejas al pasar."},
@@ -1403,6 +1403,14 @@ const EFIMEROS = [
 {t:"Noche limpia",x:"Duerme tranquila, mi amor.\nLa noche cuida tus sueños\ny mi gratitud vela por ti\nhasta que amanezca."},
 {t:"El puente",x:"Entre tu mundo y el mío\nno hacían falta puentes:\nbastaba mirarnos\ny ya estábamos del otro lado."}
 ];
+
+// Poemas efímeros específicos por fecha (ej: hoy y fechas señaladas)
+const EFIMEROS_FECHA = {
+  "2026-10-15": {
+    t: "Jueves",
+    x: "De todas las horas y todos los caminos,\nagradezco esta suerte limpia:\ndespertar sabiendo que existes,\nque nos queremos\ny que el mundo, contigo, vuelve a ser un milagro."
+  }
+};
 
 // Horas de cambio intercaladas cada día: 7:00am, 7:30am, 8:00am
 const EFI_HORAS = [420, 450, 480]; // 7:00 (420m), 7:30 (450m), 8:00 (480m)
@@ -1425,6 +1433,8 @@ function efiKey(){
   return b.getFullYear()+'-'+m+'-'+d;
 }
 function efiPoema(){
+  const key=efiKey();
+  if(typeof EFIMEROS_FECHA!=='undefined' && EFIMEROS_FECHA[key]) return EFIMEROS_FECHA[key];
   const b=efiBase();
   const mid=new Date(b.getFullYear(), b.getMonth(), b.getDate());
   const ini=new Date(b.getFullYear(),0,1);

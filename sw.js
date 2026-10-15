@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v14'; // v14: poemas efimeros diarios 7:00 / 7:30 / 8:00 rotativo ♥
+const CACHE = 'rincon-v15'; // v15: efimero activo hoy jueves 15 oct ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
