@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v15'; // v15: efimero activo hoy jueves 15 oct ♥
+const CACHE = 'rincon-v16'; // v16: musica de fondo Amor Completo + Zoe + Whitesnake ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });

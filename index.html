@@ -513,8 +513,9 @@ Si te quedas, arde.</p>
 
 <footer><div class="orn">✦ ♥ ✦</div><div>Cindy & Oscar · hecho con amor, para siempre</div></footer>
 </div>
-<button id="musBtn" aria-label="Ambiente chill" title="Ambiente chill ♥">♪</button>
-<style>#musBtn{position:fixed;right:16px;bottom:16px;z-index:20;width:54px;height:54px;border-radius:50%;border:1px solid rgba(201,169,106,.6);background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;font-size:1.4rem;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.5);min-height:54px}#musBtn.on{box-shadow:0 0 0 3px rgba(233,207,154,.35),0 10px 30px rgba(0,0,0,.5)}#musBtn:focus-visible{outline:none;box-shadow:var(--foco)}</style>
+<button id="musBtn" aria-label="Música de fondo: Mon Laferte - Amor Completo" title="Mon Laferte - Amor Completo ♥ (toca para reproducir/pausar)">♪</button>
+<audio id="bgAudio" loop preload="auto" src="amor-completo.mp3"></audio>
+<style>#musBtn{position:fixed;right:16px;bottom:16px;z-index:20;width:54px;height:54px;border-radius:50%;border:1px solid rgba(201,169,106,.6);background:linear-gradient(180deg,var(--dorado2),var(--dorado));color:#1a1420;font-size:1.4rem;cursor:pointer;box-shadow:0 10px 30px rgba(0,0,0,.5);min-height:54px;transition:transform .2s ease}#musBtn.on{box-shadow:0 0 0 3px rgba(233,207,154,.45),0 0 20px rgba(201,169,106,.6),0 10px 30px rgba(0,0,0,.5);animation:latido 1.8s infinite ease-in-out}#musBtn:focus-visible{outline:none;box-shadow:var(--foco)}</style>
 
 <script>
 const DEFAULT = [
@@ -887,10 +888,17 @@ function agregarIdea(){
 // NOTE: pintar inicial se llama después de init nube (abajo)
 
 // --- MÚSICA FIJA EN LA PÁGINA (Spotify, la ven los dos) ---
+// --- MÚSICA FIJA EN LA PÁGINA (Spotify, la ven los dos) ---
+// Amor Completo (Mon Laferte): open.spotify.com/track/00kIWJu9IHiQ6i0qJAU0Z9
+// Labios Rotos (Zoé): open.spotify.com/track/1nULBrlzWatdcjA2ZctIMv
+// Is This Love (Whitesnake): open.spotify.com/track/6QyWVCLASvvtpKD0KJZs5e
 // Baby I'm Yours: open.spotify.com/track/0SzvmWfOhoxZVGrmvb56YL
 // Pedrería de Asombro (Carlo Mazzilli, ApanaDubs): open.spotify.com/track/72Z4GxF5vSQXV8IwdGbJCJ
 // Cualquiera en su sano juicio (Bunbury): open.spotify.com/track/58aohHRqfzaKC9T0qh3WEF
 const MUSICA_FIJA = [
+{titulo:"Amor Completo", artista:"Mon Laferte ♥ canción de fondo del blog", tipo:"track", id:"00kIWJu9IHiQ6i0qJAU0Z9", nota:"Nuestra canción de fondo en el blog ♥", fijo:true},
+{titulo:"Labios Rotos", artista:"Zoé ♥ MTV Unplugged", tipo:"track", id:"1nULBrlzWatdcjA2ZctIMv", nota:"Regálame tu corazón y déjame entrar a ese lugar ♥", fijo:true},
+{titulo:"Is This Love", artista:"Whitesnake ♥", tipo:"track", id:"6QyWVCLASvvtpKD0KJZs5e", nota:"Is this love that I'm feeling? ♥", fijo:true},
 {titulo:"Baby I'm Yours", artista:"Arctic Monkeys ♥ nuestra canción", tipo:"track", id:"0SzvmWfOhoxZVGrmvb56YL", nota:"Baby, I'm yours hasta que las estrellas caigan ♥", fijo:true},
 {titulo:"Pedrería de Asombro", artista:"Carlo Mazzilli, ApanaDubs ♥", tipo:"track", id:"72Z4GxF5vSQXV8IwdGbJCJ", nota:"Nuestra pedrería de asombro ♥", fijo:true},
 {titulo:"Cualquiera en su sano juicio (se habría vuelto loco por ti)", artista:"Bunbury ♥", tipo:"track", id:"58aohHRqfzaKC9T0qh3WEF", nota:"Mi para ti, de Cindy a Oscar ♥", fijo:true}
@@ -931,7 +939,9 @@ function pintarMusica(){
   todos.forEach((m)=>{
     const d=document.createElement('div'); d.className='mus';
     const badge=m.origen==='fijo'?'<div class="cuando">♥ fijo en la página</div>':m.origen==='nube'?'<div class="cuando">☁ compartido</div>':'<div class="cuando">solo en este dispositivo</div>';
-    d.innerHTML='<h3>'+esc(m.titulo||'Canción ♥')+'</h3><div class="artista">'+esc(m.artista||'Spotify')+'</div>'+badge+(m.nota?'<div class="texto" style="font-style:italic;opacity:.8;margin-top:.3rem">'+esc(m.nota)+'</div>':'')+'<iframe src="'+spotifyEmbed(m)+'" height="152" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Spotify ♥"></iframe><div class="acciones"><a class="pill" target="_blank" rel="noopener" href="'+spotifyOpen(m)+'">Abrir en Spotify ♪</a>'+(m.origen==='fijo'?'':'<button class="borrar">borrar</button>')+'</div>';
+    const esFondo = (m.id === '00kIWJu9IHiQ6i0qJAU0Z9');
+    d.innerHTML='<h3>'+esc(m.titulo||'Canción ♥')+'</h3><div class="artista">'+esc(m.artista||'Spotify')+'</div>'+badge+(m.nota?'<div class="texto" style="font-style:italic;opacity:.8;margin-top:.3rem">'+esc(m.nota)+'</div>':'')+'<iframe src="'+spotifyEmbed(m)+'" height="152" loading="lazy" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" title="Spotify ♥"></iframe><div class="acciones"><a class="pill" target="_blank" rel="noopener" href="'+spotifyOpen(m)+'">Abrir en Spotify ♪</a>'+(esFondo?'<button class="pill btn-fondo-mus" style="background:var(--dorado2);color:#1a1420;font-weight:600">Sonar de fondo ♥</button>':'')+(m.origen==='fijo'?'':'<button class="borrar">borrar</button>')+'</div>';
+    if(esFondo){ const bf=d.querySelector('.btn-fondo-mus'); if(bf) bf.onclick=()=>setFondoMus(!bgMusOn); }
     if(m.origen==='local'){ d.querySelector('.borrar').onclick=()=>{ if(!confirm('¿Borrar esta canción? ♥')) return; const idx=musica.findIndex(x=>(x.lid||x.id)===(m.lid||m.id)); if(idx>-1) musica.splice(idx,1); guardarMusica(musica); pintarMusica(); }; }
     if(m.origen==='nube'){ const b=d.querySelector('.borrar'); if(b) b.onclick=()=>{ if(!confirm('¿Borrar de la nube? ♥')) return; nubeDel('musica', m.id_doc); }; }
     c.appendChild(d);
@@ -1614,33 +1624,51 @@ try{ actualizarCuenta18(); }catch(e){}
   document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&lb){ lb.style.display='none'; } });
 })();
 
-// --- AMBIENTE CHILL (pad suave, sin internet) ---
-let musCtx=null, musOn=false, musTimer=null;
-const MUS_PADS=[[293.66,369.99,440],[246.94,293.66,369.99],[329.63,392,493.88],[220,277.18,329.63]];
-function musPad(chord,t0,dur){
-  chord.forEach(f=>{
-    const o=musCtx.createOscillator(), g=musCtx.createGain();
-    o.type='sine'; o.frequency.value=f;
-    g.gain.setValueAtTime(0.0001,t0); g.gain.linearRampToValueAtTime(0.06,t0+1.2); g.gain.linearRampToValueAtTime(0.0001,t0+dur);
-    o.connect(g); g.connect(musCtx.destination); o.start(t0); o.stop(t0+dur+0.1);
-  });
+// --- MÚSICA DE FONDO DEL BLOG (Mon Laferte - Amor Completo) ---
+let bgMusOn = false;
+function setFondoMus(play){
+  const b = document.getElementById('musBtn');
+  const a = document.getElementById('bgAudio');
+  if(!a) return;
+  if(play){
+    a.play().then(()=>{
+      bgMusOn = true;
+      if(b){
+        b.classList.add('on');
+        b.textContent = '♥';
+        b.setAttribute('title', 'Mon Laferte - Amor Completo (sonando ♥ toca para pausar)');
+      }
+    }).catch(()=>{});
+  } else {
+    a.pause();
+    bgMusOn = false;
+    if(b){
+      b.classList.remove('on');
+      b.textContent = '♪';
+      b.setAttribute('title', 'Mon Laferte - Amor Completo ♥ (toca para reproducir)');
+    }
+  }
 }
-function musLoop(){
-  if(!musOn) return;
-  const t0=musCtx.currentTime+0.1;
-  MUS_PADS.forEach((c,i)=>musPad(c,t0+i*4,4.5));
-  musTimer=setTimeout(musLoop, MUS_PADS.length*4000+500);
-}
+
 (function initMus(){
-  const b=document.getElementById('musBtn'); if(!b) return;
-  b.onclick=()=>{
-    try{
-      if(!musCtx) musCtx=new (window.AudioContext||window.webkitAudioContext)();
-      if(musCtx.state==='suspended') musCtx.resume();
-      musOn=!musOn; b.classList.toggle('on',musOn); b.textContent=musOn?'♥':'♪';
-      if(musOn) musLoop(); else clearTimeout(musTimer);
-    }catch(e){}
-  };
+  const b = document.getElementById('musBtn');
+  if(b){
+    b.onclick = (e) => {
+      e.stopPropagation();
+      setFondoMus(!bgMusOn);
+    };
+  }
+  // Iniciar automáticamente con la primera interacción del usuario en la pantalla
+  let primerToque = false;
+  function arrancarFondo(){
+    if(primerToque) return;
+    primerToque = true;
+    document.removeEventListener('click', arrancarFondo);
+    document.removeEventListener('touchstart', arrancarFondo);
+    if(!bgMusOn) setFondoMus(true);
+  }
+  document.addEventListener('click', arrancarFondo, {once: true});
+  document.addEventListener('touchstart', arrancarFondo, {once: true, passive: true});
 })();
 
 // --- PARTÍCULAS DORADAS QUE CAEN (lluvia de amor) ---
