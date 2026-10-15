@@ -1367,47 +1367,56 @@ window.spawnSparkle = spawnSparkle;
   }, {passive: true});
 })();
 
-// --- POEMA EFÍMERO DIARIO (cambia cada día a las 7:30am, dura 24h) ---
-// Pausa: 13-15 oct 2026 sin efímero, vuelve el viernes 16 oct ♥
-const EFIMERO_PAUSA = ["2026-10-13","2026-10-14","2026-10-15"];
-// 30 micro-poemas alegres y románticos, escritos para ella.
-// Estilo luminoso: ojos, cejas y mirada que me gustan.
-// Rota por día del año. Para agregar más, añade {t,x} aquí.
+// --- POEMA EFÍMERO DIARIO (intercala horas: 7:00am, 7:30am, 8:00am) ---
+// Micro-poemas de amor, complicidad y gratitud.
+// Tono literario íntimo y evocador, sin firma de autor ni mención de estilo.
+// Rota día a día.
 const EFIMEROS = [
-{t:"Mirada que amanece",x:"Abres los ojos\ny amanece dos veces:\nen el cielo\ny en mi pecho."},
-{t:"Tus ojos",x:"Tus ojos me miran\ny todo se ordena:\nel café sabe mejor,\nla vida canta bajito."},
-{t:"Tus cejas",x:"Tus cejas bonitas,\narco perfecto:\nmi refugio favorito,\nmi fiesta de cada día."},
-{t:"Lo que me gusta",x:"Me gustan tus ojos,\nme gustan tus cejas:\ncuando me miras así,\nme quedo a vivir ahí."},
-{t:"Fiesta en tu mirada",x:"Hay fiesta en tu mirada:\nbrillan tus ojos,\nríen tus cejas,\ny yo bailo contigo."},
-{t:"Arco perfecto",x:"Tus cejas dibujan\nun arco de alegría:\ndebajo viven tus ojos,\nmis dos lunas favoritas."},
-{t:"Luz de tus ojos",x:"No necesito sol:\ntus ojos me alumbran,\ntus cejas me abrigan,\ny ando feliz todo el día."},
-{t:"Buenos días",x:"Buenos días, mi amor:\nque tus ojos manden hoy,\nque tus cejas digan sí,\ny que el día nos sonría."},
-{t:"Café contigo",x:"Un café contigo,\nmirándote a los ojos:\nse me sube la risa,\nse me queda tu brillo."},
-{t:"Miércoles contigo",x:"Mitad de semana, amor mío:\ntus ojos me acortan el día,\ntus cejas me dicen ven cerquita\ny todo sabe a nosotros."},
-{t:"Caminito",x:"Vamos de la mano:\nyo miro el camino,\ntú me miras a mí,\ny llegamos felices."},
-{t:"Estrellas en ti",x:"Dicen que hay estrellas:\nyo ya las encontré,\nviven en tus ojos,\nlas cuidan tus cejas."},
-{t:"Pintura",x:"Si te pintara,\nempezaría por tus ojos,\nseguiría tus cejas,\ny firmaría: mi amor."},
-{t:"Jardín feliz",x:"Tu mirada es jardín:\nflorecen tus ojos,\nlas cejas son puente,\ny yo paseo feliz."},
-{t:"Mensajito",x:"Me llegó tu mensaje\ny tus ojos brillaban\nhasta en las palabras:\nte leo y sonrío."},
-{t:"Abrazo",x:"Te abrazo fuerte\ny por encima del hombro\nveo tus ojos felices\ny tus cejas en fiesta."},
-{t:"Bailar",x:"Bailamos bajito,\ntus ojos me guían,\ntus cejas marcan el ritmo:\nno quiero otra pista."},
-{t:"Plan bonito",x:"Mi plan de hoy:\nmirar tus ojos,\nadmirar tus cejas\ny cumplirlo contigo."},
-{t:"Futuro",x:"Pienso en futuro\ny te veo riendo:\ntus ojos brillando,\ntus cejas bailando."},
-{t:"Canción",x:"Tu mirada es canción:\ntus ojos el coro,\ntus cejas el ritmo,\ny yo la canto feliz."},
-{t:"Sol",x:"Salió el sol:\nse miró en tus ojos\ny dijo: qué bonito brillas,\nme quedo aquí contigo."},
-{t:"Tarde bonita",x:"Tarde bonita:\ntus ojos color miel,\ntus cejas perfectas\ny helado para dos."},
-{t:"Noche feliz",x:"Llega la noche:\ntus ojos la encienden,\ntus cejas la adornan\ny la hacemos nuestra."},
-{t:"Sueño bonito",x:"Que sueñes bonito:\ncon ojos que brillan,\ncon cejas que ríen,\nconmigo a tu lado."},
-{t:"Despertar",x:"Despertar contigo:\nbuscar tus ojos,\nencontrar tus cejas\ny empezar feliz."},
-{t:"Viaje",x:"Viajemos lejos:\ntus ojos la ventana,\ntus cejas el paisaje,\ny el amor el camino."},
-{t:"Picnic",x:"Picnic en el parque:\ntú, yo y tu mirada.\nTus ojos el postre,\ntus cejas la fiesta."},
-{t:"Monserrate",x:"Subamos juntos:\nla ciudad abajo,\ntus ojos arriba,\ntus cejas mi abrigo."},
-{t:"Cine",x:"En el cine oscuro\nlo que más brilla\nson tus ojos, mi amor,\ny tus cejas que ríen."},
-{t:"Para siempre",x:"Te elijo hoy:\ntus ojos, tus cejas,\ntu risa, tu forma:\nmi para siempre eres tú."}
+{t:"El sendero",x:"Si el tiempo es un jardín de senderos,\ngracias por ser el único\nen el que siempre elijo\nperderme y encontrarme."},
+{t:"La noche",x:"La noche escribe tu nombre\ncon tinta de estrellas.\nYo no lo borro:\nle agradezco a la oscuridad\nque me lleve a ti."},
+{t:"Rayuela",x:"Andábamos sin buscarnos,\npero sabiendo que la vida\nera este salto exacto:\ncaer en tu abrazo y quedarnos."},
+{t:"El espejo",x:"Me miré al espejo\ny detrás de mis ojos\nestabas tú:\nel amor más sereno,\nmi mayor gratitud."},
+{t:"Silencio",x:"Haz silencio un momento:\nno es ausencia,\nes el agradecimiento hondo\nde tenerte aquí,\ntan cerca de mi voz."},
+{t:"Encuentro",x:"Como si se pudiera elegir el amor,\ncomo si no fueras este rayo dulce\nque me desarmó la prisa\ny me enseñó a querer despacio."},
+{t:"El instante",x:"Entre todos los siglos del mundo,\nel azar o el destino\nme regaló este instante:\nverte sonreír frente a mí."},
+{t:"Palabra",x:"Guardé una palabra limpia\npara cuando la noche apriete:\ntu nombre,\nmi lámpara encendida."},
+{t:"Complicidad",x:"Me gusta que no hagan falta palabras:\nbasta una mirada tuya sobre el café\npara saber que el mundo\nes un lugar hermoso."},
+{t:"El laberinto",x:"Construí mil muros para cuidarme.\nLlegaste con tus manos tibias\ny convertiste el laberinto\nen un jardín donde da el sol."},
+{t:"Herida de luz",x:"Hay ausencias que pesan,\npero la tuya me abriga:\nsé que existes,\nsé que me quieres,\ny eso me basta para cantar."},
+{t:"Instrucciones",x:"Instrucciones para salvar el día:\nmirarte llegar,\nescuchar tu risa de golpe\ny dar gracias al universo entero."},
+{t:"La memoria",x:"El tiempo borrará ciudades y mapas,\npero nunca la certeza\nde esta mano tuya\nentrelazada a la mía."},
+{t:"Refugio",x:"Mi corazón es una habitación pequeña.\nEntraste tú\ny la llenaste de luz,\nde silencio tibio y de paz."},
+{t:"Paraguas",x:"Si llueve afuera, no importa:\nnos inventamos un techo de risas\ny caminamos despacio,\nmojándonos de pura alegría."},
+{t:"El mapa",x:"Busqué en libros antiguos\nla definición del asombro.\nEra sencillo:\nverte despertar a mi lado."},
+{t:"Naufragio",x:"Naufragué en tu orilla\nsin pedir auxilio.\nQué fortuna tan honda\nhaber encallado en tu ternura."},
+{t:"Juego",x:"Jugamos a querernos\ncon la seriedad de los niños:\nsin trampas, sin miedos,\ncon todo el corazón abierto."},
+{t:"Eternidad",x:"Dicen que la eternidad es inalcanzable.\nYo la toqué ayer\nen los tres segundos\nque duró tu abrazo."},
+{t:"Voz",x:"Tu voz tiene la textura\nde las cosas que no mienten.\nLa escucho y el día\nse vuelve más amable."},
+{t:"La esquina",x:"En cualquier esquina de la ciudad\nte reconocería:\nno por cómo caminas,\nsino por la luz que dejas al pasar."},
+{t:"Gratitud",x:"Doy gracias a los ríos, al pan y a la tarde,\npero más que a todo,\na la bendita suerte\nde caminar a tu lado."},
+{t:"Ventana",x:"Afuera el mundo sigue con su prisa.\nNosotros miramos por la ventana,\ncompartimos el calor de una taza\ny somos felices."},
+{t:"Los cronopios",x:"Hay gente que pasa de largo por la vida.\nNosotros nos detenemos en una flor,\nen un chiste tonto, en una mirada:\ngracias por ser mi compañera de juego."},
+{t:"El poema",x:"No escribo para que rime,\nescribo para dejar constancia:\neste amor existe,\nes real y es mi mayor tesoro."},
+{t:"Sombra tibia",x:"Hasta mi sombra es más buena\ncuando camina pegada a la tuya.\nMe haces mejor persona\nsolo con mirarme."},
+{t:"Café de lluvia",x:"Llueve en la ventana.\nEl café está caliente\ny tus ojos me dicen\nque todo va a estar bien."},
+{t:"La moneda",x:"Tiré una moneda al aire\npidiendo un milagro.\nCaíste tú,\ncon tu ternura intacta."},
+{t:"Noche limpia",x:"Duerme tranquila, mi amor.\nLa noche cuida tus sueños\ny mi gratitud vela por ti\nhasta que amanezca."},
+{t:"El puente",x:"Entre tu mundo y el mío\nno hacían falta puentes:\nbastaba mirarnos\ny ya estábamos del otro lado."}
 ];
+
+// Horas de cambio intercaladas cada día: 7:00am, 7:30am, 8:00am
+const EFI_HORAS = [420, 450, 480]; // 7:00 (420m), 7:30 (450m), 8:00 (480m)
+function efiCutoffMinutos(d){
+  const base = new Date(2026, 9, 15); // 15 oct 2026 inicia a las 7:00am
+  const mid = new Date(d.getFullYear(), d.getMonth(), d.getDate());
+  const diffDays = Math.round((mid - base) / 86400000);
+  const idx = ((diffDays % 3) + 3) % 3;
+  return EFI_HORAS[idx];
+}
 function efiBase(){
   const a=new Date(); const b=new Date(a);
-  if(b.getHours()*60+b.getMinutes()<450) b.setDate(b.getDate()-1); // antes de las 7:30am vale el de ayer
+  const cutoff = efiCutoffMinutos(a);
+  if(b.getHours()*60+b.getMinutes()<cutoff) b.setDate(b.getDate()-1);
   return b;
 }
 function efiKey(){
@@ -1417,14 +1426,14 @@ function efiKey(){
 }
 function efiPoema(){
   const b=efiBase();
+  const mid=new Date(b.getFullYear(), b.getMonth(), b.getDate());
   const ini=new Date(b.getFullYear(),0,1);
-  const doy=Math.floor((b-ini)/86400000);
-  return EFIMEROS[doy % EFIMEROS.length];
+  const doy=Math.round((mid-ini)/86400000);
+  return EFIMEROS[((doy % EFIMEROS.length) + EFIMEROS.length) % EFIMEROS.length];
 }
 function pintarEfimero(){
   const c=document.getElementById('efimero'); if(!c) return;
   const key=efiKey(), p=efiPoema();
-  if(typeof EFIMERO_PAUSA!=='undefined' && EFIMERO_PAUSA.includes(key)){ c.innerHTML=''; return; }
   let visto=''; try{ visto=localStorage.getItem('efimero-visto')||''; }catch(e){}
   const esNuevo=(visto!==key);
   c.innerHTML='<div class="efi" id="efiCard"><div class="aviso">✦ poema efímero · solo hoy '+(esNuevo?'<span class="nuevo">● nuevo</span>':'')+'</div><h2>'+esc(p.t)+'</h2><div class="texto">'+esc(p.x)+'</div><div class="acciones"><button class="pill" id="efiGuardar">♥ Guardarlo para siempre</button></div></div>';
