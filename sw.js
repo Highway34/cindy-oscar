@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v16'; // v16: musica de fondo Amor Completo + Zoe + Whitesnake ♥
+const CACHE = 'rincon-v17'; // v17: rediseño Terciopelo & Champagne, scrapbook polaroid, vinilo giratorio y lacre 3D ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
