@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v19'; // v19: Glassmorphism innovador + GSAP animations + cajas organizadas ♥
+const CACHE = 'rincon-v20'; // v20: Constelaciones interactivas + Tipografía Cinzel astral + Taste Skill anti-slop ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
