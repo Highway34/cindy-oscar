@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v18'; // v18: rediseño completo Terciopelo Rubí, Pergamino & Estelar + portada arco ♥
+const CACHE = 'rincon-v19'; // v19: Glassmorphism innovador + GSAP animations + cajas organizadas ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });

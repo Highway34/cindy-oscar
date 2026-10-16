@@ -16,12 +16,13 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♥</text></svg>">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=18').catch(()=>{});let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;refreshing=true;location.reload();});});}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=19').catch(()=>{});let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;refreshing=true;location.reload();});});}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=Italiana&display=swap" rel="stylesheet">
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{
@@ -113,32 +114,52 @@ body[data-tema="estelar"] .nebula{background:radial-gradient(900px 600px at 15% 
 .tema-btn.activo{background:linear-gradient(135deg, var(--dorado2), var(--dorado));color:#230914;font-weight:600;font-style:normal;box-shadow:0 4px 14px rgba(0,0,0,.3)}
 body[data-tema="pergamino"] .tema-btn.activo{background:linear-gradient(135deg, #9e243e, #73162b);color:#fff}
 
-/* PORTADA HERO ARCO DE LIBRO ROMÁNTICO */
+/* PORTADA HERO GLASS INNOVADORA & ROMÁNTICA */
 header.hero-card{
   position:relative;
   text-align:center;
-  padding:2.6rem 1.3rem 2rem;
+  padding:2.5rem 1.4rem 2rem;
   background:var(--card-bg);
-  backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);
+  backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
   border:1px solid var(--borde-luz);
-  border-radius:120px 120px 30px 30px;
-  box-shadow:var(--sombra), 0 0 60px rgba(184, 41, 75, .22);
+  border-radius:28px;
+  box-shadow:var(--sombra), 0 20px 60px rgba(0, 0, 0, .45);
   overflow:hidden;
+  margin-bottom:1.4rem;
 }
 @media(min-width:640px){
-  header.hero-card{border-radius:180px 180px 36px 36px;padding:3.2rem 2.4rem 2.4rem}
+  header.hero-card{border-radius:32px;padding:3.2rem 2.2rem 2.4rem}
 }
 header.hero-card::before{
   content:'';
   position:absolute;
-  inset:8px;
-  border:1px dashed var(--borde);
-  border-radius:114px 114px 24px 24px;
+  top:0;left:12%;right:12%;height:1px;
+  background:linear-gradient(90deg, transparent, var(--dorado2), transparent);
+  opacity:.75;
   pointer-events:none;
 }
-@media(min-width:640px){
-  header.hero-card::before{border-radius:172px 172px 28px 28px}
+.hero-glow{
+  position:absolute;
+  top:-50px;left:50%;transform:translateX(-50%);
+  width:320px;height:160px;
+  background:radial-gradient(circle, var(--vino) 0%, transparent 70%);
+  opacity:.32;
+  filter:blur(40px);
+  pointer-events:none;
+  z-index:0;
+}
+.corazon-latido{
+  display:inline-block;
+  color:var(--vino);
+  animation:corazonPulse 1.8s ease-in-out infinite;
+}
+@keyframes corazonPulse{
+  0%,100%{transform:scale(1)}
+  14%{transform:scale(1.22)}
+  28%{transform:scale(1)}
+  42%{transform:scale(1.14)}
+  70%{transform:scale(1)}
 }
 .pret{
   display:inline-block;
@@ -311,83 +332,106 @@ body[data-tema="pergamino"] .tbtn.activo{background:linear-gradient(135deg, #9e2
   border-color:rgba(168,68,95,.5);
 }
 
-/* EPÍGRAFE / LIBRO ABIERTO DE BIENVENIDA */
-.epigrafe-wrap{
-  display:grid;
-  grid-template-columns:1fr;
-  gap:1.1rem;
-  margin:1.5rem 0;
-}
-@media(min-width:680px){
-  .epigrafe-wrap{grid-template-columns:1fr 1.25fr;align-items:stretch}
-}
-.historia{
-  background:var(--card-bg);
-  border:1px solid var(--borde-luz);
-  border-radius:var(--radio);
-  padding:1.6rem 1.4rem;
-  text-align:center;
-  box-shadow:var(--sombra);
-  backdrop-filter:blur(14px);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
-  align-items:center;
+/* BIENVENIDA GLASS EDITORIAL UNIFICADA */
+.epigrafe-card{
   position:relative;
+  background:var(--card-bg);
+  backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
+  border:1px solid var(--borde-luz);
+  border-radius:24px;
+  padding:2rem 1.8rem 1.7rem;
+  margin:1.6rem 0;
+  box-shadow:var(--sombra);
   overflow:hidden;
 }
-.historia::before{
-  content:'❦';
-  font-size:2.1rem;
-  color:var(--dorado2);
-  opacity:.85;
-  margin-bottom:.3rem;
-  line-height:1;
+.epigrafe-card::before{
+  content:'';
+  position:absolute;
+  top:0;left:15%;right:15%;height:1px;
+  background:linear-gradient(90deg, transparent, var(--dorado2), transparent);
+  opacity:.8;
+  pointer-events:none;
 }
-.historia a.btn-poema-orig{
+.epigrafe-card::after{
+  content:'“';
+  position:absolute;
+  top:8px;right:22px;
+  font-family:'Italiana',serif;
+  font-size:5rem;
+  line-height:1;
+  color:var(--dorado2);
+  opacity:.14;
+  pointer-events:none;
+}
+.epigrafe-header{
+  display:flex;
+  align-items:center;
+  gap:.6rem;
+  font-size:.78rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--dorado2);
+  margin-bottom:.85rem;
+  font-weight:600;
+}
+.epigrafe-header::after{
+  content:'';
+  flex:1;
+  height:1px;
+  background:linear-gradient(90deg, var(--borde), transparent);
+}
+.epigrafe-verso{
+  font-style:italic;
+  font-size:1.15rem;
+  line-height:1.8;
+  color:var(--tinta);
+  position:relative;
+  z-index:1;
+}
+.epigrafe-pie{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:1rem;
+  margin-top:1.25rem;
+  padding-top:1rem;
+  border-top:1px dashed var(--borde);
+  position:relative;
+  z-index:1;
+}
+.epigrafe-dedicatoria{
+  font-size:.92rem;
+  font-style:italic;
+  color:var(--tinta-dim);
+}
+.epigrafe-dedicatoria strong{
+  color:var(--dorado2);
+  font-weight:600;
+}
+.btn-poema-orig{
   display:inline-flex;
   align-items:center;
   gap:.4rem;
-  margin-top:.85rem;
-  padding:.6rem 1.25rem;
+  padding:.55rem 1.2rem;
   border-radius:100px;
-  background:linear-gradient(135deg, rgba(250,226,176,.18), rgba(184,41,75,.28));
+  background:linear-gradient(135deg, rgba(250,226,176,.15), rgba(184,41,75,.25));
   border:1px solid var(--borde-luz);
   color:var(--dorado2);
   text-decoration:none;
   font-family:'Italiana',serif;
-  font-size:.84rem;
+  font-size:.82rem;
   letter-spacing:.1em;
   text-transform:uppercase;
-  transition:all .25s ease;
+  transition:all .22s cubic-bezier(.2,.8,.2,1);
 }
-.historia a.btn-poema-orig:hover{transform:translateY(-2px);background:var(--dorado2);color:#230914}
-.bienvenida{
-  background:linear-gradient(135deg, rgba(168, 36, 72, .26), rgba(45, 11, 26, .65));
-  border:1px solid var(--borde);
-  border-left:4px solid var(--dorado2);
-  border-radius:var(--radio);
-  padding:1.45rem 1.55rem;
-  font-style:italic;
-  line-height:1.75;
-  box-shadow:var(--sombra);
-  backdrop-filter:blur(12px);
-  position:relative;
+.btn-poema-orig:hover{
+  transform:translateY(-2px);
+  background:linear-gradient(135deg, var(--dorado2), var(--dorado));
+  color:#230914;
+  box-shadow:0 8px 24px rgba(226,184,107,.35);
 }
-body[data-tema="pergamino"] .bienvenida{background:linear-gradient(135deg, rgba(255,250,242,.95), rgba(246,230,225,.9))}
-.bienvenida::after{
-  content:'“';
-  position:absolute;
-  top:6px;
-  right:18px;
-  font-family:'Italiana',serif;
-  font-size:4.5rem;
-  line-height:1;
-  color:var(--dorado2);
-  opacity:.18;
-  pointer-events:none;
-}
-.bienvenida h2{font-family:'Italiana',serif;font-weight:400;font-size:1.42rem;margin-bottom:.5rem;font-style:normal;letter-spacing:.03em;color:var(--dorado2)}
 
 /* TABS CÁPSULA DE CRISTAL */
 nav.tabs{
@@ -499,52 +543,98 @@ nav.tabs .n{display:block;font-family:'Cormorant Garamond',serif;font-size:.78re
 #visor .cerrar{display:block;margin:1.7rem auto 0;background:transparent;border:1px solid #9e243e;color:#9e243e;border-radius:100px;padding:.7rem 2.2rem;cursor:pointer;font-family:inherit;font-style:italic;font-size:1.02rem;min-height:44px;transition:.2s}
 #visor .cerrar:hover{background:#9e243e;color:#fff}
 
-/* FORMULARIOS ESTILIZADOS */
+/* FORMULARIOS GLASS MODERNOS & ORGANIZADOS */
 .form{
   background:var(--card-bg);
   border:1px solid var(--borde-luz);
-  border-radius:var(--radio);
-  padding:1.6rem 1.45rem;
-  margin-top:1.6rem;
-  backdrop-filter:blur(14px);
+  border-radius:24px;
+  padding:1.8rem 1.6rem;
+  margin-top:1.8rem;
+  backdrop-filter:blur(28px) saturate(180%);
+  -webkit-backdrop-filter:blur(28px) saturate(180%);
   box-shadow:var(--sombra);
+  position:relative;
+  overflow:hidden;
 }
-.form h2{font-family:'Italiana',serif;font-weight:400;font-size:1.65rem;margin-bottom:.3rem;letter-spacing:.02em;color:var(--dorado2)}
-.form p{font-style:italic;color:var(--tinta-dim);margin-bottom:1rem}
-.lbl{display:block;font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dorado2);margin:.95rem 0 .35rem}
+.form::before{
+  content:'';
+  position:absolute;
+  top:0;left:15%;right:15%;height:1px;
+  background:linear-gradient(90deg, transparent, var(--dorado2), transparent);
+  opacity:.75;
+  pointer-events:none;
+}
+.form h2{
+  font-family:'Italiana',serif;
+  font-weight:400;
+  font-size:1.6rem;
+  margin-bottom:.3rem;
+  letter-spacing:.02em;
+  color:var(--dorado2);
+  display:flex;
+  align-items:center;
+  gap:.5rem;
+}
+.form p{font-style:italic;color:var(--tinta-dim);font-size:.95rem;margin-bottom:1.1rem}
+.form-grid-2{display:grid;grid-template-columns:1fr;gap:.8rem}
+@media(min-width:540px){.form-grid-2{grid-template-columns:1fr 1fr}}
+.input-field{display:flex;flex-direction:column;gap:.35rem}
+.lbl{
+  display:inline-flex;
+  align-items:center;
+  gap:.35rem;
+  font-size:.76rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--dorado2);
+  margin:.6rem 0 .3rem;
+  font-weight:600;
+}
 .form input,.form textarea,.form select{
   width:100%;
-  background:rgba(15, 4, 10, .42);
-  border:1px solid var(--borde-luz);
+  background:rgba(255, 255, 255, .05);
+  border:1px solid rgba(255, 255, 255, .15);
   color:var(--tinta);
   border-radius:14px;
-  padding:.85rem 1rem;
+  padding:.88rem 1.1rem;
   font-family:inherit;
   font-size:1.02rem;
   margin-bottom:.15rem;
-  transition:.22s;
+  transition:all .22s cubic-bezier(.2,.8,.2,1);
 }
-body[data-tema="pergamino"] .form input,body[data-tema="pergamino"] .form textarea,body[data-tema="pergamino"] .form select{background:#fff;border-color:rgba(158,107,36,.4);color:#2c1620}
-.form textarea{min-height:135px;resize:vertical;line-height:1.6}
-.form input:focus,.form textarea:focus,.form select:focus{outline:none;border-color:var(--dorado2);box-shadow:var(--foco)}
+body[data-tema="pergamino"] .form input,
+body[data-tema="pergamino"] .form textarea,
+body[data-tema="pergamino"] .form select{
+  background:rgba(255, 255, 255, .92);
+  border-color:rgba(158,107,36,.35);
+  color:#2c1620;
+}
+.form textarea{min-height:125px;resize:vertical;line-height:1.65}
+.form input:focus,.form textarea:focus,.form select:focus{
+  outline:none;
+  background:rgba(255, 255, 255, .09);
+  border-color:var(--dorado2);
+  box-shadow:0 0 0 3px var(--dorado-brillo), 0 8px 24px rgba(0,0,0,.35);
+  transform:translateY(-1px);
+}
 .form select{appearance:none;cursor:pointer}
 .form select option{background:#240814;color:#fdf5e8}
 body[data-tema="pergamino"] .form select option{background:#fff;color:#2c1620}
 .form input[type="date"],.form input[type="time"]{color-scheme:dark}
 body[data-tema="pergamino"] .form input[type="date"],body[data-tema="pergamino"] .form input[type="time"]{color-scheme:light}
-.row2{display:flex;gap:.65rem;flex-wrap:wrap}
+.row2{display:flex;gap:.75rem;flex-wrap:wrap}
 .row2>div{flex:1 1 140px}
-.hint{font-size:.92rem;font-style:italic;color:var(--tinta-dim);background:rgba(226,184,107,.08);border:1px solid var(--borde);border-radius:14px;padding:.75rem 1rem;margin:.85rem 0;line-height:1.55}
+.hint{font-size:.92rem;font-style:italic;color:var(--tinta-dim);background:rgba(226,184,107,.08);border:1px solid var(--borde);border-radius:14px;padding:.85rem 1.1rem;margin:.9rem 0;line-height:1.55}
 .hint b{color:var(--dorado2)}
 .btn{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  gap:.5rem;
+  gap:.55rem;
   background:linear-gradient(135deg, var(--dorado2) 0%, var(--dorado) 100%);
   border:none;
   border-radius:100px;
-  padding:.95rem 2.1rem;
+  padding:.95rem 2.2rem;
   font-family:'Italiana',serif;
   letter-spacing:.16em;
   text-transform:uppercase;
@@ -554,14 +644,14 @@ body[data-tema="pergamino"] .form input[type="date"],body[data-tema="pergamino"]
   font-size:.9rem;
   min-height:48px;
   width:100%;
-  transition:all .22s ease;
-  margin-top:.75rem;
-  box-shadow:0 8px 24px rgba(226,184,107,.35);
+  transition:all .22s cubic-bezier(.2,.8,.2,1);
+  margin-top:.85rem;
+  box-shadow:0 10px 28px rgba(226,184,107,.38);
 }
-body[data-tema="pergamino"] .btn{background:linear-gradient(135deg, #9e243e, #73162b);color:#fff;box-shadow:0 8px 24px rgba(158,36,62,.3)}
+body[data-tema="pergamino"] .btn{background:linear-gradient(135deg, #9e243e, #73162b);color:#fff;box-shadow:0 10px 28px rgba(158,36,62,.35)}
 @media(min-width:560px){.btn{width:auto}}
-.btn:hover{filter:brightness(1.08);transform:translateY(-2px)}
-.btn:active{transform:scale(.98)}
+.btn:hover{filter:brightness(1.08);transform:translateY(-2px);box-shadow:0 12px 32px rgba(226,184,107,.48)}
+.btn:active{transform:scale(.97)}
 .btn:focus-visible{outline:none;box-shadow:var(--foco)}
 .msg{min-height:1.4em;margin-top:.7rem;font-style:italic;color:var(--dorado2)}
 .borrar{margin-top:.5rem;background:transparent;border:none;color:var(--rosa);cursor:pointer;font-style:italic;opacity:.8;padding:.4rem 0;min-height:36px}
@@ -758,8 +848,9 @@ body[data-tema="pergamino"] .ruleta-display{background:rgba(158,36,62,.06)}
 </div>
 
 <header class="hero-card">
+  <div class="hero-glow" aria-hidden="true"></div>
   <div class="pret">✦ Nuestro Diario de Amor ✦</div>
-  <h1>Cindy <em>&</em> Oscar ♥</h1>
+  <h1>Cindy <em>&</em> Oscar <span class="corazon-latido">♥</span></h1>
   <p class="sub">cada día más cerca de ti ♥</p>
 
   <div class="tiempos-botones" role="group" aria-label="Tiempos">
@@ -792,18 +883,17 @@ body[data-tema="pergamino"] .ruleta-display{background:rgba(158,36,62,.06)}
 <div id="efimero" aria-label="Poema efímero de hoy" role="status"></div>
 <div id="aniv" aria-label="Aniversario del 18" role="status"></div>
 
-<div class="epigrafe-wrap">
-  <div class="historia">
-    <p>Este es <strong>nuestro rincón secreto</strong> ♥ donde guardamos versos, citas, canciones y promesas.</p>
-    <p style="margin-top:.45rem;font-style:italic;opacity:.85">Todo empezó con aquel primer poema:</p>
-    <a class="btn-poema-orig" href="poema-jardin-nocturno.html">✦ Abrir “El jardín nocturno” →</a>
-  </div>
-  <div class="bienvenida">
-    <h2>✦ Bienvenida a nuestra casa ✦</h2>
-    <p>Quédate.<br>
+<div class="epigrafe-card" aria-label="Bienvenida a nuestro rincón secreto">
+  <div class="epigrafe-header">✦ Bienvenida a nuestra casa ✦</div>
+  <p class="epigrafe-verso">
+    Quédate.<br>
     La noche es pequeña, cabe en tus manos.<br>
     No digas nada. Mírame hasta que el silencio aprenda tu nombre.<br>
-    Esta casa es de papel y luna: si te vas, se apaga. Si te quedas, arde.</p>
+    Esta casa es de papel y luna: si te vas, se apaga. Si te quedas, arde.
+  </p>
+  <div class="epigrafe-pie">
+    <div class="epigrafe-dedicatoria">Nuestro rincón secreto ♥ donde cada verso vive por ti.</div>
+    <a class="btn-poema-orig" href="poema-jardin-nocturno.html">✦ Abrir “El jardín nocturno” →</a>
   </div>
 </div>
 
@@ -834,12 +924,20 @@ body[data-tema="pergamino"] .ruleta-display{background:rgba(158,36,62,.06)}
   <div class="form">
     <h2>✦ Escribir un nuevo poema</h2>
     <p>Escríbelo aquí. Con la nube ☁ activada se guarda para los dos, si no, en este dispositivo.</p>
-    <label class="lbl" for="fTitulo">Título</label>
-    <input id="fTitulo" placeholder="Ej. Luna de septiembre" autocomplete="off">
-    <label class="lbl" for="fFecha">Fecha</label>
-    <input id="fFecha" type="date">
-    <label class="lbl" for="fTexto">Poema</label>
-    <textarea id="fTexto" placeholder="Escribe tu poema aquí…"></textarea>
+    <div class="form-grid-2">
+      <div class="input-field">
+        <label class="lbl" for="fTitulo">Título</label>
+        <input id="fTitulo" placeholder="Ej. Luna de septiembre" autocomplete="off">
+      </div>
+      <div class="input-field">
+        <label class="lbl" for="fFecha">Fecha</label>
+        <input id="fFecha" type="date">
+      </div>
+    </div>
+    <div class="input-field">
+      <label class="lbl" for="fTexto">Poema</label>
+      <textarea id="fTexto" placeholder="Escribe tu poema aquí…"></textarea>
+    </div>
     <button class="btn" onclick="agregar()">Guardar para ella ♥</button>
     <div id="msg" class="msg" aria-live="polite"></div>
   </div>
@@ -850,18 +948,34 @@ body[data-tema="pergamino"] .ruleta-display{background:rgba(158,36,62,.06)}
   <div class="form">
     <h2>✦ Agendar nueva cita o evento</h2>
     <p>Crea citas, aniversarios o salidas. Se guardan aquí y puedes mandarlos a Google Calendar ♥</p>
-    <label class="lbl" for="eTitulo">Título</label>
-    <input id="eTitulo" placeholder="Ej. Cena de aniversario" autocomplete="off">
-    <label class="lbl" for="eFecha">Fecha</label>
-    <input id="eFecha" type="date">
-    <div class="row2">
-      <div><label class="lbl" for="eHoraI">Inicia</label><input id="eHoraI" type="time" value="19:00"></div>
-      <div><label class="lbl" for="eHoraF">Termina</label><input id="eHoraF" type="time" value="21:00"></div>
+    <div class="form-grid-2">
+      <div class="input-field">
+        <label class="lbl" for="eTitulo">Título</label>
+        <input id="eTitulo" placeholder="Ej. Cena de aniversario" autocomplete="off">
+      </div>
+      <div class="input-field">
+        <label class="lbl" for="eFecha">Fecha</label>
+        <input id="eFecha" type="date">
+      </div>
     </div>
-    <label class="lbl" for="eLugar">Lugar (opcional)</label>
-    <input id="eLugar" placeholder="Ej. Mirador, cine, casa…" autocomplete="off">
-    <label class="lbl" for="eDesc">Detalles (opcional)</label>
-    <textarea id="eDesc" placeholder="Ej. Llevo flores, playlist y tu chocolate favorito…" style="min-height:80px"></textarea>
+    <div class="form-grid-2">
+      <div class="input-field">
+        <label class="lbl" for="eHoraI">Inicia</label>
+        <input id="eHoraI" type="time" value="19:00">
+      </div>
+      <div class="input-field">
+        <label class="lbl" for="eHoraF">Termina</label>
+        <input id="eHoraF" type="time" value="21:00">
+      </div>
+    </div>
+    <div class="input-field">
+      <label class="lbl" for="eLugar">Lugar (opcional)</label>
+      <input id="eLugar" placeholder="Ej. Mirador, cine, casa…" autocomplete="off">
+    </div>
+    <div class="input-field">
+      <label class="lbl" for="eDesc">Detalles (opcional)</label>
+      <textarea id="eDesc" placeholder="Ej. Llevo flores, playlist y tu chocolate favorito…" style="min-height:80px"></textarea>
+    </div>
     <button class="btn" onclick="agregarEvento()">Guardar evento ♥</button>
     <div id="msgE" class="msg" aria-live="polite"></div>
     <div class="hint">💡 <b>Dos tipos:</b> ♥ <b>en la página</b> = lo vemos los dos siempre. <b>Solo en este dispositivo</b> = es tu borrador. Para pasarlo al otro usa <b>WhatsApp</b> o <b>Google Calendar</b>.</div>
@@ -873,17 +987,25 @@ body[data-tema="pergamino"] .ruleta-display{background:rgba(158,36,62,.06)}
   <div class="form">
     <h2>✦ Dejar una idea o mensajito ✦</h2>
     <p>Mi amor, este es tu espacio ♥ Deja una idea para una cita, una sugerencia para el blog, o simplemente un mensaje bonito. Todo lo que escribas aquí florece.</p>
-    <label class="lbl" for="sNombre">Tu nombre</label>
-    <input id="sNombre" placeholder="Tu nombre ♥ (opcional)" autocomplete="off">
-    <label class="lbl" for="sTipo">Tipo</label>
-    <select id="sTipo">
-      <option value="💌 Mensaje bonito">💌 Mensaje bonito</option>
-      <option value="💡 Idea para cita">💡 Idea para cita</option>
-      <option value="🌙 Sugerencia">🌙 Sugerencia</option>
-      <option value="✨ Plan a futuro">✨ Plan a futuro</option>
-    </select>
-    <label class="lbl" for="sTexto">Tu mensaje amable y bonito</label>
-    <textarea id="sTexto" placeholder="Escribe aquí con el corazón…&#10;Ej: Amor, hoy pensé en ti cuando vi la luna… Me encantaría que fuéramos por un helado y miráramos las estrellas juntos ♥"></textarea>
+    <div class="form-grid-2">
+      <div class="input-field">
+        <label class="lbl" for="sNombre">Tu nombre</label>
+        <input id="sNombre" placeholder="Tu nombre ♥ (opcional)" autocomplete="off">
+      </div>
+      <div class="input-field">
+        <label class="lbl" for="sTipo">Tipo</label>
+        <select id="sTipo">
+          <option value="💌 Mensaje bonito">💌 Mensaje bonito</option>
+          <option value="💡 Idea para cita">💡 Idea para cita</option>
+          <option value="🌙 Sugerencia">🌙 Sugerencia</option>
+          <option value="✨ Plan a futuro">✨ Plan a futuro</option>
+        </select>
+      </div>
+    </div>
+    <div class="input-field">
+      <label class="lbl" for="sTexto">Tu mensaje amable y bonito</label>
+      <textarea id="sTexto" placeholder="Escribe aquí con el corazón…&#10;Ej: Amor, hoy pensé en ti cuando vi la luna… Me encantaría que fuéramos por un helado y miráramos las estrellas juntos ♥"></textarea>
+    </div>
     <button class="btn" onclick="agregarIdea()">Guardar con amor ♥</button>
     <div id="msgS" class="msg" aria-live="polite"></div>
     <div class="hint">💌 Si quieres que quede <b>fijo en la página para los dos</b>, mándamelo por <b>WhatsApp ♥</b> y yo lo publico.</div>
@@ -895,10 +1017,16 @@ body[data-tema="pergamino"] .ruleta-display{background:rgba(158,36,62,.06)}
   <div class="form">
     <h2>＋ Dedicar otra canción de Spotify</h2>
     <p>Pega el link de Spotify, ej. <span style="opacity:.8">https://open.spotify.com/track/...</span></p>
-    <label class="lbl" for="mLink">Link de Spotify</label>
-    <input id="mLink" placeholder="Pega aquí el link ♥" autocomplete="off" inputmode="url">
-    <label class="lbl" for="mNota">Dedicatoria (opcional)</label>
-    <input id="mNota" placeholder="Ej. Nuestra canción de los viernes ♥" autocomplete="off">
+    <div class="form-grid-2">
+      <div class="input-field">
+        <label class="lbl" for="mLink">Link de Spotify</label>
+        <input id="mLink" placeholder="Pega aquí el link ♥" autocomplete="off" inputmode="url">
+      </div>
+      <div class="input-field">
+        <label class="lbl" for="mNota">Dedicatoria (opcional)</label>
+        <input id="mNota" placeholder="Ej. Nuestra canción de los viernes ♥" autocomplete="off">
+      </div>
+    </div>
     <button class="btn" onclick="agregarMusica()">Guardar canción ♥</button>
     <div id="msgM" class="msg" aria-live="polite"></div>
   </div>
@@ -969,12 +1097,20 @@ body[data-tema="pergamino"] .ruleta-display{background:rgba(158,36,62,.06)}
   <div class="form">
     <h2>✦ Escribir una nueva carta para ella</h2>
     <p>Crea un sobre nuevo para una ocasión especial.</p>
-    <label class="lbl" for="cTitulo">Ocasión / Título</label>
-    <input id="cTitulo" placeholder="Ej. Abrir cuando cumplamos 6 meses…" autocomplete="off">
-    <label class="lbl" for="cEmoji">Ícono del sobre</label>
-    <input id="cEmoji" placeholder="Ej. 💌, 🌙, ✨, 🌸, ☕" value="💌" style="max-width:120px">
-    <label class="lbl" for="cTexto">Contenido de la carta</label>
-    <textarea id="cTexto" placeholder="Escribe aquí con todo tu corazón…"></textarea>
+    <div class="form-grid-2">
+      <div class="input-field">
+        <label class="lbl" for="cTitulo">Ocasión / Título</label>
+        <input id="cTitulo" placeholder="Ej. Abrir cuando cumplamos 6 meses…" autocomplete="off">
+      </div>
+      <div class="input-field">
+        <label class="lbl" for="cEmoji">Ícono del sobre</label>
+        <input id="cEmoji" placeholder="Ej. 💌, 🌙, ✨, 🌸, ☕" value="💌">
+      </div>
+    </div>
+    <div class="input-field">
+      <label class="lbl" for="cTexto">Contenido de la carta</label>
+      <textarea id="cTexto" placeholder="Escribe aquí con todo tu corazón…"></textarea>
+    </div>
     <button class="btn" onclick="agregarCarta()">Sellar y guardar sobre ♥</button>
     <div id="msgC" class="msg" aria-live="polite"></div>
   </div>
@@ -1256,12 +1392,18 @@ pintar();
 // --- TABS con hash (sin sticky, se va al hacer scroll) ---
 function mostrar(cual){
   const secs={poemas:'secPoemas',eventos:'secEventos',ideas:'secIdeas',musica:'secMusica',planes:'secPlanes',cartas:'secCartas'};
+  let activeSec = null;
   Object.entries(secs).forEach(([k,id])=>{
     const s=document.getElementById(id);
     if(!s) return;
     const show=(k===cual);
     s.style.display=show?'block':'none';
-    if(show){ s.classList.remove('fade'); void s.offsetWidth; s.classList.add('fade'); }
+    if(show){
+      activeSec = s;
+      s.classList.remove('fade');
+      void s.offsetWidth;
+      s.classList.add('fade');
+    }
   });
   document.getElementById('tabPoemas').classList.toggle('activo', cual==='poemas');
   document.getElementById('tabEventos').classList.toggle('activo', cual==='eventos');
@@ -1277,6 +1419,18 @@ function mostrar(cual){
   if(cual==='musica') pintarMusica();
   if(cual==='planes') pintarPlanes();
   if(cual==='cartas') pintarCartas();
+
+  if(window.gsap && activeSec){
+    try{
+      gsap.killTweensOf(activeSec);
+      gsap.fromTo(activeSec, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" });
+      const cards = activeSec.querySelectorAll('.card, .ev, .idea, .mus, .plan, .carta-sobre, .frasco-card, .ruleta-card, .form');
+      if(cards.length){
+        gsap.killTweensOf(cards);
+        gsap.fromTo(cards, { opacity: 0, y: 16 }, { opacity: 1, y: 0, stagger: 0.04, duration: 0.35, ease: "power2.out" });
+      }
+    }catch(e){}
+  }
 }
 (function initTab(){ const h=(location.hash||'').replace('#',''); if(['poemas','eventos','ideas','musica','planes','cartas'].includes(h)) mostrar(h); })();
 
@@ -2254,6 +2408,64 @@ function setFondoMus(play){
     requestAnimationFrame(frame);
     document.addEventListener('visibilitychange', ()=>{ if(!document.hidden) requestAnimationFrame(frame); });
   }catch(e){}
+})();
+
+// --- GSAP ANIMATION ENGINE (Glassmorphism & Romantic Motion) ---
+(function initGSAPAnimations(){
+  if(!window.gsap) return;
+  // Animación de entrada elegante en la portada y elementos iniciales
+  function entradaHero(){
+    try{
+      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+      tl.fromTo('.topbar-ambiente', { opacity: 0, y: -14 }, { opacity: 1, y: 0, duration: 0.55 })
+        .fromTo('header.hero-card', { opacity: 0, y: 22, scale: 0.98 }, { opacity: 1, y: 0, scale: 1, duration: 0.75 }, '-=0.25')
+        .fromTo('header.hero-card .pret, header.hero-card h1, header.hero-card .sub', { opacity: 0, y: 12 }, { opacity: 1, y: 0, stagger: 0.08, duration: 0.55 }, '-=0.45')
+        .fromTo('.tiempos-botones .tbtn', { opacity: 0, scale: 0.92 }, { opacity: 1, scale: 1, stagger: 0.06, duration: 0.45 }, '-=0.35')
+        .fromTo('.epigrafe-card', { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 0.65 }, '-=0.3')
+        .fromTo('nav.tabs', { opacity: 0, y: 12 }, { opacity: 1, y: 0, duration: 0.55 }, '-=0.3')
+        .fromTo('#secPoemas .toolbar, #secPoemas .card', { opacity: 0, y: 16 }, { opacity: 1, y: 0, stagger: 0.05, duration: 0.45 }, '-=0.3');
+    }catch(e){}
+  }
+
+  if(document.readyState === 'complete'){ entradaHero(); }
+  else { window.addEventListener('load', entradaHero); }
+
+  // Micro-interacción 3D Tilt glass en tarjetas
+  function aplicarTilt(elem){
+    if(!elem || elem._tiltInit) return;
+    elem._tiltInit = true;
+    elem.addEventListener('mousemove', (e)=>{
+      const rect = elem.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width/2;
+      const y = e.clientY - rect.top - rect.height/2;
+      const rotX = -(y / (rect.height/2)) * 5;
+      const rotY = (x / (rect.width/2)) * 5;
+      gsap.to(elem, {
+        transformPerspective: 900,
+        rotationX: rotX,
+        rotationY: rotY,
+        scale: 1.015,
+        duration: 0.25,
+        ease: 'power1.out'
+      });
+    });
+    elem.addEventListener('mouseleave', ()=>{
+      gsap.to(elem, {
+        rotationX: 0,
+        rotationY: 0,
+        scale: 1,
+        duration: 0.45,
+        ease: 'power2.out'
+      });
+    });
+  }
+
+  function refrescarTilts(){
+    document.querySelectorAll('.card, .carta-sobre, .frasco-card, .ruleta-card').forEach(aplicarTilt);
+  }
+  refrescarTilts();
+  window.addEventListener('load', refrescarTilts);
+  setInterval(refrescarTilts, 2500);
 })();
 </script>
 </body>
