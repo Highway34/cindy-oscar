@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v17'; // v17: rediseño Terciopelo & Champagne, scrapbook polaroid, vinilo giratorio y lacre 3D ♥
+const CACHE = 'rincon-v18'; // v18: rediseño completo Terciopelo Rubí, Pergamino & Estelar + portada arco ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
@@ -9,6 +9,8 @@ self.addEventListener('activate', e => {
   );
 });
 self.addEventListener('fetch', e => {
-  // solo para cumplir requisito instalable, pasa todo a red
-  return;
+  if (e.request.mode === 'navigate') {
+    e.respondWith(fetch(e.request, {cache: 'no-cache'}).catch(() => fetch(e.request)));
+    return;
+  }
 });
