@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v20'; // v20: Constelaciones interactivas + Tipografía Cinzel astral + Taste Skill anti-slop ♥
+const CACHE = 'rincon-v21'; // v21: Corrección conteo aniversario mes #1 ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
