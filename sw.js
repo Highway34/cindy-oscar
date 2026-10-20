@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v21'; // v21: Corrección conteo aniversario mes #1 ♥
+const CACHE = 'rincon-v22'; // v22: poemas efimeros tranquilos y cortos dia de por medio ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });

@@ -2085,58 +2085,56 @@ window.spawnSparkle = spawnSparkle;
   }, {passive: true});
 })();
 
-// --- POEMA EFÍMERO DIARIO (intercala horas: 7:00am, 7:30am, 8:00am) ---
-// Micro-poemas de amor, complicidad y gratitud.
-// Tono literario íntimo y evocador, sin firma de autor ni mención de estilo.
-// Rota día a día.
+// --- POEMA EFÍMERO (día de por medio, sereno y breve) ---
+// Micro-poemas de amor, calma, refugio y gratitud.
+// Versos cortos y tranquilos, sin firmas de estilo.
+// Rota día de por medio intercalando horas matutinas: 7:00am, 7:30am, 8:00am.
 const EFIMEROS = [
-{t:"El sendero",x:"Si el tiempo es un jardín de senderos,\ngracias por ser el único\nen el que siempre elijo\nperderme y encontrarme."},
-{t:"La noche",x:"La noche escribe tu nombre\ncon tinta de estrellas.\nYo no lo borro:\nle agradezco a la oscuridad\nque me lleve a ti."},
-{t:"Rayuela",x:"Andábamos sin buscarnos,\npero sabiendo que la vida\nera este salto exacto:\ncaer en tu abrazo y quedarnos."},
-{t:"El espejo",x:"Me miré al espejo\ny detrás de mis ojos\nestabas tú:\nel amor más sereno,\nmi mayor gratitud."},
-{t:"Silencio",x:"Haz silencio un momento:\nno es ausencia,\nes el agradecimiento hondo\nde tenerte aquí,\ntan cerca de mi voz."},
-{t:"Encuentro",x:"Como si se pudiera elegir el amor,\ncomo si no fueras este rayo dulce\nque me desarmó la prisa\ny me enseñó a querer despacio."},
-{t:"El instante",x:"Entre todos los siglos del mundo,\nel azar o el destino\nme regaló este instante:\nverte sonreír frente a mí."},
-{t:"Palabra",x:"Guardé una palabra limpia\npara cuando la noche apriete:\ntu nombre,\nmi lámpara encendida."},
-{t:"Complicidad",x:"Me gusta que no hagan falta palabras:\nbasta una mirada tuya sobre el café\npara saber que el mundo\nes un lugar hermoso."},
-{t:"El laberinto",x:"Construí mil muros para cuidarme.\nLlegaste con tus manos tibias\ny convertiste el laberinto\nen un jardín donde da el sol."},
-{t:"Herida de luz",x:"Hay ausencias que pesan,\npero la tuya me abriga:\nsé que existes,\nsé que me quieres,\ny eso me basta para cantar."},
-{t:"Instrucciones",x:"Instrucciones para salvar el día:\nmirarte llegar,\nescuchar tu risa de golpe\ny dar gracias al universo entero."},
-{t:"La memoria",x:"El tiempo borrará ciudades y mapas,\npero nunca la certeza\nde esta mano tuya\nentrelazada a la mía."},
-{t:"Refugio",x:"Mi corazón es una habitación pequeña.\nEntraste tú\ny la llenaste de luz,\nde silencio tibio y de paz."},
-{t:"Paraguas",x:"Si llueve afuera, no importa:\nnos inventamos un techo de risas\ny caminamos despacio,\nmojándonos de pura alegría."},
-{t:"El mapa",x:"Busqué en libros antiguos\nla definición del asombro.\nEra sencillo:\nverte despertar a mi lado."},
-{t:"Naufragio",x:"Naufragué en tu orilla\nsin pedir auxilio.\nQué fortuna tan honda\nhaber encallado en tu ternura."},
-{t:"Jueves",x:"De todas las horas y todos los caminos,\nagradezco esta suerte limpia:\ndespertar sabiendo que existes,\nque nos queremos\ny que el mundo, contigo, vuelve a ser un milagro."},
-{t:"Eternidad",x:"Dicen que la eternidad es inalcanzable.\nYo la toqué ayer\nen los tres segundos\nque duró tu abrazo."},
-{t:"Voz",x:"Tu voz tiene la textura\nde las cosas que no mienten.\nLa escucho y el día\nse vuelve más amable."},
-{t:"La esquina",x:"En cualquier esquina de la ciudad\nte reconocería:\nno por cómo caminas,\nsino por la luz que dejas al pasar."},
-{t:"Gratitud",x:"Doy gracias a los ríos, al pan y a la tarde,\npero más que a todo,\na la bendita suerte\nde caminar a tu lado."},
-{t:"Ventana",x:"Afuera el mundo sigue con su prisa.\nNosotros miramos por la ventana,\ncompartimos el calor de una taza\ny somos felices."},
-{t:"Los cronopios",x:"Hay gente que pasa de largo por la vida.\nNosotros nos detenemos en una flor,\nen un chiste tonto, en una mirada:\ngracias por ser mi compañera de juego."},
-{t:"El poema",x:"No escribo para que rime,\nescribo para dejar constancia:\neste amor existe,\nes real y es mi mayor tesoro."},
-{t:"Sombra tibia",x:"Hasta mi sombra es más buena\ncuando camina pegada a la tuya.\nMe haces mejor persona\nsolo con mirarme."},
-{t:"Café de lluvia",x:"Llueve en la ventana.\nEl café está caliente\ny tus ojos me dicen\nque todo va a estar bien."},
-{t:"La moneda",x:"Tiré una moneda al aire\npidiendo un milagro.\nCaíste tú,\ncon tu ternura intacta."},
-{t:"Noche limpia",x:"Duerme tranquila, mi amor.\nLa noche cuida tus sueños\ny mi gratitud vela por ti\nhasta que amanezca."},
-{t:"El puente",x:"Entre tu mundo y el mío\nno hacían falta puentes:\nbastaba mirarnos\ny ya estábamos del otro lado."}
+{t:"Calma",x:"Estar contigo\nes saber que el mundo\npuede ir despacio."},
+{t:"El café",x:"Una taza tibia,\ntu mano cerca\ny la mañana en paz."},
+{t:"Silencio dulce",x:"No hace falta hablar:\ntu presencia callada\nlo abriga todo."},
+{t:"Refugio",x:"Entre tantas prisas,\ntu abrazo\nes mi lugar seguro."},
+{t:"Despacio",x:"Me gusta quererte así:\nsin afanes,\ncon la calma de lo bueno."},
+{t:"Tregua",x:"Basta mirarte\npara que el cansancio\nse vuelva suave."},
+{t:"La tarde",x:"El cielo bajando la voz,\ntu risa tibia\ny nada más que pedir."},
+{t:"Respiro",x:"Llegas tú\ny mi pecho aprende\na respirar hondo."},
+{t:"Certeza",x:"Hay una paz limpia\nen saber\nque caminamos juntos."},
+{t:"Casa",x:"No es un lugar:\nes mirarte a los ojos\ny sentirme a salvo."},
+{t:"Luz quieta",x:"No pido fuegos artificiales,\nme basta la luz serena\nque dejas al pasar."},
+{t:"Paso a paso",x:"Sin correr,\nsin promesas gigantes:\nsolo este día a tu lado."},
+{t:"La ventana",x:"La lluvia afuera,\nnosotros adentro,\ny el silencio a nuestro favor."},
+{t:"Sombra buena",x:"Tu compañía tiene\nla frescura tranquila\nde los árboles en la tarde."},
+{t:"Gratitud",x:"Doy gracias a la vida\npor la suerte mansa\nde tenerte cerca."},
+{t:"Complicidad",x:"Una sonrisa tuya,\nun roce de manos\ny todo en orden."},
+{t:"Abrigo",x:"Haga frío o no,\ntu ternura\nsiempre me templa el día."},
+{t:"Amanecer",x:"Despertar sabiendo que estás:\nel primer regalo\nde cada mañana."},
+{t:"Sencillez",x:"Qué lindo es el amor\ncuando no pesa,\ncuando solo da paz."},
+{t:"El camino",x:"Caminar a tu ritmo,\nviendo la tarde caer,\nes mi hora favorita."},
+{t:"Voz baja",x:"Me gusta cuando hablas bajito:\ntu voz le quita\nel ruido al mundo."},
+{t:"Remanso",x:"En medio de todo,\nun pensamiento en ti\ny vuelve la calma."},
+{t:"El té",x:"Dos tazas humeando,\ntus ojos atentos,\nel tiempo detenido."},
+{t:"Descanso",x:"Cerrar los ojos,\nsaberte ahí\ny descansar de verdad."},
+{t:"Brisa",x:"Llegaste como brisa suave:\nsin romper nada,\nllenándolo todo de aire fresco."},
+{t:"Pausa",x:"El mundo corre afuera.\nNosotros nos quedamos aquí,\nqueriéndonos despacito."},
+{t:"Manos",x:"Tu mano en la mía:\nel mapa más sencillo\npara no perder el rumbo."},
+{t:"Noche limpia",x:"Duerme tranquila.\nLa noche cuida tus sueños\ny yo agradezco tu existencia."},
+{t:"Ternura",x:"No hace falta más:\nuna mirada limpia\ny tu cariño intacto."},
+{t:"Suerte",x:"Qué fortuna tan serena\nla de coincidir contigo\nen este pedacito de vida."},
+{t:"Puntual",x:"Como el sol que asoma sin prisa,\ntu amor llega puntual\na serenar mi pecho."},
+{t:"Siempre en calma",x:"Te elijo hoy,\nen la quietud bonita\nde quererte bien."}
 ];
 
-// Poemas efímeros específicos por fecha (ej: hoy y fechas señaladas)
-const EFIMEROS_FECHA = {
-  "2026-10-15": {
-    t: "Jueves",
-    x: "De todas las horas y todos los caminos,\nagradezco esta suerte limpia:\ndespertar sabiendo que existes,\nque nos queremos\ny que el mundo, contigo, vuelve a ser un milagro."
-  }
-};
+// Poemas efímeros específicos por fecha (ej: fechas señaladas)
+const EFIMEROS_FECHA = {};
 
-// Horas de cambio intercaladas cada día: 7:00am, 7:30am, 8:00am
+// Horas de cambio intercaladas: 7:00am, 7:30am, 8:00am
 const EFI_HORAS = [420, 450, 480]; // 7:00 (420m), 7:30 (450m), 8:00 (480m)
 function efiCutoffMinutos(d){
-  const base = new Date(2026, 9, 15); // 15 oct 2026 inicia a las 7:00am
+  const base = new Date(2026, 9, 20); // 20 oct 2026 como base
   const mid = new Date(d.getFullYear(), d.getMonth(), d.getDate());
   const diffDays = Math.round((mid - base) / 86400000);
-  const idx = ((diffDays % 3) + 3) % 3;
+  const cycle = Math.floor(diffDays / 2);
+  const idx = ((cycle % 3) + 3) % 3;
   return EFI_HORAS[idx];
 }
 function efiBase(){
@@ -2150,18 +2148,31 @@ function efiKey(){
   const m=String(b.getMonth()+1).padStart(2,'0'), d=String(b.getDate()).padStart(2,'0');
   return b.getFullYear()+'-'+m+'-'+d;
 }
+function efiActivo(){
+  const key=efiKey();
+  if(typeof EFIMEROS_FECHA!=='undefined' && EFIMEROS_FECHA[key]) return true;
+  const b=efiBase();
+  const mid=new Date(b.getFullYear(), b.getMonth(), b.getDate());
+  const base=new Date(2026, 9, 20); // Martes 20 oct 2026: activo
+  const diffDays=Math.round((mid - base) / 86400000);
+  return (((diffDays % 2) + 2) % 2) === 0;
+}
 function efiPoema(){
   const key=efiKey();
   if(typeof EFIMEROS_FECHA!=='undefined' && EFIMEROS_FECHA[key]) return EFIMEROS_FECHA[key];
+  if(!efiActivo()) return null;
   const b=efiBase();
   const mid=new Date(b.getFullYear(), b.getMonth(), b.getDate());
-  const ini=new Date(b.getFullYear(),0,1);
-  const doy=Math.round((mid-ini)/86400000);
-  return EFIMEROS[((doy % EFIMEROS.length) + EFIMEROS.length) % EFIMEROS.length];
+  const base=new Date(2026, 9, 20);
+  const diffDays=Math.round((mid - base) / 86400000);
+  const idx=Math.floor(diffDays / 2);
+  return EFIMEROS[((idx % EFIMEROS.length) + EFIMEROS.length) % EFIMEROS.length];
 }
 function pintarEfimero(){
   const c=document.getElementById('efimero'); if(!c) return;
-  const key=efiKey(), p=efiPoema();
+  const p=efiPoema();
+  if(!p){ c.innerHTML=''; return; }
+  const key=efiKey();
   let visto=''; try{ visto=localStorage.getItem('efimero-visto')||''; }catch(e){}
   const esNuevo=(visto!==key);
   c.innerHTML='<div class="efi" id="efiCard"><div class="aviso">✦ poema efímero · solo hoy '+(esNuevo?'<span class="nuevo">● nuevo</span>':'')+'</div><h2>'+esc(p.t)+'</h2><div class="texto">'+esc(p.x)+'</div><div class="acciones"><button class="pill" id="efiGuardar">♥ Guardarlo para siempre</button></div></div>';
