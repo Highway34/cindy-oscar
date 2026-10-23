@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v25'; // v25: foto real auténtica de Cindy y Oscar en portada ♥
+const CACHE = 'rincon-v26'; // v26: cena restaurante italiano primera semana de noviembre fijada ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });

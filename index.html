@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♥</text></svg>">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=25').catch(()=>{});let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;refreshing=true;location.reload();});});}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=26').catch(()=>{});let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;refreshing=true;location.reload();});});}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
@@ -1800,7 +1800,8 @@ function mostrar(cual){
 const EVENTOS_FIJOS = [
 {titulo:"Cine francés ♥ Cinemateca", fecha:"2026-09-25", horaI:"17:30", horaF:"19:30", lugar:"Cinemateca", desc:"Viernes 25 a las 5:30 pm: plan de cine francés juntos. Llegamos temprano, helado y mirarnos bonito en la oscuridad del cine.", fijo:true},
 {titulo:"Monserrate al amanecer ♥", fecha:"2026-10-03", horaI:"06:00", horaF:"09:00", lugar:"Monserrate", desc:"Sábado 3 de octubre a las 6 am: subimos a Monserrate juntos a ver el amanecer. Llevo agua, chaqueta y ganas de abrazarte mirando la ciudad ♥", fijo:true},
-{titulo:"Caminata Cerro de Guadalupe ♥", fecha:"2026-10-17", horaI:"07:30", horaF:"11:30", lugar:"Cerro de Guadalupe", desc:"Sábado 17 de octubre a las 7:30 am: caminata juntos al Cerro de Guadalupe. Ropa cómoda, agua, chaqueta ligera y muchas ganas de subir de la mano a contemplar la ciudad juntos ♥", fijo:true}
+{titulo:"Caminata Cerro de Guadalupe ♥", fecha:"2026-10-17", horaI:"07:30", horaF:"11:30", lugar:"Cerro de Guadalupe", desc:"Sábado 17 de octubre a las 7:30 am: caminata juntos al Cerro de Guadalupe. Ropa cómoda, agua, chaqueta ligera y muchas ganas de subir de la mano a contemplar la ciudad juntos ♥", fijo:true},
+{titulo:"Cena en restaurante italiano ♥", fecha:"2026-11-07", horaI:"19:30", horaF:"22:00", lugar:"Restaurante italiano", desc:"Primera semana de noviembre (sábado 7): cena romántica en restaurante italiano. Pasta deliciosa, buen vino y una velada para mirarnos a los ojos ♥", fijo:true}
 ];
 // --- EVENTOS + GOOGLE CALENDAR + WHATSAPP ---
 function cargarEv(){ const g=store.get('eventos-ella', []); return Array.isArray(g)?g:[]; }
@@ -1969,6 +1970,7 @@ function agregarMusica(){
 const PLANES_FIJOS = [
 {t:"🎨 Pintura cerámica"},{t:"⛰️ Monserrate"},
 {t:"⛰️ Caminata Cerro de Guadalupe"},
+{t:"🍝 Cena en restaurante italiano"},
 {t:"🛵 Pueblear"},{t:"📚 Ir a la biblioteca"},
 {t:"🎢 Salitre Mágico"},{t:"🎬 Cinemateca, muchas veces"},
 {t:"🍷 Cenas, muchas veces"},{t:"🪐 Planetario"},
