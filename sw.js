@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v22'; // v22: poemas efimeros tranquilos y cortos dia de por medio ♥
+const CACHE = 'rincon-v23'; // v23: foto 17 de octubre Cerro de Guadalupe añadida al scrapbook ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
