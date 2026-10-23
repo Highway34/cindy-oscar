@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v28'; // v28: mosaico de album de fotos polaroid abierto ♥
+const CACHE = 'rincon-v29'; // v29: nueva foto de portada real de nosotros ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });

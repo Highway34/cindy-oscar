@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♥</text></svg>">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=28').catch(()=>{});let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;refreshing=true;location.reload();});});}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=29').catch(()=>{});let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;refreshing=true;location.reload();});});}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
@@ -322,6 +322,16 @@ body[data-tema="pergamino"] .tiempos-botones{background:rgba(158,107,36,.09)}
 #campanaPanel .cp-titulo{font-family:'Italiana',serif;font-size:1.35rem;margin:.25rem 0;line-height:1.2}
 #campanaPanel .cp-fecha{font-style:italic;opacity:.68;font-size:.9rem}
 #campanaPanel .cp-cta{display:inline-block;margin-top:.55rem;font-style:italic;color:var(--vino)}
+
+/* PORTADA PRINCIPAL DE CINDY & OSCAR */
+.hero-portada-wrap{display:flex;flex-direction:column;align-items:center;margin:1.6rem auto 1.3rem;position:relative;width:100%}
+.hero-portada-halo{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:min(440px,94vw);height:min(300px,68vw);border-radius:24px;background:radial-gradient(ellipse,rgba(226,184,107,.35) 0%,rgba(158,36,62,.26) 50%,transparent 75%);filter:blur(24px);pointer-events:none;animation:haloLatido 6s ease-in-out infinite alternate}
+@keyframes haloLatido{0%{transform:translate(-50%,-50%) scale(.94);opacity:.6}100%{transform:translate(-50%,-50%) scale(1.06);opacity:1}}
+.hero-portada-marco{width:min(440px,90vw);aspect-ratio:4/3;border-radius:18px;padding:7px;background:linear-gradient(145deg,rgba(226,184,107,.9),rgba(158,36,62,.65),rgba(201,169,106,.9));box-shadow:0 22px 60px rgba(0,0,0,.75),0 0 32px rgba(226,184,107,.35),inset 0 0 12px rgba(226,184,107,.35);position:relative;z-index:2;cursor:zoom-in;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s ease}
+.hero-portada-marco:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 28px 75px rgba(0,0,0,.85),0 0 44px rgba(226,184,107,.55)}
+.hero-portada-marco:active{transform:scale(.98)}
+.hero-portada-img{width:100%;height:100%;object-fit:cover;border-radius:12px;display:block;box-shadow:inset 0 0 12px rgba(0,0,0,.4)}
+.hero-portada-tag{position:absolute;bottom:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#fffdf8,#f7eedc);color:#5c1021;border:1px solid var(--dorado);padding:4px 14px;border-radius:100px;font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.16em;font-weight:700;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.5);pointer-events:none}
 
 /* ÁLBUM DE FOTOS SERENO Y ELEGANTE */
 .album-galeria-romantica{display:flex;flex-direction:column;align-items:center;margin:1.8rem 0 .8rem;position:relative;width:100%}
@@ -934,6 +944,15 @@ body[data-tema="pergamino"] .ruleta-display{background:rgba(158,36,62,.06)}
   <div id="nubeInfo" class="nube-info" style="display:none" role="status"></div>
   <div style="display:none" aria-hidden="true"><span class="contador" id="contador">desde el 18 sep ♥</span><span class="cuenta" id="cuentaRegresiva"></span><span class="cuenta" id="cuenta18"></span></div>
 
+  <div class="hero-portada-wrap">
+    <div class="hero-portada-halo"></div>
+    <div class="hero-portada-marco" onclick="verFoto('portada.jpg?v=1', 'Cindy & Oscar ♥', '2026-10-23', 'En cada universo y en cada constelación, siempre tú ♥')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();verFoto('portada.jpg?v=1', 'Cindy & Oscar ♥', '2026-10-23', 'En cada universo y en cada constelación, siempre tú ♥');}" role="button" tabindex="0" title="Toca para ampliar nuestra foto de portada ♥">
+      <div class="washi-tape washi-2"></div>
+      <img src="portada.jpg?v=1" alt="Cindy & Oscar juntos ♥ Portada" class="hero-portada-img" fetchpriority="high" decoding="async">
+      <span class="hero-portada-tag">♥ CINDY &amp; OSCAR ♥</span>
+    </div>
+  </div>
+
   <section class="album-galeria-romantica" aria-label="Nuestro Álbum de Fotos">
     <div class="album-cabecera">
       <div class="album-tag">✦ Recuerdos Nuestros ♥ ✦</div>
@@ -1469,7 +1488,18 @@ function agregar(){
 }
 pintar();
 
-// --- ÁLBUM DE FOTOS Y RECUERDOS (Mosaico de polaroids en la portada) ---
+// --- PORTADA Y ÁLBUM DE FOTOS DE CINDY & OSCAR ---
+const FOTO_PORTADA = {
+  id: "f_portada",
+  src: "portada.jpg?v=1",
+  titulo: "Cindy & Oscar ♥",
+  fecha: "2026-10-23",
+  lugar: "Nuestro Rincón",
+  caption: "Cindy & Oscar ♥",
+  desc: "En cada universo y en cada constelación, siempre tú ♥",
+  sello: "♥ PORTADA"
+};
+
 const FOTOS_ALBUM_BASE = [
   {
     id: "f1",
@@ -1526,12 +1556,16 @@ function obtenerTodasLasFotos(){
   return [...FOTOS_ALBUM_BASE, ...fotosAgregadas];
 }
 
+function coleccionCompletaConPortada(){
+  return [FOTO_PORTADA, ...FOTOS_ALBUM_BASE, ...fotosAgregadas];
+}
+
 // Visor de fotos (Lightbox con navegación de anterior/siguiente)
-function verFotoPorIndice(idx){
-  const todas = obtenerTodasLasFotos();
-  if(!todas.length) return;
-  lightboxIndice = (idx + todas.length) % todas.length;
-  const f = todas[lightboxIndice];
+function verFotoPorIndice(idx, lista){
+  const coleccion = lista || coleccionCompletaConPortada();
+  if(!coleccion.length) return;
+  lightboxIndice = (idx + coleccion.length) % coleccion.length;
+  const f = coleccion[lightboxIndice];
   const lb = document.getElementById('lightbox');
   if(!lb) return;
   const im = document.getElementById('lightboxImg');
@@ -1553,14 +1587,15 @@ function verFotoPorIndice(idx){
 }
 
 function cambiarFotoLightbox(delta){
-  verFotoPorIndice(lightboxIndice + delta);
+  verFotoPorIndice(lightboxIndice + delta, coleccionCompletaConPortada());
 }
 
 function verFoto(src, titulo, fecha, desc){
-  const todas = obtenerTodasLasFotos();
-  const idx = todas.findIndex(x => x.src === src);
+  const coleccion = coleccionCompletaConPortada();
+  const cleanSrc = (src || '').split('?')[0];
+  const idx = coleccion.findIndex(x => (x.src || '').split('?')[0] === cleanSrc);
   if(idx !== -1){
-    verFotoPorIndice(idx);
+    verFotoPorIndice(idx, coleccion);
   } else {
     const lb = document.getElementById('lightbox');
     if(!lb) return;
