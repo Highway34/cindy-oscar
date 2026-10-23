@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v26'; // v26: cena restaurante italiano primera semana de noviembre fijada ♥
+const CACHE = 'rincon-v27'; // v27: album sereno y visor de fotos reparado ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
