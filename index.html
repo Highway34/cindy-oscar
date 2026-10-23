@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♥</text></svg>">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=27').catch(()=>{});let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;refreshing=true;location.reload();});});}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=28').catch(()=>{});let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;refreshing=true;location.reload();});});}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
@@ -323,33 +323,63 @@ body[data-tema="pergamino"] .tiempos-botones{background:rgba(158,107,36,.09)}
 #campanaPanel .cp-fecha{font-style:italic;opacity:.68;font-size:.9rem}
 #campanaPanel .cp-cta{display:inline-block;margin-top:.55rem;font-style:italic;color:var(--vino)}
 
-/* ÁLBUM DE FOTOS TRANQUILO Y PRÁCTICO */
-.album-tranquilo{display:flex;flex-direction:column;align-items:center;margin:1.8rem 0 .6rem;position:relative;width:100%}
-.album-visor{display:flex;align-items:center;justify-content:center;gap:.75rem;width:100%;max-width:440px;position:relative}
-.album-nav-btn{background:var(--vidrio);border:1px solid var(--borde-luz);color:var(--dorado2);width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.45rem;line-height:1;cursor:pointer;transition:all .22s ease;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);user-select:none;flex-shrink:0;box-shadow:0 6px 18px rgba(0,0,0,.35)}
-.album-nav-btn:hover{background:var(--card-hover);border-color:var(--dorado);transform:scale(1.08)}
-.album-nav-btn:active{transform:scale(.96)}
-.album-card-wrap{flex:0 1 290px;width:min(290px, 76vw);perspective:1000px}
-.album-polaroid{background:linear-gradient(180deg,#fffdf9 0%,#f7eedc 100%);border-radius:8px;padding:12px 12px 18px;box-shadow:0 24px 55px rgba(0,0,0,.62),0 4px 12px rgba(0,0,0,.28),0 0 0 1px rgba(226,184,107,.45);cursor:zoom-in;position:relative;transition:transform .3s cubic-bezier(.2,.8,.2,1),box-shadow .3s ease;width:100%;text-align:center}
-.album-polaroid:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 28px 65px rgba(0,0,0,.72),0 0 0 1px var(--dorado)}
-.album-img-wrap{width:100%;height:265px;border-radius:4px;overflow:hidden;background:#1e0c14;box-shadow:inset 0 0 14px rgba(0,0,0,.4);position:relative}
-.album-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease,opacity .25s ease}
-.album-polaroid:hover .album-img-wrap img{transform:scale(1.04)}
-.album-subcaption{font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.08em;color:#6b283b;margin-top:.25rem;font-weight:600;text-transform:uppercase}
-.album-dots{display:flex;gap:.45rem;justify-content:center;align-items:center;margin-top:1.1rem}
-.album-dot{width:8px;height:8px;border-radius:50%;background:rgba(250,229,184,.3);border:1px solid rgba(250,229,184,.45);cursor:pointer;transition:all .22s ease;padding:0}
-.album-dot.activo{width:22px;border-radius:10px;background:linear-gradient(90deg,var(--dorado2),var(--dorado));border-color:var(--dorado2)}
-.album-bar-tranquila{display:flex;gap:.65rem;margin-top:1rem;flex-wrap:wrap;justify-content:center;align-items:center}
-.album-btn-accion{display:inline-flex;align-items:center;gap:.35rem;padding:.42rem 1rem;background:var(--vidrio);border:1px solid var(--borde-luz);border-radius:100px;color:var(--tinta-dim);font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:.08em;cursor:pointer;transition:all .22s ease;backdrop-filter:blur(8px)}
-.album-btn-accion:hover{background:var(--card-hover);color:var(--dorado2);border-color:var(--dorado2);transform:translateY(-1px)}
-.album-cuadricula{display:none;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.6rem;width:100%;margin-top:1.6rem;padding-top:1.4rem;border-top:1px dashed var(--borde);animation:subir .3s ease}
-.album-cuadricula.abierta{display:grid}
-.polaroid-sello{position:absolute;bottom:12px;right:12px;font-family:'Italiana',serif;font-size:.58rem;letter-spacing:.16em;text-transform:uppercase;color:#9e243e;border:1px solid rgba(158,36,62,.45);padding:2px 6px;border-radius:4px;transform:rotate(-8deg);opacity:.75;pointer-events:none}
-.handwritten-caption{font-family:'Caveat',cursive;font-size:1.52rem;font-weight:700;color:#3d222b;text-align:center;margin-top:.6rem;line-height:1.2}
-.washi-tape{position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:98px;height:25px;background:repeating-linear-gradient(45deg,rgba(235,192,122,.62),rgba(235,192,122,.62) 6px,rgba(255,238,208,.45) 6px,rgba(255,238,208,.45) 12px);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);border-left:2px dotted rgba(180,130,65,.6);border-right:2px dotted rgba(180,130,65,.6);box-shadow:0 3px 8px rgba(0,0,0,.22);pointer-events:none;z-index:3}
-.washi-1{transform:translateX(-50%) rotate(-3.5deg)}
-.washi-2{transform:translateX(-50%) rotate(4deg);background:repeating-linear-gradient(-45deg,rgba(212,110,138,.58),rgba(212,110,138,.58) 6px,rgba(250,215,225,.45) 6px,rgba(250,215,225,.45) 12px);border-color:rgba(168,68,95,.5)}
-.washi-3{transform:translateX(-50%) rotate(-2.5deg);background:repeating-linear-gradient(45deg,rgba(143,208,179,.55),rgba(143,208,179,.55) 6px,rgba(220,245,235,.42) 6px,rgba(220,245,235,.42) 12px);border-left:2px dotted rgba(100,165,135,.6);border-right:2px dotted rgba(100,165,135,.6)}
+/* ÁLBUM DE FOTOS SERENO Y ELEGANTE */
+.album-galeria-romantica{display:flex;flex-direction:column;align-items:center;margin:1.8rem 0 .8rem;position:relative;width:100%}
+.album-cabecera{text-align:center;margin-bottom:1.1rem}
+.album-tag{font-family:'Cinzel',serif;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dorado2);margin-bottom:.25rem}
+.album-titulo-sereno{font-family:'Italiana',serif;font-size:1.9rem;color:var(--papel);letter-spacing:.03em;margin:0;line-height:1.2}
+.album-subtitulo-sereno{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:1.02rem;color:var(--tinta-dim);margin:.3rem 0 0}
+.album-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:1.25rem;width:100%;max-width:960px;margin:0 auto;padding:.4rem 0}
+@media (max-width:620px){
+  .album-grid{grid-template-columns:repeat(2,1fr);gap:.7rem}
+  .album-titulo-sereno{font-size:1.6rem}
+}
+.album-polaroid{background:linear-gradient(180deg,#fffdfa 0%,#f7eedc 100%);border-radius:8px;padding:9px 9px 13px;box-shadow:0 12px 30px rgba(0,0,0,.55),0 0 0 1px rgba(226,184,107,.4);cursor:zoom-in;position:relative;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s ease;text-align:center;display:flex;flex-direction:column;justify-content:space-between;user-select:none}
+@media (max-width:620px){
+  .album-polaroid{padding:6px 6px 10px;border-radius:6px}
+}
+.album-polaroid:hover{transform:translateY(-4px) scale(1.02);box-shadow:0 18px 45px rgba(0,0,0,.7),0 0 0 1.5px var(--dorado);z-index:2}
+.album-polaroid:active{transform:scale(.98)}
+.album-img-wrap{width:100%;aspect-ratio:4/3;border-radius:4px;overflow:hidden;background:#1e0c14;box-shadow:inset 0 0 12px rgba(0,0,0,.35);position:relative}
+@media (max-width:620px){
+  .album-img-wrap{aspect-ratio:1/1}
+}
+.album-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .35s ease}
+.album-polaroid:hover .album-img-wrap img{transform:scale(1.05)}
+.handwritten-caption{font-family:'Caveat',cursive;font-size:1.32rem;font-weight:700;color:#3d222b;text-align:center;margin-top:.4rem;line-height:1.15}
+@media (max-width:620px){
+  .handwritten-caption{font-size:1.08rem;margin-top:.3rem}
+}
+.album-subcaption{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.05em;color:#6b283b;margin-top:.15rem;font-weight:600;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (max-width:620px){
+  .album-subcaption{font-size:.62rem}
+}
+.polaroid-sello{font-family:'Italiana',serif;font-size:.56rem;letter-spacing:.14em;text-transform:uppercase;color:#9e243e;border:1px solid rgba(158,36,62,.45);padding:1px 5px;border-radius:4px;display:inline-block}
+.del-foto-btn{background:none;border:none;color:#9e243e;font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;padding:1px 4px;border-radius:3px;transition:all .2s ease}
+.del-foto-btn:hover{background:rgba(158,36,62,.15);color:#c42d4f}
+.album-add-card{background:rgba(255,253,248,.07);border:2px dashed rgba(226,184,107,.55);box-shadow:0 10px 25px rgba(0,0,0,.35);cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:190px;transition:all .25s ease;text-align:center}
+@media (max-width:620px){
+  .album-add-card{min-height:150px}
+}
+.album-add-card:hover{background:rgba(255,253,248,.15);border-color:var(--dorado2);transform:translateY(-3px) scale(1.02);box-shadow:0 16px 36px rgba(0,0,0,.5)}
+.album-add-inner{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:.8rem .4rem}
+.album-add-icon{width:42px;height:42px;border-radius:50%;background:linear-gradient(135deg,var(--dorado2),var(--dorado));color:#1a0812;font-size:1.5rem;font-weight:bold;display:flex;align-items:center;justify-content:center;margin-bottom:.45rem;box-shadow:0 4px 14px rgba(201,169,106,.4);transition:transform .25s ease}
+.album-add-card:hover .album-add-icon{transform:scale(1.1) rotate(90deg)}
+@media (max-width:620px){
+  .album-add-icon{width:34px;height:34px;font-size:1.25rem;margin-bottom:.3rem}
+}
+.album-add-text{font-family:'Cinzel',serif;font-size:.82rem;color:var(--dorado2);letter-spacing:.08em;font-weight:600}
+@media (max-width:620px){
+  .album-add-text{font-size:.72rem}
+}
+.album-add-sub{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:.9rem;color:var(--tinta-dim);margin-top:.15rem}
+@media (max-width:620px){
+  .album-add-sub{font-size:.78rem}
+}
+.washi-tape{position:absolute;top:-10px;left:50%;transform:translateX(-50%);width:72px;height:20px;background:repeating-linear-gradient(45deg,rgba(235,192,122,.62),rgba(235,192,122,.62) 6px,rgba(255,238,208,.45) 6px,rgba(255,238,208,.45) 12px);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);border-left:2px dotted rgba(180,130,65,.6);border-right:2px dotted rgba(180,130,65,.6);box-shadow:0 3px 8px rgba(0,0,0,.22);pointer-events:none;z-index:3}
+.washi-1{transform:translateX(-50%) rotate(-3deg)}
+.washi-2{transform:translateX(-50%) rotate(3.5deg);background:repeating-linear-gradient(-45deg,rgba(212,110,138,.58),rgba(212,110,138,.58) 6px,rgba(250,215,225,.45) 6px,rgba(250,215,225,.45) 12px);border-color:rgba(168,68,95,.5)}
+.washi-3{transform:translateX(-50%) rotate(-2deg);background:repeating-linear-gradient(45deg,rgba(143,208,179,.55),rgba(143,208,179,.55) 6px,rgba(220,245,235,.42) 6px,rgba(220,245,235,.42) 12px);border-left:2px dotted rgba(100,165,135,.6);border-right:2px dotted rgba(100,165,135,.6)}
 
 /* BIENVENIDA GLASS EDITORIAL UNIFICADA */
 .epigrafe-card{
@@ -734,13 +764,22 @@ footer .orn{color:var(--dorado2);letter-spacing:.4em;margin-bottom:.45rem;font-s
 .like:focus-visible{outline:none;box-shadow:var(--foco)}
 #lightbox{display:none;position:fixed;inset:0;z-index:50;background:rgba(12,3,8,.94);align-items:center;justify-content:center;padding:1.2rem;cursor:zoom-out;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .lightbox-wrap{display:flex;flex-direction:column;align-items:center;max-width:min(94vw,760px);cursor:default;position:relative}
-#lightbox img{max-width:100%;max-height:72vh;border-radius:16px;box-shadow:0 30px 90px rgba(0,0,0,.88), 0 0 0 2px var(--dorado);object-fit:contain}
+#lightbox img{max-width:100%;max-height:72vh;border-radius:16px;box-shadow:0 30px 90px rgba(0,0,0,.88), 0 0 0 2px var(--dorado);object-fit:contain;transition:opacity .2s ease}
 .lightbox-info{margin-top:.85rem;text-align:center;color:#fffdf9;max-width:620px}
 .lightbox-title{font-family:'Cinzel',serif;font-size:1.25rem;color:var(--dorado2);letter-spacing:.04em}
 .lightbox-date{font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-top:.2rem}
 .lightbox-desc{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:1.15rem;line-height:1.45;color:var(--papel);margin-top:.35rem}
 .lightbox-close-btn{position:absolute;top:18px;right:22px;background:rgba(0,0,0,.5);border:1px solid rgba(226,184,107,.5);color:var(--dorado2);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;transition:transform .2s,background .2s;z-index:60}
 .lightbox-close-btn:hover{transform:scale(1.1);background:rgba(158,36,62,.6)}
+.lightbox-nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(18,5,12,.7);border:1px solid rgba(226,184,107,.45);color:var(--dorado2);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;line-height:1;cursor:pointer;transition:all .2s ease;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:60;user-select:none}
+.lightbox-nav-btn:hover{background:rgba(158,36,62,.85);border-color:var(--dorado);transform:translateY(-50%) scale(1.1)}
+.lightbox-nav-btn.lb-prev{left:18px}
+.lightbox-nav-btn.lb-next{right:18px}
+@media (max-width:600px){
+  .lightbox-nav-btn{width:36px;height:36px;font-size:1.35rem}
+  .lightbox-nav-btn.lb-prev{left:8px}
+  .lightbox-nav-btn.lb-next{right:8px}
+}
 .fade{animation:sectionIn .36s cubic-bezier(.16, 1, .3, 1)}
 @keyframes sectionIn{from{opacity:0;transform:translateY(12px) scale(.995);filter:blur(3px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
 
@@ -895,48 +934,30 @@ body[data-tema="pergamino"] .ruleta-display{background:rgba(158,36,62,.06)}
   <div id="nubeInfo" class="nube-info" style="display:none" role="status"></div>
   <div style="display:none" aria-hidden="true"><span class="contador" id="contador">desde el 18 sep ♥</span><span class="cuenta" id="cuentaRegresiva"></span><span class="cuenta" id="cuenta18"></span></div>
 
-  <div class="album-tranquilo" aria-label="Nuestro Álbum de Fotos">
-    <div class="album-visor">
-      <button class="album-nav-btn" onclick="cambiarFotoAlbum(-1)" aria-label="Foto anterior" title="Foto anterior">‹</button>
-      
-      <div class="album-card-wrap">
-        <div class="album-polaroid" id="albumPolaroidActiva" onclick="abrirFotoActiva()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();abrirFotoActiva();}" role="button" tabindex="0" title="Toca para ampliar en pantalla completa ♥">
-          <div class="washi-tape washi-2" id="albumWashi"></div>
-          <div class="album-img-wrap">
-            <img id="albumImg" src="foto-nosotros.jpg?v=8" alt="Cindy y Oscar juntos" fetchpriority="high" decoding="async">
-          </div>
-          <figcaption class="handwritten-caption" id="albumCaption">nosotros ♥ 18 · 09 · 2026</figcaption>
-          <div class="album-subcaption" id="albumSubcaption">Nuestro Inicio · Bajo la noche estrellada</div>
-          <span class="polaroid-sello" id="albumSello">✦ JUNTOS</span>
-        </div>
-      </div>
-
-      <button class="album-nav-btn" onclick="cambiarFotoAlbum(1)" aria-label="Foto siguiente" title="Foto siguiente">›</button>
+  <section class="album-galeria-romantica" aria-label="Nuestro Álbum de Fotos">
+    <div class="album-cabecera">
+      <div class="album-tag">✦ Recuerdos Nuestros ♥ ✦</div>
+      <h2 class="album-titulo-sereno">Álbum de Recuerdos</h2>
+      <p class="album-subtitulo-sereno">Toca cualquier foto para verla en pantalla completa con su recuerdo ♥</p>
     </div>
 
-    <div class="album-dots" id="albumDots" role="tablist" aria-label="Fotos del álbum"></div>
-
-    <div class="album-bar-tranquila">
-      <button class="album-btn-accion" onclick="abrirFotoActiva()" type="button">🔍 Ampliar foto</button>
-      <button class="album-btn-accion" onclick="toggleModoCuadricula()" type="button" id="btnToggleCuadricula">✦ Ver todas</button>
-      <button class="album-btn-accion" onclick="abrirSelectorNuevaFoto()" type="button">＋ Añadir foto ♥</button>
-      <input type="file" id="inputNuevaFoto" accept="image/*" style="display:none" onchange="subirFotoDirecta(this)">
-    </div>
-
-    <div class="album-cuadricula" id="albumCuadricula"></div>
-  </div>
+    <div class="album-grid" id="albumGrid"></div>
+    <input type="file" id="inputNuevaFoto" accept="image/*" style="display:none" onchange="subirFotoDirecta(this)">
+  </section>
 </header>
 
 <div id="lightbox" onclick="cerrarFoto()" role="dialog" aria-modal="true" aria-label="Visor de fotografía">
   <button class="lightbox-close-btn" onclick="cerrarFoto()" aria-label="Cerrar visor">✕</button>
+  <button class="lightbox-nav-btn lb-prev" onclick="cambiarFotoLightbox(-1);event.stopPropagation()" aria-label="Foto anterior" title="Foto anterior">‹</button>
   <div class="lightbox-wrap" onclick="event.stopPropagation()">
-    <img id="lightboxImg" src="foto-nosotros.jpg?v=8" alt="Nosotros ampliado ♥">
+    <img id="lightboxImg" src="foto-17-10-2026.jpg" alt="Recuerdo ampliado ♥">
     <div class="lightbox-info">
       <div class="lightbox-title" id="lbTitle"></div>
       <div class="lightbox-date" id="lbDate"></div>
       <div class="lightbox-desc" id="lbDesc"></div>
     </div>
   </div>
+  <button class="lightbox-nav-btn lb-next" onclick="cambiarFotoLightbox(1);event.stopPropagation()" aria-label="Foto siguiente" title="Foto siguiente">›</button>
 </div>
 
 <div id="efimero" aria-label="Poema efímero de hoy" role="status"></div>
@@ -1448,23 +1469,11 @@ function agregar(){
 }
 pintar();
 
-// --- ÁLBUM DE FOTOS Y RECUERDOS TRANQUILO (en la portada) ---
+// --- ÁLBUM DE FOTOS Y RECUERDOS (Mosaico de polaroids en la portada) ---
 const FOTOS_ALBUM_BASE = [
   {
     id: "f1",
-    src: "foto-nosotros.jpg?v=8",
-    titulo: "Nuestro Inicio",
-    fecha: "2026-09-18",
-    lugar: "Bajo la noche estrellada",
-    caption: "nosotros ♥ 18 · 09 · 2026",
-    desc: "El día en que comenzó oficialmente nuestro universo juntos. Para siempre.",
-    sello: "✦ JUNTOS",
-    washi: "washi-2",
-    pos: "center 20%"
-  },
-  {
-    id: "f2",
-    src: "foto-17-10-2026.jpg?v=1",
+    src: "foto-17-10-2026.jpg?v=3",
     titulo: "Caminata Cerro de Guadalupe",
     fecha: "2026-10-17",
     lugar: "Cerro de Guadalupe, Bogotá",
@@ -1475,8 +1484,20 @@ const FOTOS_ALBUM_BASE = [
     pos: "50% 25%"
   },
   {
+    id: "f2",
+    src: "foto-nosotros.jpg?v=9",
+    titulo: "Nuestro Inicio",
+    fecha: "2026-09-18",
+    lugar: "Bajo la noche estrellada",
+    caption: "nosotros ♥ 18 · 09 · 2026",
+    desc: "El día en que comenzó oficialmente nuestro universo juntos. Para siempre.",
+    sello: "✦ JUNTOS",
+    washi: "washi-2",
+    pos: "center 20%"
+  },
+  {
     id: "f3",
-    src: "foto-04-09-2026.jpg?v=2",
+    src: "foto-04-09-2026.jpg?v=3",
     titulo: "Noche de Luces",
     fecha: "2026-09-04",
     lugar: "Luces de la ciudad",
@@ -1499,26 +1520,60 @@ function guardarFotosLocales(arr){
 }
 
 let fotosAgregadas = cargarFotosLocales();
-let albumIndice = 0;
-let modoCuadricula = false;
+let lightboxIndice = 0;
 
 function obtenerTodasLasFotos(){
   return [...FOTOS_ALBUM_BASE, ...fotosAgregadas];
 }
 
-// Visor de fotos (Lightbox)
-function verFoto(src, titulo, fecha, desc){
+// Visor de fotos (Lightbox con navegación de anterior/siguiente)
+function verFotoPorIndice(idx){
+  const todas = obtenerTodasLasFotos();
+  if(!todas.length) return;
+  lightboxIndice = (idx + todas.length) % todas.length;
+  const f = todas[lightboxIndice];
   const lb = document.getElementById('lightbox');
   if(!lb) return;
   const im = document.getElementById('lightboxImg');
   const t = document.getElementById('lbTitle');
   const d = document.getElementById('lbDate');
   const de = document.getElementById('lbDesc');
-  if(im) im.src = src;
-  if(t) t.textContent = titulo || 'Nosotros ♥';
-  if(d) d.textContent = fecha ? fmtFecha(fecha) : '';
-  if(de) de.textContent = desc || '';
+  if(im){
+    im.style.opacity = '0';
+    setTimeout(() => {
+      im.src = f.src;
+      im.alt = f.titulo || 'Nosotros ♥';
+      im.style.opacity = '1';
+    }, 70);
+  }
+  if(t) t.textContent = f.titulo || 'Nosotros ♥';
+  if(d) d.textContent = f.fecha ? fmtFecha(f.fecha) + (f.lugar ? ' · ' + f.lugar : '') : '';
+  if(de) de.textContent = f.desc || f.caption || '';
   lb.style.display = 'flex';
+}
+
+function cambiarFotoLightbox(delta){
+  verFotoPorIndice(lightboxIndice + delta);
+}
+
+function verFoto(src, titulo, fecha, desc){
+  const todas = obtenerTodasLasFotos();
+  const idx = todas.findIndex(x => x.src === src);
+  if(idx !== -1){
+    verFotoPorIndice(idx);
+  } else {
+    const lb = document.getElementById('lightbox');
+    if(!lb) return;
+    const im = document.getElementById('lightboxImg');
+    const t = document.getElementById('lbTitle');
+    const d = document.getElementById('lbDate');
+    const de = document.getElementById('lbDesc');
+    if(im) im.src = src;
+    if(t) t.textContent = titulo || 'Nosotros ♥';
+    if(d) d.textContent = fecha ? fmtFecha(fecha) : '';
+    if(de) de.textContent = desc || '';
+    lb.style.display = 'flex';
+  }
 }
 function cerrarFoto(){
   const lb = document.getElementById('lightbox');
@@ -1527,137 +1582,85 @@ function cerrarFoto(){
 window.abrirLightbox = verFoto;
 window.cerrarLightbox = cerrarFoto;
 
-function renderAlbum(){
+function pintarAlbumMosaico(){
+  const cont = document.getElementById('albumGrid');
+  if(!cont) return;
   const todas = obtenerTodasLasFotos();
-  if(!todas.length) return;
-  if(albumIndice >= todas.length) albumIndice = 0;
-  if(albumIndice < 0) albumIndice = todas.length - 1;
+  cont.innerHTML = '';
 
-  const actual = todas[albumIndice];
-  const im = document.getElementById('albumImg');
-  const cap = document.getElementById('albumCaption');
-  const sub = document.getElementById('albumSubcaption');
-  const sello = document.getElementById('albumSello');
-  const washi = document.getElementById('albumWashi');
-
-  if(im){
-    im.style.opacity = '0';
-    setTimeout(() => {
-      im.src = actual.src;
-      im.alt = actual.titulo;
-      if(actual.pos) im.style.objectPosition = actual.pos;
-      im.style.opacity = '1';
-    }, 80);
-  }
-  if(cap) cap.textContent = actual.caption || actual.titulo;
-  if(sub) sub.textContent = actual.titulo + (actual.lugar ? ' · ' + actual.lugar : '');
-  if(sello) sello.textContent = actual.sello || '♥ SIEMPRE';
-  if(washi){
-    washi.className = 'washi-tape ' + (actual.washi || 'washi-1');
-  }
-
-  // Dots
-  const dotsCont = document.getElementById('albumDots');
-  if(dotsCont){
-    dotsCont.innerHTML = '';
-    todas.forEach((_, i) => {
-      const dot = document.createElement('button');
-      dot.type = 'button';
-      dot.className = 'album-dot' + (i === albumIndice ? ' activo' : '');
-      dot.setAttribute('aria-label', `Foto ${i + 1}`);
-      dot.onclick = () => irAFotoAlbum(i);
-      dotsCont.appendChild(dot);
-    });
-  }
-
-  if(modoCuadricula) renderCuadricula();
-}
-
-function cambiarFotoAlbum(delta){
-  const todas = obtenerTodasLasFotos();
-  if(!todas.length) return;
-  albumIndice = (albumIndice + delta + todas.length) % todas.length;
-  renderAlbum();
-}
-
-function irAFotoAlbum(idx){
-  albumIndice = idx;
-  renderAlbum();
-}
-
-function abrirFotoActiva(){
-  const todas = obtenerTodasLasFotos();
-  const actual = todas[albumIndice] || todas[0];
-  if(actual){
-    verFoto(actual.src, actual.titulo, actual.fecha, actual.desc || actual.caption);
-  }
-}
-
-function toggleModoCuadricula(){
-  modoCuadricula = !modoCuadricula;
-  const grid = document.getElementById('albumCuadricula');
-  const btn = document.getElementById('btnToggleCuadricula');
-  if(!grid) return;
-  if(modoCuadricula){
-    grid.classList.add('abierta');
-    if(btn) btn.textContent = '✕ Ocultar todas';
-    renderCuadricula();
-    grid.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-  } else {
-    grid.classList.remove('abierta');
-    if(btn) btn.textContent = '✦ Ver todas';
-  }
-}
-
-function renderCuadricula(){
-  const grid = document.getElementById('albumCuadricula');
-  if(!grid) return;
-  const todas = obtenerTodasLasFotos();
-  grid.innerHTML = '';
   todas.forEach((f, idx) => {
     const card = document.createElement('div');
     card.className = 'album-polaroid';
-    card.style.cursor = 'pointer';
-    card.style.margin = '0 auto';
-    card.style.maxWidth = '280px';
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('title', 'Toca para ampliar ♥');
     const washiClass = f.washi || 'washi-1';
     const posStyle = f.pos ? `style="object-position:${f.pos}"` : '';
     const esAgregada = idx >= FOTOS_ALBUM_BASE.length;
+
     card.innerHTML = `
       <div class="washi-tape ${washiClass}"></div>
-      <div class="album-img-wrap" style="height:230px">
+      <div class="album-img-wrap">
         <img src="${f.src}" alt="${esc(f.titulo)}" ${posStyle} loading="lazy" decoding="async">
       </div>
-      <figcaption class="handwritten-caption" style="font-size:1.15rem;margin-top:.45rem">${esc(f.caption || f.titulo)}</figcaption>
-      <div class="album-subcaption">${esc(f.titulo)}</div>
-      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:.6rem;padding-top:.4rem;border-top:1px dashed #e8d8c0">
-        <span class="polaroid-sello" style="position:static;display:inline-block">${esc(f.sello || '♥ JUNTOS')}</span>
-        ${esAgregada ? `<button type="button" class="del-btn" style="background:none;border:none;color:#9e213e;font-size:.78rem;cursor:pointer;padding:.2rem .4rem" title="Eliminar de este dispositivo">borrar</button>` : ''}
+      <figcaption class="handwritten-caption">${esc(f.caption || f.titulo)}</figcaption>
+      <div class="album-subcaption">${esc(f.titulo)}${f.lugar ? ' · ' + esc(f.lugar) : ''}</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-top:.4rem;padding-top:.35rem;border-top:1px dashed rgba(226,184,107,.35)">
+        <span class="polaroid-sello">${esc(f.sello || '♥ JUNTOS')}</span>
+        ${esAgregada ? `<button type="button" class="del-foto-btn" title="Eliminar de este dispositivo">borrar</button>` : `<span style="font-size:.7rem;color:var(--tinta-dim);opacity:.7">♥</span>`}
       </div>
     `;
+
     card.onclick = (e) => {
-      if(e.target.classList.contains('del-btn')) return;
-      albumIndice = idx;
-      renderAlbum();
-      verFoto(f.src, f.titulo, f.fecha, f.desc || f.caption);
+      if(e.target.classList.contains('del-foto-btn')) return;
+      verFotoPorIndice(idx);
     };
+    card.onkeydown = (e) => {
+      if(e.key === 'Enter' || e.key === ' '){
+        e.preventDefault();
+        verFotoPorIndice(idx);
+      }
+    };
+
     if(esAgregada){
-      const delBtn = card.querySelector('.del-btn');
+      const delBtn = card.querySelector('.del-foto-btn');
       if(delBtn){
         delBtn.onclick = (e) => {
           e.stopPropagation();
-          if(!confirm(`¿Deseas quitar esta foto de este dispositivo? ♥`)) return;
+          if(!confirm(`¿Deseas quitar la foto "${f.titulo}" de este dispositivo? ♥`)) return;
           const localIdx = idx - FOTOS_ALBUM_BASE.length;
           fotosAgregadas.splice(localIdx, 1);
           guardarFotosLocales(fotosAgregadas);
-          if(albumIndice >= obtenerTodasLasFotos().length) albumIndice = 0;
-          renderAlbum();
-          renderCuadricula();
+          pintarAlbumMosaico();
+          toast('msg', 'Foto retirada del álbum ♥');
         };
       }
     }
-    grid.appendChild(card);
+
+    cont.appendChild(card);
   });
+
+  // Card para añadir foto directamente
+  const addCard = document.createElement('div');
+  addCard.className = 'album-polaroid album-add-card';
+  addCard.setAttribute('role', 'button');
+  addCard.setAttribute('tabindex', '0');
+  addCard.setAttribute('title', 'Toca para agregar una foto de tu galería ♥');
+  addCard.innerHTML = `
+    <div class="album-add-inner">
+      <div class="album-add-icon">＋</div>
+      <div class="album-add-text">Añadir foto ♥</div>
+      <div class="album-add-sub">De tu galería</div>
+    </div>
+  `;
+  addCard.onclick = () => abrirSelectorNuevaFoto();
+  addCard.onkeydown = (e) => {
+    if(e.key === 'Enter' || e.key === ' '){
+      e.preventDefault();
+      abrirSelectorNuevaFoto();
+    }
+  };
+  cont.appendChild(addCard);
 }
 
 function abrirSelectorNuevaFoto(){
@@ -1701,8 +1704,7 @@ function subirFotoDirecta(input){
       };
       fotosAgregadas.push(nuevo);
       guardarFotosLocales(fotosAgregadas);
-      albumIndice = obtenerTodasLasFotos().length - 1;
-      renderAlbum();
+      pintarAlbumMosaico();
       toast('msg', '¡Nueva foto añadida a nuestro álbum con amor ♥!');
       input.value = '';
     };
@@ -1711,32 +1713,41 @@ function subirFotoDirecta(input){
   reader.readAsDataURL(file);
 }
 
-// Deslizar con el dedo sobre la foto polaroid en el móvil
-(function initPolaroidSwipe(){
-  const pol = document.getElementById('albumPolaroidActiva');
-  if(!pol) return;
+// Deslizar con el dedo dentro del visor de fotos
+(function initLightboxSwipe(){
+  const lb = document.getElementById('lightbox');
+  if(!lb) return;
   let sx = 0, sy = 0, st = 0;
-  pol.addEventListener('touchstart', (e) => {
+  lb.addEventListener('touchstart', (e) => {
     if(e.touches.length === 1){
       sx = e.touches[0].clientX;
       sy = e.touches[0].clientY;
       st = Date.now();
     }
   }, { passive: true });
-  pol.addEventListener('touchend', (e) => {
-    if(e.changedTouches.length === 1){
+  lb.addEventListener('touchend', (e) => {
+    if(e.changedTouches.length === 1 && lb.style.display === 'flex'){
       const dx = e.changedTouches[0].clientX - sx;
       const dy = e.changedTouches[0].clientY - sy;
       const dt = Date.now() - st;
-      if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.3 && dt < 500){
-        if(dx < 0) cambiarFotoAlbum(1);
-        else cambiarFotoAlbum(-1);
+      if(Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.3 && dt < 600){
+        if(dx < 0) cambiarFotoLightbox(1);
+        else cambiarFotoLightbox(-1);
       }
     }
   }, { passive: true });
 })();
 
-renderAlbum();
+// Teclado para el visor de fotos (flechas izquierda/derecha)
+document.addEventListener('keydown', (e) => {
+  const lb = document.getElementById('lightbox');
+  if(lb && lb.style.display === 'flex'){
+    if(e.key === 'ArrowRight') cambiarFotoLightbox(1);
+    else if(e.key === 'ArrowLeft') cambiarFotoLightbox(-1);
+  }
+});
+
+pintarAlbumMosaico();
 
 // --- TABS con hash (sin sticky, se va al hacer scroll) ---
 function mostrar(cual){

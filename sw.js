@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v27'; // v27: album sereno y visor de fotos reparado ♥
+const CACHE = 'rincon-v28'; // v28: mosaico de album de fotos polaroid abierto ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
