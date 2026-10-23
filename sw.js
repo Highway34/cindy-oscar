@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v23'; // v23: foto 17 de octubre Cerro de Guadalupe añadida al scrapbook ♥
+const CACHE = 'rincon-v24'; // v24: portada con ilustración astral + sección álbum de fotos dedicada ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });

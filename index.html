@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♥</text></svg>">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=23').catch(()=>{});let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;refreshing=true;location.reload();});});}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=24').catch(()=>{});let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;refreshing=true;location.reload();});});}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
@@ -323,91 +323,53 @@ body[data-tema="pergamino"] .tiempos-botones{background:rgba(158,107,36,.09)}
 #campanaPanel .cp-fecha{font-style:italic;opacity:.68;font-size:.9rem}
 #campanaPanel .cp-cta{display:inline-block;margin-top:.55rem;font-style:italic;color:var(--vino)}
 
-/* SCRAPBOOK POLAROID COLLAGE */
-.scrapbook-wrap{display:flex;justify-content:center;margin:1.7rem 0 .4rem;position:relative}
-.scrapbook-collage{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:1.4rem;max-width:880px;position:relative}
-@media(min-width:768px){
-  .scrapbook-collage{gap:.4rem}
-  .polaroid-1{transform:rotate(-4deg);margin-right:-12px;z-index:2}
-  .polaroid-2{transform:rotate(2deg) translateY(-8px);z-index:1}
-  .polaroid-3{transform:rotate(-3deg);margin-left:-12px;z-index:3}
-  .polaroid-1:hover,.polaroid-1:focus-within{transform:rotate(-1deg) scale(1.06) translateY(-6px);z-index:6}
-  .polaroid-2:hover,.polaroid-2:focus-within{transform:rotate(0deg) scale(1.06) translateY(-10px);z-index:6}
-  .polaroid-3:hover,.polaroid-3:focus-within{transform:rotate(1deg) scale(1.06) translateY(-6px);z-index:6}
-}
-@media(min-width:540px) and (max-width:767px){
-  .scrapbook-collage{gap:.9rem}
-  .polaroid-1{transform:rotate(-3deg);z-index:2}
-  .polaroid-2{transform:rotate(2.5deg);z-index:1}
-  .polaroid-3{transform:rotate(-2deg);z-index:3}
-  .polaroid-1:hover,.polaroid-1:focus-within{transform:rotate(-1deg) scale(1.05) translateY(-4px);z-index:6}
-  .polaroid-2:hover,.polaroid-2:focus-within{transform:rotate(1deg) scale(1.05) translateY(-4px);z-index:6}
-  .polaroid-3:hover,.polaroid-3:focus-within{transform:rotate(0deg) scale(1.05) translateY(-4px);z-index:6}
-}
-@media(max-width:539px){
-  .polaroid-1{transform:rotate(-2deg)}
-  .polaroid-2{transform:rotate(2deg)}
-  .polaroid-3{transform:rotate(-1.8deg)}
-  .polaroid-1:active,.polaroid-2:active,.polaroid-3:active{transform:rotate(0deg) scale(1.03)}
-}
-.foto-polaroid{
-  background:linear-gradient(180deg, #fffdf9 0%, #f7eedc 100%);
-  border-radius:8px;
-  padding:12px 12px 18px;
-  box-shadow:0 24px 55px rgba(0,0,0,.62), 0 4px 12px rgba(0,0,0,.28), 0 0 0 1px rgba(226,184,107,.45);
-  cursor:zoom-in;
-  position:relative;
-  transition:all .34s cubic-bezier(.2,.8,.2,1);
-  width:min(252px, 78vw);
-}
-.polaroid-sello{
-  position:absolute;
-  bottom:12px;
-  right:12px;
-  font-family:'Italiana',serif;
-  font-size:.58rem;
-  letter-spacing:.16em;
-  text-transform:uppercase;
-  color:#9e243e;
-  border:1px solid rgba(158,36,62,.45);
-  padding:2px 6px;
-  border-radius:4px;
-  transform:rotate(-8deg);
-  opacity:.75;
-  pointer-events:none;
-}
-.polaroid-img-wrap{width:100%;height:265px;border-radius:4px;overflow:hidden;background:#1e0c14;box-shadow:inset 0 0 14px rgba(0,0,0,.4)}
-.polaroid-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease}
-.foto-polaroid:hover .polaroid-img-wrap img{transform:scale(1.04)}
+/* PORTADA ILUSTRACIÓN DE LOS DOS */
+.hero-ilustracion-wrap{display:flex;flex-direction:column;align-items:center;margin:1.8rem 0 .5rem;position:relative}
+.hero-ilustracion-halo{position:absolute;top:45%;left:50%;transform:translate(-50%,-50%);width:min(290px,76vw);height:min(290px,76vw);border-radius:50%;background:radial-gradient(circle,rgba(226,184,107,.35) 0%,rgba(158,36,62,.28) 45%,rgba(0,0,0,0) 70%);filter:blur(20px);pointer-events:none;animation:haloLatido 6s ease-in-out infinite alternate}
+@keyframes haloLatido{0%{transform:translate(-50%,-50%) scale(.93);opacity:.65}100%{transform:translate(-50%,-50%) scale(1.07);opacity:1}}
+.hero-ilustracion-marco{width:min(235px,66vw);height:min(235px,66vw);border-radius:50%;padding:6px;background:linear-gradient(145deg,rgba(226,184,107,.9),rgba(158,36,62,.7),rgba(201,169,106,.9));box-shadow:0 18px 50px rgba(0,0,0,.7),0 0 32px rgba(226,184,107,.4),inset 0 0 14px rgba(226,184,107,.45);position:relative;z-index:2;cursor:pointer;transition:transform .4s cubic-bezier(.2,.8,.2,1),box-shadow .4s ease}
+.hero-ilustracion-marco:hover{transform:scale(1.04);box-shadow:0 24px 60px rgba(0,0,0,.8),0 0 42px rgba(226,184,107,.6)}
+.hero-ilustracion-img{width:100%;height:100%;object-fit:cover;border-radius:50%;display:block;border:2px solid rgba(255,248,235,.85)}
+.hero-ilustracion-tag{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);background:var(--papel);color:var(--papel-tinta);border:1px solid var(--dorado);padding:3px 12px;border-radius:100px;font-family:'Cinzel',serif;font-size:.65rem;letter-spacing:.16em;font-weight:700;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.45);pointer-events:none}
+.hero-album-pill-wrap{margin-top:1.45rem;z-index:2}
+.hero-album-cta{display:inline-flex;align-items:center;gap:.6rem;padding:.58rem 1.35rem;background:var(--vidrio);border:1px solid var(--borde-luz);border-radius:100px;color:var(--tinta);font-family:'Cinzel',serif;font-size:.85rem;letter-spacing:.08em;text-decoration:none;box-shadow:0 8px 24px rgba(0,0,0,.35);transition:all .28s ease;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);cursor:pointer}
+.hero-album-cta:hover{background:var(--card-hover);border-color:var(--dorado2);color:var(--dorado2);transform:translateY(-2px);box-shadow:0 12px 28px rgba(0,0,0,.45)}
+.hero-album-cta .cta-icono{font-size:1.05rem}
+.hero-album-cta .cta-flecha{transition:transform .2s ease;color:var(--dorado2)}
+.hero-album-cta:hover .cta-flecha{transform:translateX(3px)}
+
+/* SECCIÓN ÁLBUM */
+.album-intro{text-align:center;margin-bottom:1.6rem;padding:1.4rem 1.2rem;background:var(--card-bg);border:1px solid var(--borde-luz);border-radius:var(--radio);box-shadow:var(--sombra);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.album-intro h2{font-family:'Cinzel',serif;font-size:1.45rem;letter-spacing:.06em;color:var(--dorado2);margin-bottom:.45rem}
+.album-intro p{font-style:italic;color:var(--tinta-dim);font-size:1.02rem;line-height:1.6;max-width:620px;margin:0 auto}
+.album-stats-bar{display:flex;justify-content:center;gap:1rem;margin-top:.85rem;flex-wrap:wrap}
+.album-stat-chip{display:inline-flex;align-items:center;gap:.35rem;font-size:.82rem;letter-spacing:.08em;padding:.3rem .85rem;border-radius:100px;background:rgba(226,184,107,.1);border:1px solid rgba(226,184,107,.35);color:var(--tinta)}
+.album-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:2rem;margin-top:1.4rem;justify-items:center}
+@media(max-width:580px){.album-grid{grid-template-columns:1fr;gap:1.6rem}}
+.album-card{background:linear-gradient(180deg,#fffdf9 0%,#f7eedc 100%);border-radius:10px;padding:14px 14px 18px;box-shadow:0 22px 50px rgba(0,0,0,.6),0 4px 12px rgba(0,0,0,.25),0 0 0 1px rgba(226,184,107,.45);position:relative;transition:all .34s cubic-bezier(.2,.8,.2,1);width:100%;max-width:320px;display:flex;flex-direction:column}
+.album-card:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 28px 65px rgba(0,0,0,.75),0 0 0 1px var(--dorado);z-index:4}
+.album-card .album-img-wrap{width:100%;height:245px;border-radius:6px;overflow:hidden;background:#1a0a12;box-shadow:inset 0 0 14px rgba(0,0,0,.45);cursor:zoom-in;position:relative}
+.album-card .album-img-wrap img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .45s ease}
+.album-card:hover .album-img-wrap img{transform:scale(1.05)}
+.album-card .album-meta{margin-top:.75rem;display:flex;flex-direction:column;gap:.25rem}
+.album-card .album-titulo{font-family:'Cinzel',serif;font-size:1.15rem;color:#2a121d;font-weight:700;line-height:1.25}
+.album-card .album-fecha{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:#8a4055;font-weight:600}
+.album-card .album-desc{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:1.06rem;color:#4a2f3a;line-height:1.45;margin-top:.35rem}
+.album-card .album-pie{margin-top:auto;padding-top:.85rem;display:flex;justify-content:space-between;align-items:center}
+.album-card .album-sello{font-family:'Italiana',serif;font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:#9e243e;border:1px solid rgba(158,36,62,.45);padding:2px 7px;border-radius:4px;transform:rotate(-4deg);pointer-events:none}
+.album-card .album-acciones{display:flex;gap:.4rem;align-items:center}
+.album-card .btn-ver-foto{font-family:'Cinzel',serif;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:#9e243e;background:none;border:none;cursor:pointer;font-weight:700;padding:4px 6px;transition:color .2s}
+.album-card .btn-ver-foto:hover{color:#2a121d}
+.album-card .btn-del-foto{font-size:.72rem;color:#9e243e;background:none;border:1px dashed rgba(158,36,62,.4);border-radius:100px;padding:2px 8px;cursor:pointer}
+.album-card .btn-del-foto:hover{background:rgba(158,36,62,.1)}
+.album-select{width:100%;background:rgba(0,0,0,.35);border:1px solid var(--borde-luz);color:var(--tinta);border-radius:100px;padding:.68rem 1.2rem;font-family:inherit;font-size:1rem;min-height:44px}
+body[data-tema="pergamino"] .album-select{background:rgba(255,255,255,.7);color:var(--tinta)}
+
 .handwritten-caption{font-family:'Caveat',cursive;font-size:1.52rem;font-weight:700;color:#3d222b;text-align:center;margin-top:.6rem;line-height:1.2}
-.washi-tape{
-  position:absolute;
-  top:-12px;
-  left:50%;
-  transform:translateX(-50%);
-  width:98px;
-  height:25px;
-  background:repeating-linear-gradient(45deg, rgba(235,192,122,.62), rgba(235,192,122,.62) 6px, rgba(255,238,208,.45) 6px, rgba(255,238,208,.45) 12px);
-  backdrop-filter:blur(3px);
-  -webkit-backdrop-filter:blur(3px);
-  border-left:2px dotted rgba(180,130,65,.6);
-  border-right:2px dotted rgba(180,130,65,.6);
-  box-shadow:0 3px 8px rgba(0,0,0,.22);
-  pointer-events:none;
-  z-index:3;
-}
+.washi-tape{position:absolute;top:-12px;left:50%;transform:translateX(-50%);width:98px;height:25px;background:repeating-linear-gradient(45deg,rgba(235,192,122,.62),rgba(235,192,122,.62) 6px,rgba(255,238,208,.45) 6px,rgba(255,238,208,.45) 12px);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);border-left:2px dotted rgba(180,130,65,.6);border-right:2px dotted rgba(180,130,65,.6);box-shadow:0 3px 8px rgba(0,0,0,.22);pointer-events:none;z-index:3}
 .washi-1{transform:translateX(-50%) rotate(-3.5deg)}
-.washi-2{
-  transform:translateX(-50%) rotate(4deg);
-  background:repeating-linear-gradient(-45deg, rgba(212,110,138,.58), rgba(212,110,138,.58) 6px, rgba(250,215,225,.45) 6px, rgba(250,215,225,.45) 12px);
-  border-color:rgba(168,68,95,.5);
-}
-.washi-3{
-  transform:translateX(-50%) rotate(-2.5deg);
-  background:repeating-linear-gradient(45deg, rgba(143,208,179,.55), rgba(143,208,179,.55) 6px, rgba(220,245,235,.42) 6px, rgba(220,245,235,.42) 12px);
-  border-left:2px dotted rgba(100,165,135,.6);
-  border-right:2px dotted rgba(100,165,135,.6);
-}
+.washi-2{transform:translateX(-50%) rotate(4deg);background:repeating-linear-gradient(-45deg,rgba(212,110,138,.58),rgba(212,110,138,.58) 6px,rgba(250,215,225,.45) 6px,rgba(250,215,225,.45) 12px);border-color:rgba(168,68,95,.5)}
+.washi-3{transform:translateX(-50%) rotate(-2.5deg);background:repeating-linear-gradient(45deg,rgba(143,208,179,.55),rgba(143,208,179,.55) 6px,rgba(220,245,235,.42) 6px,rgba(220,245,235,.42) 12px);border-left:2px dotted rgba(100,165,135,.6);border-right:2px dotted rgba(100,165,135,.6)}
 
 /* BIENVENIDA GLASS EDITORIAL UNIFICADA */
 .epigrafe-card{
@@ -790,8 +752,15 @@ footer .orn{color:var(--dorado2);letter-spacing:.4em;margin-bottom:.45rem;font-s
 .like{margin-top:.65rem;display:inline-flex;align-items:center;gap:.4rem;background:rgba(245,181,200,.08);border:1px solid rgba(245,181,200,.45);color:var(--rosa);border-radius:100px;padding:.32rem .95rem;cursor:pointer;font-style:italic;font-size:.92rem;min-height:36px;transition:.2s}
 .like.liked{background:rgba(245,181,200,.24);border-color:var(--rosa)}
 .like:focus-visible{outline:none;box-shadow:var(--foco)}
-#lightbox{display:none;position:fixed;inset:0;z-index:50;background:rgba(12,3,8,.92);align-items:center;justify-content:center;padding:1rem;cursor:zoom-out;backdrop-filter:blur(12px)}
-#lightbox img{max-width:min(92vw,700px);max-height:86vh;border-radius:16px;box-shadow:0 30px 90px rgba(0,0,0,.85), 0 0 0 2px var(--dorado)}
+#lightbox{display:none;position:fixed;inset:0;z-index:50;background:rgba(12,3,8,.94);align-items:center;justify-content:center;padding:1.2rem;cursor:zoom-out;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+.lightbox-wrap{display:flex;flex-direction:column;align-items:center;max-width:min(94vw,760px);cursor:default;position:relative}
+#lightbox img{max-width:100%;max-height:72vh;border-radius:16px;box-shadow:0 30px 90px rgba(0,0,0,.88), 0 0 0 2px var(--dorado);object-fit:contain}
+.lightbox-info{margin-top:.85rem;text-align:center;color:#fffdf9;max-width:620px}
+.lightbox-title{font-family:'Cinzel',serif;font-size:1.25rem;color:var(--dorado2);letter-spacing:.04em}
+.lightbox-date{font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-top:.2rem}
+.lightbox-desc{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:1.15rem;line-height:1.45;color:var(--papel);margin-top:.35rem}
+.lightbox-close-btn{position:absolute;top:18px;right:22px;background:rgba(0,0,0,.5);border:1px solid rgba(226,184,107,.5);color:var(--dorado2);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;transition:transform .2s,background .2s;z-index:60}
+.lightbox-close-btn:hover{transform:scale(1.1);background:rgba(158,36,62,.6)}
 .fade{animation:sectionIn .36s cubic-bezier(.16, 1, .3, 1)}
 @keyframes sectionIn{from{opacity:0;transform:translateY(12px) scale(.995);filter:blur(3px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
 
@@ -946,30 +915,33 @@ body[data-tema="pergamino"] .ruleta-display{background:rgba(158,36,62,.06)}
   <div id="nubeInfo" class="nube-info" style="display:none" role="status"></div>
   <div style="display:none" aria-hidden="true"><span class="contador" id="contador">desde el 18 sep ♥</span><span class="cuenta" id="cuentaRegresiva"></span><span class="cuenta" id="cuenta18"></span></div>
 
-  <div class="scrapbook-wrap" aria-label="Nuestras fotos juntos">
-    <div class="scrapbook-collage">
-      <div class="foto-polaroid polaroid-1 foto-marco" id="fotoMarco" title="Toca para ampliar ♥" role="button" tabindex="0">
-        <div class="washi-tape washi-1"></div>
-        <div class="polaroid-img-wrap"><img src="foto-04-09-2026.jpg?v=2" alt="Nosotros juntos ♥ 4 sep" fetchpriority="high" decoding="async" onerror="this.closest('.foto-polaroid').style.display='none'"></div>
-        <figcaption class="handwritten-caption">nosotros ♥ 04 · 09 · 2026</figcaption>
-        <span class="polaroid-sello">♥ SIEMPRE</span>
-      </div>
-      <div class="foto-polaroid polaroid-2 foto-marco" id="fotoMarco2" title="Toca para ampliar ♥" role="button" tabindex="0">
-        <div class="washi-tape washi-2"></div>
-        <div class="polaroid-img-wrap"><img src="foto-nosotros.jpg?v=7" alt="Nosotros juntos ♥ 18 sep" decoding="async" onerror="this.closest('.foto-polaroid').style.display='none'"></div>
-        <figcaption class="handwritten-caption">nosotros ♥ 18 · 09 · 2026</figcaption>
-        <span class="polaroid-sello">✦ JUNTOS</span>
-      </div>
-      <div class="foto-polaroid polaroid-3 foto-marco" id="fotoMarco3" title="Toca para ampliar ♥" role="button" tabindex="0">
-        <div class="washi-tape washi-3"></div>
-        <div class="polaroid-img-wrap"><img src="foto-17-10-2026.jpg?v=1" alt="Nosotros juntos ♥ 17 oct" decoding="async" style="object-position:50% 25%" onerror="this.closest('.foto-polaroid').style.display='none'"></div>
-        <figcaption class="handwritten-caption">nosotros ♥ 17 · 10 · 2026</figcaption>
-        <span class="polaroid-sello">♥ MI CIELO</span>
-      </div>
+  <div class="hero-ilustracion-wrap">
+    <div class="hero-ilustracion-halo"></div>
+    <div class="hero-ilustracion-marco" onclick="mostrar('album')" role="button" tabindex="0" title="Toca para abrir nuestro álbum de recuerdos ♥">
+      <img src="ilustracion-portada.jpg?v=1" alt="Ilustración de Cindy & Oscar juntos ♥" class="hero-ilustracion-img" fetchpriority="high" decoding="async">
+      <span class="hero-ilustracion-tag">♥ CINDY &amp; OSCAR</span>
+    </div>
+    <div class="hero-album-pill-wrap">
+      <button class="hero-album-cta" onclick="mostrar('album')" type="button">
+        <span class="cta-icono">📷</span>
+        <span class="cta-texto">Ver nuestro Álbum de Recuerdos (<span id="heroAlbumCount">3 fotos</span>)</span>
+        <span class="cta-flecha">→</span>
+      </button>
     </div>
   </div>
-  <div id="lightbox" onclick="this.style.display='none'"><img id="lightboxImg" src="foto-nosotros.jpg?v=6" alt="Nosotros ampliado ♥"></div>
 </header>
+
+<div id="lightbox" onclick="cerrarLightbox(event)" role="dialog" aria-modal="true" aria-label="Visor de fotografía">
+  <button class="lightbox-close-btn" onclick="document.getElementById('lightbox').style.display='none'" aria-label="Cerrar visor">✕</button>
+  <div class="lightbox-wrap" onclick="event.stopPropagation()">
+    <img id="lightboxImg" src="foto-nosotros.jpg?v=6" alt="Nosotros ampliado ♥">
+    <div class="lightbox-info" id="lightboxInfo">
+      <div class="lightbox-title" id="lbTitle"></div>
+      <div class="lightbox-date" id="lbDate"></div>
+      <div class="lightbox-desc" id="lbDesc"></div>
+    </div>
+  </div>
+</div>
 
 <div id="efimero" aria-label="Poema efímero de hoy" role="status"></div>
 <div id="aniv" aria-label="Aniversario del 18" role="status"></div>
@@ -990,6 +962,7 @@ body[data-tema="pergamino"] .ruleta-display{background:rgba(158,36,62,.06)}
 
 <nav class="tabs" aria-label="Secciones">
   <button id="tabPoemas" class="activo" onclick="mostrar('poemas')">♥ Poemas <span class="n" id="nPoemas"></span></button>
+  <button id="tabAlbum" onclick="mostrar('album')">📷 Álbum <span class="n" id="nAlbum"></span></button>
   <button id="tabEventos" onclick="mostrar('eventos')">✦ Eventos <span class="n" id="nEv"></span></button>
   <button id="tabIdeas" onclick="mostrar('ideas')">✉ Ideas <span class="n" id="nIdeas"></span></button>
   <button id="tabMusica" onclick="mostrar('musica')">♪ Música <span class="n" id="nMus"></span></button>
@@ -1032,6 +1005,80 @@ body[data-tema="pergamino"] .ruleta-display{background:rgba(158,36,62,.06)}
     <button class="btn" onclick="agregar()">Guardar para ella ♥</button>
     <div id="msg" class="msg" aria-live="polite"></div>
   </div>
+</section>
+
+<section id="secAlbum" style="display:none" aria-label="Álbum de Fotos y Recuerdos">
+  <div class="album-intro">
+    <h2>✦ Álbum de Nuestros Recuerdos ✦</h2>
+    <p>Cada fotografía es un pedacito de tiempo detenido donde somos felices. Guarda aquí nuestros momentos, salidas y sonrisas ♥</p>
+    <div class="album-stats-bar">
+      <span class="album-stat-chip">📷 <strong id="albumTotalCount">3</strong> recuerdos</span>
+      <span class="album-stat-chip">✨ Cindy &amp; Oscar</span>
+    </div>
+  </div>
+
+  <div class="toolbar">
+    <input id="buscarFoto" placeholder="Buscar en el álbum… ej. caminata, septiembre" oninput="pintarAlbum()" aria-label="Buscar foto">
+    <button class="pill" onclick="fotoSorpresa()" title="Ver una foto al azar ♥">✦ Foto al azar ♥</button>
+    <button class="pill" onclick="toggleFormFoto()" id="btnToggleFormFoto">＋ Agregar foto ♥</button>
+  </div>
+
+  <!-- Formulario desplegable para agregar nuevas fotos -->
+  <div class="form" id="formAgregarFoto" style="display:none">
+    <h2>✦ Añadir una nueva fotografía al álbum ✦</h2>
+    <p>Sube una foto desde tu galería o teléfono. Se guardará con su fecha y dedicatoria ♥</p>
+    
+    <div class="input-field">
+      <label class="lbl" for="fotoArchivo">Seleccionar foto de tu dispositivo</label>
+      <input id="fotoArchivo" type="file" accept="image/*" onchange="previsualizarFoto(this)">
+      <div id="fotoPreviewBox" style="display:none;margin-top:10px;text-align:center">
+        <img id="fotoPreviewImg" src="" alt="Vista previa" style="max-height:180px;border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.4)">
+      </div>
+    </div>
+
+    <div class="form-grid-2">
+      <div class="input-field">
+        <label class="lbl" for="fotoTitulo">Título o momento</label>
+        <input id="fotoTitulo" placeholder="Ej. Atardecer en el mirador" autocomplete="off">
+      </div>
+      <div class="input-field">
+        <label class="lbl" for="fotoFecha">Fecha</label>
+        <input id="fotoFecha" type="date">
+      </div>
+    </div>
+
+    <div class="form-grid-2">
+      <div class="input-field">
+        <label class="lbl" for="fotoLugar">Lugar (opcional)</label>
+        <input id="fotoLugar" placeholder="Ej. Cerro de Guadalupe, Bogotá" autocomplete="off">
+      </div>
+      <div class="input-field">
+        <label class="lbl" for="fotoSello">Sello romántico</label>
+        <select id="fotoSello" class="album-select">
+          <option value="♥ SIEMPRE">♥ SIEMPRE</option>
+          <option value="✦ JUNTOS">✦ JUNTOS</option>
+          <option value="♥ MI CIELO">♥ MI CIELO</option>
+          <option value="✦ AMOR MÍO">✦ AMOR MÍO</option>
+          <option value="♥ INOLVIDABLE">♥ INOLVIDABLE</option>
+          <option value="✦ CONTIGO">✦ CONTIGO</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="input-field">
+      <label class="lbl" for="fotoNota">Dedicatoria o recuerdo (opcional)</label>
+      <textarea id="fotoNota" placeholder="Qué sentiste ese día, un detalle o memoria que quieras guardar…" style="min-height:75px"></textarea>
+    </div>
+
+    <div style="display:flex;gap:.8rem;flex-wrap:wrap;align-items:center">
+      <button class="btn" type="button" onclick="guardarNuevaFoto()" id="btnGuardarFoto">Guardar en nuestro álbum ♥</button>
+      <button class="pill" type="button" onclick="toggleFormFoto(false)">Cancelar</button>
+    </div>
+    <div id="msgFoto" class="msg" aria-live="polite"></div>
+    <div class="hint">💡 <b>Tu álbum personal:</b> las fotos se guardan en el álbum de tu navegador con compresión ligera para que carguen al instante, y las fotos oficiales del blog quedan fijas para siempre ♥</div>
+  </div>
+
+  <div class="album-grid" id="listaAlbum"></div>
 </section>
 
 <section id="secEventos" style="display:none" aria-label="Eventos">
@@ -1480,9 +1527,230 @@ function agregar(){
 }
 pintar();
 
+// --- ÁLBUM DE FOTOS Y RECUERDOS ---
+const FOTOS_FIJAS = [
+  {
+    id: "f1",
+    src: "foto-04-09-2026.jpg?v=2",
+    titulo: "Noche de Luces",
+    fecha: "2026-09-04",
+    lugar: "Luces de la ciudad",
+    caption: "nosotros ♥ 04 · 09 · 2026",
+    desc: "Nuestra noche mágica de risas, miradas cómplices y colores brillantes.",
+    sello: "♥ SIEMPRE",
+    washi: "washi-1",
+    pos: "center 25%",
+    fijo: true
+  },
+  {
+    id: "f2",
+    src: "foto-nosotros.jpg?v=7",
+    titulo: "Nuestro Inicio",
+    fecha: "2026-09-18",
+    lugar: "Bajo la noche estrellada",
+    caption: "nosotros ♥ 18 · 09 · 2026",
+    desc: "El día en que comenzó oficialmente nuestro universo juntos. Para siempre.",
+    sello: "✦ JUNTOS",
+    washi: "washi-2",
+    pos: "center 20%",
+    fijo: true
+  },
+  {
+    id: "f3",
+    src: "foto-17-10-2026.jpg?v=1",
+    titulo: "Caminata Cerro de Guadalupe",
+    fecha: "2026-10-17",
+    lugar: "Cerro de Guadalupe, Bogotá",
+    caption: "nosotros ♥ 17 · 10 · 2026",
+    desc: "Subir de la mano entre los pinos a contemplar la ciudad y abrazarte fuerte.",
+    sello: "♥ MI CIELO",
+    washi: "washi-3",
+    pos: "50% 25%",
+    fijo: true
+  }
+];
+
+function cargarFotosLocales(){
+  const g = store.get('album-ella', []);
+  return Array.isArray(g) ? g : [];
+}
+function guardarFotosLocales(l){
+  if(!store.set('album-ella', l)) toast('msgFoto', '⚠️ No se pudo guardar en este navegador ♥');
+}
+let fotosLocales = cargarFotosLocales();
+let tempFotoDataUrl = '';
+
+function toggleFormFoto(force){
+  const f = document.getElementById('formAgregarFoto');
+  const b = document.getElementById('btnToggleFormFoto');
+  if(!f) return;
+  const show = typeof force === 'boolean' ? force : (f.style.display === 'none');
+  f.style.display = show ? 'block' : 'none';
+  if(b) b.textContent = show ? '✕ Cerrar formulario' : '＋ Agregar foto ♥';
+  if(show){
+    document.getElementById('fotoFecha').value = new Date().toISOString().slice(0, 10);
+    f.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function previsualizarFoto(input){
+  const file = input.files && input.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const img = new Image();
+    img.onload = function(){
+      const maxDim = 1280;
+      let w = img.width, h = img.height;
+      if(w > maxDim || h > maxDim){
+        if(w > h){ h = Math.round(h * maxDim / w); w = maxDim; }
+        else { w = Math.round(w * maxDim / h); h = maxDim; }
+      }
+      const canvas = document.createElement('canvas');
+      canvas.width = w; canvas.height = h;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(img, 0, 0, w, h);
+      tempFotoDataUrl = canvas.toDataURL('image/jpeg', 0.82);
+      const prevImg = document.getElementById('fotoPreviewImg');
+      const prevBox = document.getElementById('fotoPreviewBox');
+      if(prevImg && prevBox){
+        prevImg.src = tempFotoDataUrl;
+        prevBox.style.display = 'block';
+      }
+    };
+    img.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+
+function guardarNuevaFoto(){
+  const t = document.getElementById('fotoTitulo').value.trim();
+  const f = document.getElementById('fotoFecha').value || new Date().toISOString().slice(0, 10);
+  const l = document.getElementById('fotoLugar').value.trim();
+  const s = document.getElementById('fotoSello').value || '♥ SIEMPRE';
+  const n = document.getElementById('fotoNota').value.trim();
+  if(!tempFotoDataUrl){
+    toast('msgFoto', 'Selecciona una foto de tu galería primero ♥');
+    return;
+  }
+  if(!t){
+    toast('msgFoto', 'Ponle un título o nombre a este recuerdo ♥');
+    return;
+  }
+  const washis = ['washi-1', 'washi-2', 'washi-3'];
+  const ranWashi = washis[Math.floor(Math.random() * washis.length)];
+  const obj = {
+    id: 'F' + Date.now(),
+    src: tempFotoDataUrl,
+    titulo: t,
+    fecha: f,
+    lugar: l,
+    caption: 'nosotros ♥ ' + f.split('-').reverse().join(' · '),
+    desc: n,
+    sello: s,
+    washi: ranWashi,
+    fijo: false
+  };
+  fotosLocales.unshift(obj);
+  guardarFotosLocales(fotosLocales);
+  pintarAlbum();
+  toast('msgFoto', '¡Recuerdo guardado con amor en el álbum ♥!');
+  document.getElementById('fotoTitulo').value = '';
+  document.getElementById('fotoLugar').value = '';
+  document.getElementById('fotoNota').value = '';
+  document.getElementById('fotoArchivo').value = '';
+  const prevBox = document.getElementById('fotoPreviewBox');
+  if(prevBox) prevBox.style.display = 'none';
+  tempFotoDataUrl = '';
+  toggleFormFoto(false);
+}
+
+function pintarAlbum(){
+  const c = document.getElementById('listaAlbum');
+  if(!c) return;
+  const q = (document.getElementById('buscarFoto')?.value || '').trim().toLowerCase();
+  const todas = [...FOTOS_FIJAS, ...fotosLocales];
+  
+  const total = todas.length;
+  const nAlbum = document.getElementById('nAlbum');
+  if(nAlbum) nAlbum.textContent = `(${total})`;
+  const hCount = document.getElementById('heroAlbumCount');
+  if(hCount) hCount.textContent = `${total} foto${total===1?'':'s'}`;
+  const tCount = document.getElementById('albumTotalCount');
+  if(tCount) tCount.textContent = total;
+
+  const filtradas = q ? todas.filter(x => 
+    (x.titulo && x.titulo.toLowerCase().includes(q)) ||
+    (x.desc && x.desc.toLowerCase().includes(q)) ||
+    (x.fecha && x.fecha.toLowerCase().includes(q)) ||
+    (x.lugar && x.lugar.toLowerCase().includes(q)) ||
+    (x.caption && x.caption.toLowerCase().includes(q))
+  ) : todas;
+
+  if(!filtradas.length){
+    c.innerHTML = '<div class="empty">No encontramos fotos con esa búsqueda, amor ♥<br>Prueba con otra palabra o añade una nueva foto.</div>';
+    return;
+  }
+
+  c.innerHTML = '';
+  filtradas.forEach(foto => {
+    const card = document.createElement('div');
+    card.className = 'album-card';
+    const posStyle = foto.pos ? `style="object-position:${foto.pos}"` : '';
+    const washiClass = foto.washi || 'washi-1';
+    
+    card.innerHTML = `
+      <div class="washi-tape ${washiClass}"></div>
+      <div class="album-img-wrap" role="button" tabindex="0" title="Toca para ampliar ♥">
+        <img src="${foto.src}" alt="${esc(foto.titulo)}" ${posStyle} loading="lazy" decoding="async">
+      </div>
+      <div class="album-meta">
+        <figcaption class="handwritten-caption" style="margin:0.35rem 0 0.15rem;font-size:1.32rem">${esc(foto.caption || foto.titulo)}</figcaption>
+        <div class="album-titulo">${esc(foto.titulo)}</div>
+        <div class="album-fecha">${esc(fmtFecha(foto.fecha))}${foto.lugar ? ' · ' + esc(foto.lugar) : ''}</div>
+        ${foto.desc ? `<div class="album-desc">${esc(foto.desc)}</div>` : ''}
+      </div>
+      <div class="album-pie">
+        <span class="album-sello">${esc(foto.sello || '♥ SIEMPRE')}</span>
+        <div class="album-acciones">
+          <button class="btn-ver-foto" type="button">♥ Ver</button>
+          ${!foto.fijo ? `<button class="btn-del-foto" type="button">borrar</button>` : ''}
+        </div>
+      </div>
+    `;
+
+    const abrir = () => abrirLightbox(foto.src, foto.titulo, foto.fecha, foto.desc || foto.caption);
+    card.querySelector('.album-img-wrap').onclick = abrir;
+    card.querySelector('.btn-ver-foto').onclick = abrir;
+    card.querySelector('.album-img-wrap').onkeydown = (e) => { if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); abrir(); } };
+
+    if(!foto.fijo){
+      const delBtn = card.querySelector('.btn-del-foto');
+      if(delBtn){
+        delBtn.onclick = () => {
+          if(!confirm(`¿Deseas eliminar "${foto.titulo}" de este dispositivo? ♥`)) return;
+          fotosLocales = fotosLocales.filter(x => x.id !== foto.id);
+          guardarFotosLocales(fotosLocales);
+          pintarAlbum();
+        };
+      }
+    }
+
+    c.appendChild(card);
+  });
+}
+
+function fotoSorpresa(){
+  const todas = [...FOTOS_FIJAS, ...fotosLocales];
+  if(!todas.length) return;
+  const f = todas[Math.floor(Math.random() * todas.length)];
+  abrirLightbox(f.src, f.titulo, f.fecha, f.desc || f.caption);
+}
+pintarAlbum();
+
 // --- TABS con hash (sin sticky, se va al hacer scroll) ---
 function mostrar(cual){
-  const secs={poemas:'secPoemas',eventos:'secEventos',ideas:'secIdeas',musica:'secMusica',planes:'secPlanes',cartas:'secCartas'};
+  const secs={poemas:'secPoemas',album:'secAlbum',eventos:'secEventos',ideas:'secIdeas',musica:'secMusica',planes:'secPlanes',cartas:'secCartas'};
   let activeSec = null;
   Object.entries(secs).forEach(([k,id])=>{
     const s=document.getElementById(id);
@@ -1497,6 +1765,7 @@ function mostrar(cual){
     }
   });
   document.getElementById('tabPoemas').classList.toggle('activo', cual==='poemas');
+  const tAlbum=document.getElementById('tabAlbum'); if(tAlbum) tAlbum.classList.toggle('activo', cual==='album');
   document.getElementById('tabEventos').classList.toggle('activo', cual==='eventos');
   document.getElementById('tabIdeas').classList.toggle('activo', cual==='ideas');
   const tm=document.getElementById('tabMusica'); if(tm) tm.classList.toggle('activo', cual==='musica');
@@ -1505,6 +1774,7 @@ function mostrar(cual){
   if(('#'+cual)!==location.hash){ history.replaceState(null,'','#'+cual); }
   const btnActivo=document.getElementById('tab'+cual.charAt(0).toUpperCase()+cual.slice(1));
   if(btnActivo && btnActivo.scrollIntoView){ try{ btnActivo.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'}); }catch(e){} }
+  if(cual==='album') pintarAlbum();
   if(cual==='eventos') pintarEv();
   if(cual==='ideas') pintarIdeas();
   if(cual==='musica') pintarMusica();
@@ -1515,7 +1785,7 @@ function mostrar(cual){
     try{
       gsap.killTweensOf(activeSec);
       gsap.fromTo(activeSec, { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.35, ease: "power2.out" });
-      const cards = activeSec.querySelectorAll('.card, .ev, .idea, .mus, .plan, .carta-sobre, .frasco-card, .ruleta-card, .form');
+      const cards = activeSec.querySelectorAll('.card, .album-card, .ev, .idea, .mus, .plan, .carta-sobre, .frasco-card, .ruleta-card, .form');
       if(cards.length){
         gsap.killTweensOf(cards);
         gsap.fromTo(cards, { opacity: 0, y: 16 }, { opacity: 1, y: 0, stagger: 0.04, duration: 0.35, ease: "power2.out" });
@@ -1523,7 +1793,7 @@ function mostrar(cual){
     }catch(e){}
   }
 }
-(function initTab(){ const h=(location.hash||'').replace('#',''); if(['poemas','eventos','ideas','musica','planes','cartas'].includes(h)) mostrar(h); })();
+(function initTab(){ const h=(location.hash||'').replace('#',''); if(['poemas','album','eventos','ideas','musica','planes','cartas'].includes(h)) mostrar(h); })();
 
 // --- EVENTOS FIJOS EN LA PÁGINA (los ve todo el mundo) ---
 // Para fijar uno para siempre, dime "fija este evento: ..." y yo lo agrego aquí y lo publico ♥
@@ -2070,7 +2340,7 @@ window.spawnSparkle = spawnSparkle;
 
 // --- GESTOS SWIPE ENTRE PESTAÑAS ---
 (function initSwipeGestures(){
-  const TABS_ORDEN = ['poemas', 'eventos', 'ideas', 'musica', 'planes', 'cartas'];
+  const TABS_ORDEN = ['poemas', 'album', 'eventos', 'ideas', 'musica', 'planes', 'cartas'];
   let touchStartX = 0, touchStartY = 0, touchStartTime = 0;
 
   document.addEventListener('touchstart', (e) => {
@@ -2388,14 +2658,12 @@ setInterval(actualizarLuzDia, 60000);
 // --- LIGHTBOX foto ---
 (function initLight(){
   const lb=document.getElementById('lightbox');
-  const lbImg=document.getElementById('lightboxImg');
   document.querySelectorAll('.foto-marco').forEach(marco=>{
     const abrir=()=>{
       try{
         const im=marco.querySelector('img');
-        if(im&&lbImg) lbImg.src=im.src;
+        if(im) abrirLightbox(im.src, marco.getAttribute('data-titulo')||'Nosotros ♥', marco.getAttribute('data-fecha')||'', marco.getAttribute('data-desc')||'');
       }catch(e){}
-      if(lb) lb.style.display='flex';
     };
     marco.addEventListener('click',abrir);
     marco.addEventListener('keydown',e=>{ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); abrir(); } });
@@ -2643,7 +2911,7 @@ function setFondoMus(play){
   }
 
   function refrescarTilts(){
-    document.querySelectorAll('.card, .carta-sobre, .frasco-card, .ruleta-card').forEach(aplicarTilt);
+    document.querySelectorAll('.card, .album-card, .carta-sobre, .frasco-card, .ruleta-card').forEach(aplicarTilt);
   }
   refrescarTilts();
   window.addEventListener('load', refrescarTilts);
