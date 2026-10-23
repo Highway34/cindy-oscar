@@ -16,7 +16,7 @@
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♥</text></svg>">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="apple-touch-icon" href="icon-192.png">
-<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=29').catch(()=>{});let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;refreshing=true;location.reload();});});}</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js?v=30').catch(()=>{});let refreshing=false;navigator.serviceWorker.addEventListener('controllerchange',()=>{if(refreshing)return;refreshing=true;location.reload();});});}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
@@ -333,17 +333,36 @@ body[data-tema="pergamino"] .tiempos-botones{background:rgba(158,107,36,.09)}
 .hero-portada-img{width:100%;height:100%;object-fit:cover;border-radius:12px;display:block;box-shadow:inset 0 0 12px rgba(0,0,0,.4)}
 .hero-portada-tag{position:absolute;bottom:-11px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,#fffdf8,#f7eedc);color:#5c1021;border:1px solid var(--dorado);padding:4px 14px;border-radius:100px;font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:.16em;font-weight:700;white-space:nowrap;box-shadow:0 6px 18px rgba(0,0,0,.5);pointer-events:none}
 
-/* ÁLBUM DE FOTOS SERENO Y ELEGANTE */
-.album-galeria-romantica{display:flex;flex-direction:column;align-items:center;margin:1.8rem 0 .8rem;position:relative;width:100%}
-.album-cabecera{text-align:center;margin-bottom:1.1rem}
-.album-tag{font-family:'Cinzel',serif;font-size:.74rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dorado2);margin-bottom:.25rem}
-.album-titulo-sereno{font-family:'Italiana',serif;font-size:1.9rem;color:var(--papel);letter-spacing:.03em;margin:0;line-height:1.2}
-.album-subtitulo-sereno{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:1.02rem;color:var(--tinta-dim);margin:.3rem 0 0}
-.album-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:1.25rem;width:100%;max-width:960px;margin:0 auto;padding:.4rem 0}
-@media (max-width:620px){
-  .album-grid{grid-template-columns:repeat(2,1fr);gap:.7rem}
-  .album-titulo-sereno{font-size:1.6rem}
-}
+/* BOTÓN EN PORTADA PARA ABRIR EL ÁLBUM */
+.hero-album-btn-wrap{margin-top:1.15rem;z-index:2}
+.btn-abrir-album{display:inline-flex;align-items:center;gap:.65rem;padding:.65rem 1.5rem;background:var(--vidrio);border:1px solid var(--borde-luz);border-radius:100px;color:var(--dorado2);font-family:'Cinzel',serif;font-size:.88rem;letter-spacing:.08em;font-weight:600;cursor:pointer;transition:all .25s ease;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:0 8px 24px rgba(0,0,0,.4)}
+.btn-abrir-album:hover{background:var(--card-hover);border-color:var(--dorado);transform:translateY(-2px);box-shadow:0 12px 30px rgba(0,0,0,.55),0 0 20px rgba(226,184,107,.25)}
+.btn-abrir-album:active{transform:scale(.98)}
+.btn-album-icono{font-size:1.15rem}
+.btn-album-flecha{color:var(--dorado);transition:transform .2s ease}
+.btn-abrir-album:hover .btn-album-flecha{transform:translateX(3px)}
+
+/* MODAL ÁLBUM DE FOTOS DEDICADO */
+#modalAlbum{position:fixed;inset:0;z-index:60;background:rgba(12,3,8,.96);backdrop-filter:blur(22px);-webkit-backdrop-filter:blur(22px);display:none;flex-direction:column;overflow:hidden;animation:albumEntrada .28s cubic-bezier(.16,1,.3,1)}
+@keyframes albumEntrada{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
+.modal-album-header{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.4rem;background:rgba(25,7,17,.8);border-bottom:1px solid rgba(226,184,107,.35);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);position:sticky;top:0;z-index:10;flex-shrink:0}
+@media(max-width:620px){.modal-album-header{padding:.8rem 1rem}}
+.modal-album-titulos{text-align:left}
+.modal-album-tag{font-family:'Cinzel',serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dorado2);margin-bottom:.2rem}
+.modal-album-titulo{font-family:'Italiana',serif;font-size:1.6rem;color:var(--papel);letter-spacing:.03em;margin:0;line-height:1.2}
+.modal-album-sub{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:.95rem;color:var(--tinta-dim);margin:.2rem 0 0}
+@media(max-width:620px){.modal-album-titulo{font-size:1.3rem}.modal-album-sub{font-size:.85rem}}
+.modal-album-acciones{display:flex;align-items:center;gap:.75rem}
+.modal-album-btn-add{background:linear-gradient(135deg,var(--dorado2),var(--dorado));color:#1a0812;border:none;padding:.45rem 1.1rem;border-radius:100px;font-family:'Cinzel',serif;font-size:.78rem;font-weight:700;letter-spacing:.08em;cursor:pointer;transition:all .2s ease;box-shadow:0 4px 14px rgba(201,169,106,.35)}
+.modal-album-btn-add:hover{transform:scale(1.04);box-shadow:0 6px 18px rgba(201,169,106,.5)}
+.modal-album-btn-cerrar{background:rgba(255,255,255,.08);border:1px solid rgba(226,184,107,.4);color:var(--dorado2);width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;transition:all .2s ease}
+.modal-album-btn-cerrar:hover{background:rgba(158,36,62,.7);border-color:var(--dorado);transform:scale(1.08)}
+.modal-album-body{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:1.4rem 1.2rem 3.5rem;max-width:1040px;width:100%;margin:0 auto}
+@media(max-width:620px){.modal-album-body{padding:1rem .75rem 3rem}}
+
+/* CUADRÍCULA POLAROID DENTRO DEL ÁLBUM */
+.album-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:1.25rem;width:100%;max-width:980px;margin:0 auto;padding:.4rem 0}
+@media (max-width:620px){.album-grid{grid-template-columns:repeat(2,1fr);gap:.7rem}}
 .album-polaroid{background:linear-gradient(180deg,#fffdfa 0%,#f7eedc 100%);border-radius:8px;padding:9px 9px 13px;box-shadow:0 12px 30px rgba(0,0,0,.55),0 0 0 1px rgba(226,184,107,.4);cursor:zoom-in;position:relative;transition:transform .25s cubic-bezier(.2,.8,.2,1),box-shadow .25s ease;text-align:center;display:flex;flex-direction:column;justify-content:space-between;user-select:none}
 @media (max-width:620px){
   .album-polaroid{padding:6px 6px 10px;border-radius:6px}
@@ -772,16 +791,16 @@ footer .orn{color:var(--dorado2);letter-spacing:.4em;margin-bottom:.45rem;font-s
 .like{margin-top:.65rem;display:inline-flex;align-items:center;gap:.4rem;background:rgba(245,181,200,.08);border:1px solid rgba(245,181,200,.45);color:var(--rosa);border-radius:100px;padding:.32rem .95rem;cursor:pointer;font-style:italic;font-size:.92rem;min-height:36px;transition:.2s}
 .like.liked{background:rgba(245,181,200,.24);border-color:var(--rosa)}
 .like:focus-visible{outline:none;box-shadow:var(--foco)}
-#lightbox{display:none;position:fixed;inset:0;z-index:50;background:rgba(12,3,8,.94);align-items:center;justify-content:center;padding:1.2rem;cursor:zoom-out;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
+#lightbox{display:none;position:fixed;inset:0;z-index:75;background:rgba(12,3,8,.94);align-items:center;justify-content:center;padding:1.2rem;cursor:zoom-out;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
 .lightbox-wrap{display:flex;flex-direction:column;align-items:center;max-width:min(94vw,760px);cursor:default;position:relative}
 #lightbox img{max-width:100%;max-height:72vh;border-radius:16px;box-shadow:0 30px 90px rgba(0,0,0,.88), 0 0 0 2px var(--dorado);object-fit:contain;transition:opacity .2s ease}
 .lightbox-info{margin-top:.85rem;text-align:center;color:#fffdf9;max-width:620px}
 .lightbox-title{font-family:'Cinzel',serif;font-size:1.25rem;color:var(--dorado2);letter-spacing:.04em}
 .lightbox-date{font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;opacity:.8;margin-top:.2rem}
 .lightbox-desc{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:1.15rem;line-height:1.45;color:var(--papel);margin-top:.35rem}
-.lightbox-close-btn{position:absolute;top:18px;right:22px;background:rgba(0,0,0,.5);border:1px solid rgba(226,184,107,.5);color:var(--dorado2);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;transition:transform .2s,background .2s;z-index:60}
+.lightbox-close-btn{position:absolute;top:18px;right:22px;background:rgba(0,0,0,.5);border:1px solid rgba(226,184,107,.5);color:var(--dorado2);border-radius:50%;width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;cursor:pointer;transition:transform .2s,background .2s;z-index:80}
 .lightbox-close-btn:hover{transform:scale(1.1);background:rgba(158,36,62,.6)}
-.lightbox-nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(18,5,12,.7);border:1px solid rgba(226,184,107,.45);color:var(--dorado2);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;line-height:1;cursor:pointer;transition:all .2s ease;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:60;user-select:none}
+.lightbox-nav-btn{position:absolute;top:50%;transform:translateY(-50%);background:rgba(18,5,12,.7);border:1px solid rgba(226,184,107,.45);color:var(--dorado2);width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.8rem;line-height:1;cursor:pointer;transition:all .2s ease;backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);z-index:80;user-select:none}
 .lightbox-nav-btn:hover{background:rgba(158,36,62,.85);border-color:var(--dorado);transform:translateY(-50%) scale(1.1)}
 .lightbox-nav-btn.lb-prev{left:18px}
 .lightbox-nav-btn.lb-next{right:18px}
@@ -946,24 +965,41 @@ body[data-tema="pergamino"] .ruleta-display{background:rgba(158,36,62,.06)}
 
   <div class="hero-portada-wrap">
     <div class="hero-portada-halo"></div>
-    <div class="hero-portada-marco" onclick="verFoto('portada.jpg?v=1', 'Cindy & Oscar ♥', '2026-10-23', 'En cada universo y en cada constelación, siempre tú ♥')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();verFoto('portada.jpg?v=1', 'Cindy & Oscar ♥', '2026-10-23', 'En cada universo y en cada constelación, siempre tú ♥');}" role="button" tabindex="0" title="Toca para ampliar nuestra foto de portada ♥">
+    <div class="hero-portada-marco" onclick="abrirModalAlbum()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();abrirModalAlbum();}" role="button" tabindex="0" title="Toca para abrir nuestro álbum de recuerdos ♥">
       <div class="washi-tape washi-2"></div>
       <img src="portada.jpg?v=1" alt="Cindy & Oscar juntos ♥ Portada" class="hero-portada-img" fetchpriority="high" decoding="async">
       <span class="hero-portada-tag">♥ CINDY &amp; OSCAR ♥</span>
     </div>
+
+    <div class="hero-album-btn-wrap">
+      <button class="btn-abrir-album" onclick="abrirModalAlbum()" type="button" aria-label="Abrir álbum de recuerdos">
+        <span class="btn-album-icono">📖</span>
+        <span class="btn-album-texto">Abrir Álbum de Recuerdos (<span id="albumBadgeCount">4 fotos</span>) ♥</span>
+        <span class="btn-album-flecha">→</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- MODAL ÁLBUM DE FOTOS DEDICADO (se ve solo cuando uno lo abre) -->
+<div id="modalAlbum" class="modal-album" role="dialog" aria-modal="true" aria-label="Nuestro Álbum de Recuerdos" style="display:none" onclick="cerrarModalAlbumSiFondo(event)">
+  <div class="modal-album-header">
+    <div class="modal-album-titulos">
+      <div class="modal-album-tag">✦ Recuerdos de Nosotros ♥ ✦</div>
+      <h2 class="modal-album-titulo">Nuestro Álbum de Fotos</h2>
+      <p class="modal-album-sub">Toca cualquier foto para ampliarla en grande con su recuerdo ♥</p>
+    </div>
+    <div class="modal-album-acciones">
+      <button class="modal-album-btn-add" onclick="abrirSelectorNuevaFoto()" type="button">＋ Añadir foto</button>
+      <button class="modal-album-btn-cerrar" onclick="cerrarModalAlbum()" aria-label="Cerrar álbum" type="button">✕</button>
+    </div>
   </div>
 
-  <section class="album-galeria-romantica" aria-label="Nuestro Álbum de Fotos">
-    <div class="album-cabecera">
-      <div class="album-tag">✦ Recuerdos Nuestros ♥ ✦</div>
-      <h2 class="album-titulo-sereno">Álbum de Recuerdos</h2>
-      <p class="album-subtitulo-sereno">Toca cualquier foto para verla en pantalla completa con su recuerdo ♥</p>
-    </div>
-
+  <div class="modal-album-body">
     <div class="album-grid" id="albumGrid"></div>
-    <input type="file" id="inputNuevaFoto" accept="image/*" style="display:none" onchange="subirFotoDirecta(this)">
-  </section>
-</header>
+  </div>
+  <input type="file" id="inputNuevaFoto" accept="image/*" style="display:none" onchange="subirFotoDirecta(this)">
+</div>
 
 <div id="lightbox" onclick="cerrarFoto()" role="dialog" aria-modal="true" aria-label="Visor de fotografía">
   <button class="lightbox-close-btn" onclick="cerrarFoto()" aria-label="Cerrar visor">✕</button>
@@ -1617,10 +1653,38 @@ function cerrarFoto(){
 window.abrirLightbox = verFoto;
 window.cerrarLightbox = cerrarFoto;
 
+function abrirModalAlbum(){
+  const m = document.getElementById('modalAlbum');
+  if(!m) return;
+  m.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+  pintarAlbumMosaico();
+}
+
+function cerrarModalAlbum(){
+  const m = document.getElementById('modalAlbum');
+  if(!m) return;
+  m.style.display = 'none';
+  document.body.style.overflow = '';
+}
+
+function cerrarModalAlbumSiFondo(e){
+  if(e.target && e.target.id === 'modalAlbum'){
+    cerrarModalAlbum();
+  }
+}
+
+function actualizarBadgeAlbum(){
+  const b = document.getElementById('albumBadgeCount');
+  if(!b) return;
+  const total = coleccionCompletaConPortada().length;
+  b.textContent = `${total} foto${total===1?'':'s'}`;
+}
+
 function pintarAlbumMosaico(){
   const cont = document.getElementById('albumGrid');
   if(!cont) return;
-  const todas = obtenerTodasLasFotos();
+  const todas = coleccionCompletaConPortada();
   cont.innerHTML = '';
 
   todas.forEach((f, idx) => {
@@ -1631,7 +1695,7 @@ function pintarAlbumMosaico(){
     card.setAttribute('title', 'Toca para ampliar ♥');
     const washiClass = f.washi || 'washi-1';
     const posStyle = f.pos ? `style="object-position:${f.pos}"` : '';
-    const esAgregada = idx >= FOTOS_ALBUM_BASE.length;
+    const esAgregada = f.id && String(f.id).startsWith('F');
 
     card.innerHTML = `
       <div class="washi-tape ${washiClass}"></div>
@@ -1648,12 +1712,12 @@ function pintarAlbumMosaico(){
 
     card.onclick = (e) => {
       if(e.target.classList.contains('del-foto-btn')) return;
-      verFotoPorIndice(idx);
+      verFotoPorIndice(idx, todas);
     };
     card.onkeydown = (e) => {
       if(e.key === 'Enter' || e.key === ' '){
         e.preventDefault();
-        verFotoPorIndice(idx);
+        verFotoPorIndice(idx, todas);
       }
     };
 
@@ -1663,8 +1727,7 @@ function pintarAlbumMosaico(){
         delBtn.onclick = (e) => {
           e.stopPropagation();
           if(!confirm(`¿Deseas quitar la foto "${f.titulo}" de este dispositivo? ♥`)) return;
-          const localIdx = idx - FOTOS_ALBUM_BASE.length;
-          fotosAgregadas.splice(localIdx, 1);
+          fotosAgregadas = fotosAgregadas.filter(x => x.id !== f.id);
           guardarFotosLocales(fotosAgregadas);
           pintarAlbumMosaico();
           toast('msg', 'Foto retirada del álbum ♥');
@@ -1696,6 +1759,7 @@ function pintarAlbumMosaico(){
     }
   };
   cont.appendChild(addCard);
+  actualizarBadgeAlbum();
 }
 
 function abrirSelectorNuevaFoto(){
@@ -1773,16 +1837,24 @@ function subirFotoDirecta(input){
   }, { passive: true });
 })();
 
-// Teclado para el visor de fotos (flechas izquierda/derecha)
+// Teclado para el visor de fotos y modal álbum
 document.addEventListener('keydown', (e) => {
   const lb = document.getElementById('lightbox');
   if(lb && lb.style.display === 'flex'){
     if(e.key === 'ArrowRight') cambiarFotoLightbox(1);
     else if(e.key === 'ArrowLeft') cambiarFotoLightbox(-1);
+    else if(e.key === 'Escape') cerrarFoto();
+    return;
+  }
+  if(e.key === 'Escape'){
+    const m = document.getElementById('modalAlbum');
+    if(m && m.style.display === 'flex'){
+      cerrarModalAlbum();
+    }
   }
 });
 
-pintarAlbumMosaico();
+actualizarBadgeAlbum();
 
 // --- TABS con hash (sin sticky, se va al hacer scroll) ---
 function mostrar(cual){
@@ -2396,6 +2468,8 @@ window.spawnSparkle = spawnSparkle;
     if(cv && cv.style.display === 'block') return;
     const lb = document.getElementById('lightbox');
     if(lb && lb.style.display === 'flex') return;
+    const ma = document.getElementById('modalAlbum');
+    if(ma && ma.style.display === 'flex') return;
 
     const dx = e.changedTouches[0].clientX - touchStartX;
     const dy = e.changedTouches[0].clientY - touchStartY;

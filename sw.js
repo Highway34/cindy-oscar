@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v29'; // v29: nueva foto de portada real de nosotros ♥
+const CACHE = 'rincon-v30'; // v30: fotos solo visibles al abrir el album dedicado con todas las fotos ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
