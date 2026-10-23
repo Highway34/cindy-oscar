@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v24'; // v24: portada con ilustración astral + sección álbum de fotos dedicada ♥
+const CACHE = 'rincon-v25'; // v25: foto real auténtica de Cindy y Oscar en portada ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
