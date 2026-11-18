@@ -1,5 +1,5 @@
 /* SW mínimo para permitir Instalar / Añadir a inicio ♥ */
-const CACHE = 'rincon-v30'; // v30: fotos solo visibles al abrir el album dedicado con todas las fotos ♥
+const CACHE = 'rincon-v31'; // v30: fotos solo visibles al abrir el album dedicado con todas las fotos ♥
 self.addEventListener('install', e => {
   self.skipWaiting();
 });
